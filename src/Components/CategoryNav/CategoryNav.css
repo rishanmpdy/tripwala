@@ -1,0 +1,29 @@
+.category-nav {
+  display: flex;
+  gap: 7px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.category-btn {
+  height: 36px;
+
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: rgba(20, 29, 32, 0.9);
+
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.category-btn.active {
+  background: #079bd3;
+}

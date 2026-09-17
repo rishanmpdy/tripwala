@@ -1,0 +1,84 @@
+.destination-card {
+  position: relative;
+
+    width: 100%;
+    height: 304px;
+
+  border-radius: 9px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  background: #eee;
+}
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition: transform 0.4s ease;
+}
+
+.destination-card:hover .destination-image {
+  transform: scale(1.04);
+}
+
+/* Bottom shadow */
+.card-gradient {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 80px;
+
+  background: linear-gradient(
+    transparent,
+    rgba(0, 0, 0, 0.75)
+  );
+}
+
+/* Information */
+.card-info {
+  position: absolute;
+
+  left: 12px;
+  right: 10px;
+  bottom: 10px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  color: white;
+}
+
+.location {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.card-stats {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 9px;
+}
+
+.like {
+  color: white;
+}
+
+.comments {
+  color: white;
+}

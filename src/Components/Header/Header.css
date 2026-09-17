@@ -1,0 +1,30 @@
+.site-header {
+  width: 100%;
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 27px;
+  font-weight: 700;
+  color: #111;
+}
+
+.logo-icon {
+  width: 29px;
+  height: 29px;
+
+  border-radius: 50%;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+}
