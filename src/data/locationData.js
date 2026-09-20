@@ -2,6 +2,7 @@ export const states = ["Kerala", "Tamil Nadu"];
 
 export const districtsByState = {
   Kerala: [
+    "All",
     "Alappuzha",
     "Ernakulam",
     "Idukki",

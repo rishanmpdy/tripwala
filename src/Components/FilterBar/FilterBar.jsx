@@ -4,7 +4,7 @@ import "./FilterBar.css";
 
 const FilterBar = () => {
   const [state, setState] = useState("Kerala");
-  const [district, setDistrict] = useState("Wayanad");
+  const [district, setDistrict] = useState("All");
   const districts = districtsByState[state] ?? [];
 
   const handleStateChange = (event) => {

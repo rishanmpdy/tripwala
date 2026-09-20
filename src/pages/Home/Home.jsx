@@ -12,13 +12,15 @@ import "./Home.css";
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("places");
   const visibleDestinations = useMemo(
-    () => destinations.filter((destination) => destination.category === activeCategory),
+    () =>
+      destinations.filter(
+        (destination) => destination.category === activeCategory,
+      ),
     [activeCategory],
   );
 
   return (
     <main className="home-page">
-
       {/* Header */}
       <Header />
 
@@ -34,21 +36,17 @@ const Home = () => {
 
       {/* Destination Grid */}
       <section className="destination-grid">
-
         {visibleDestinations.map((destination) => (
-
           <DestinationCard
             key={destination.id}
+            id={destination.id}
             image={destination.image}
             location={destination.location}
             likes={destination.likes}
             comments={destination.comments}
           />
-
         ))}
-
       </section>
-
     </main>
   );
 };

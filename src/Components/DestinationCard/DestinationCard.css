@@ -82,3 +82,10 @@
 .comments {
   color: white;
 }
+
+
+.destination-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

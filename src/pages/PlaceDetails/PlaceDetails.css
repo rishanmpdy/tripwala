@@ -1,0 +1,502 @@
+.place-details-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 32px 64px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.details-header {
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+}
+
+.details-logo {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.logo-circle {
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  background: #000;
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   TOP BANNER
+========================= */
+
+.place-banner {
+  position: relative;
+
+  width: 100%;
+  height: 180px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 60, 80, 0.15),
+      rgba(0, 45, 70, 0.45)
+    ),
+    url("/images/hero.jpg");
+
+  background-size: cover;
+
+  background-position: center;
+}
+
+
+/* Back button */
+
+.back-button {
+  position: absolute;
+
+  left: 13px;
+  top: 12px;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 24px;
+
+  background: rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================
+   PLACE INFORMATION
+========================= */
+
+.place-information {
+  padding: 28px 0 0;
+}
+
+
+.place-heading {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+}
+
+
+.place-heading h1 {
+  margin: 0;
+
+  font-size: clamp(24px, 3vw, 34px);
+
+  line-height: 1.15;
+
+  font-weight: 800;
+  letter-spacing: -0.035em;
+
+  color: #111;
+}
+
+
+.place-location {
+  margin: 8px 0 0;
+
+  color: #667085;
+
+  font-size: 14px;
+}
+
+
+.place-description {
+  max-width: 760px;
+
+  margin: 16px 0 0;
+
+  color: #475467;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================
+   DIRECTION
+========================= */
+
+.direction-button {
+  height: 42px;
+
+  min-width: 115px;
+
+  padding: 0 13px;
+
+  border: 0;
+
+  border-radius: 20px;
+
+  background: #111827;
+
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.direction-button span {
+  font-size: 17px;
+}
+
+
+/* =========================
+   FEATURES
+========================= */
+
+.place-features {
+  display: flex;
+
+  gap: 0;
+
+  margin-top: 28px;
+}
+
+
+.feature {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  min-width: 48px;
+
+  color: #667085;
+
+  font-size: 11px;
+}
+
+
+.feature-icon {
+  width: 42px;
+  height: 42px;
+
+  border: 2px solid #adadad;
+
+  border-radius: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 3px;
+
+  font-size: 16px;
+}
+
+
+.feature strong {
+  margin-top: 2px;
+
+  color: #1d2939;
+
+  font-size: 11px;
+}
+
+
+/* =========================
+   PHOTO GALLERY
+========================= */
+
+/* .place-gallery {
+  column-count: 4;
+  column-gap: 0 !important;
+  font-size: 0;
+  line-height: 0;
+  
+
+  margin-top: 40px;
+
+  width: 100%;
+ 
+} */
+
+/* =========================
+   PHOTO GALLERY
+========================= */
+
+.place-gallery {
+  column-count: 4;
+  column-gap: 0 !important;
+  font-size: 0;
+  line-height: 0;
+
+  margin-top: 40px;
+  width: 100%;
+
+  /* ONLY OUTER GALLERY CORNERS */
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+
+/* Gallery item */
+/* 
+.gallery-item {
+  position: relative;
+border-radius: 0px;
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% + 1px);
+  margin: 0 -1px -1px 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  appearance: none;
+  overflow: hidden;
+
+  background: #eee;
+  break-inside: avoid;
+  cursor: zoom-in;
+} */
+
+
+.gallery-item {
+  position: relative;
+
+  border-radius: 0px;
+
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% + 1px);
+  margin: 0 -1px -1px 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  appearance: none;
+  overflow: hidden;
+  background: #eee;
+  break-inside: avoid;
+  cursor: zoom-in;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  display: block;
+
+  transition: transform 0.35s ease;
+}
+
+
+.gallery-item:hover img {
+  transform: scale(1.03);
+}
+
+.image-viewer-open {
+  overflow: hidden;
+}
+
+.image-viewer {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: zoom-out;
+}
+
+.viewer-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: min(100%, 980px);
+  max-height: calc(100vh - 48px);
+}
+
+.viewer-content img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.viewer-close,
+.viewer-control {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.viewer-close {
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.viewer-control {
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 42px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.viewer-previous {
+  left: 16px;
+}
+
+.viewer-next {
+  right: 16px;
+}
+
+.viewer-count {
+  position: absolute;
+  bottom: 12px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   NOT FOUND
+========================= */
+
+.not-found {
+  padding: 100px;
+
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .place-details-page {
+    padding: 0 12px 40px;
+  }
+
+  .details-header {
+    height: 68px;
+  }
+
+  .place-banner {
+    height: 150px;
+    border-radius: 14px;
+  }
+
+  .place-heading {
+    gap: 16px;
+  }
+
+  .place-heading h1 {
+    font-size: 21px;
+  }
+
+  .direction-button {
+    min-width: auto;
+    white-space: nowrap;
+  }
+
+  .place-gallery {
+    column-count: 2;
+    margin-top: 30px;
+  }
+
+  .image-viewer {
+    padding: 12px;
+  }
+
+  .viewer-content img {
+    max-height: calc(100vh - 24px);
+  }
+
+  .viewer-control {
+    width: 40px;
+    height: 40px;
+    font-size: 36px;
+  }
+
+  .viewer-previous {
+    left: 4px;
+  }
+
+  .viewer-next {
+    right: 4px;
+  }
+
+  .not-found {
+    padding: 72px 20px;
+  }
+}
