@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./DestinationCard.css";
 
 const DestinationCard = ({
@@ -8,9 +8,16 @@ const DestinationCard = ({
   likes = "1.2k",
   comments = "325",
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/resorts");
+  };
+
   return (
-    <Link
-      to={`/place/${id}`}
+    <div
+      onClick={handleClick}
       className="destination-card-link"
     >
       <div className="destination-card">
@@ -44,7 +51,7 @@ const DestinationCard = ({
         </div>
 
       </div>
-    </Link>
+    </div>
   );
 };
 

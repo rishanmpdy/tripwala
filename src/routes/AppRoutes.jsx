@@ -2,21 +2,16 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import PlaceDetails from "../pages/PlaceDetails/PlaceDetails";
+import Resorts from "../pages/Resorts/Resorts";
 
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
 
-      <Route
-        path="/"
-        element={<Home />}
-      />
+      <Route path="/place/:id" element={<PlaceDetails />} />
 
-      <Route
-        path="/place/:id"
-        element={<PlaceDetails />}
-      />
-
+      <Route path="/resorts" element={<Resorts />} />
     </Routes>
   );
 };

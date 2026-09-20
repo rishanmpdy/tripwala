@@ -1,0 +1,41 @@
+.resort-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 32px;
+}
+
+
+@media (max-width: 1000px) {
+
+  .resort-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .resort-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .resort-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
