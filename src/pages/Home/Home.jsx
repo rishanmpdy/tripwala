@@ -4,9 +4,11 @@ import Hero from "../../Components/Hero/Hero";
 import FilterBar from "../../Components/FilterBar/FilterBar";
 import DestinationCard from "../../Components/DestinationCard/DestinationCard";
 import ResortMasonry from "../../Components/Resort/ResortMasonry";
+import FoodMasonry from "../../Components/FoodMasonry/FoodMasonry";
 
 import destinations from "./destinationData";
 import resorts from "../../data/resorts";
+import foodSpots from "../../data/foodSpots";
 import { categories } from "../../data/categoryData";
 
 import "./Home.css";
@@ -17,6 +19,7 @@ const Home = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("All");
 
   const isResortCategory = activeCategory === "resort";
+  const isFoodCategory = activeCategory === "food-spot";
 
   const visibleDestinations = useMemo(
     () =>
@@ -70,10 +73,16 @@ const Home = () => {
         onDistrictChange={setSelectedDistrict}
       />
 
-      {/* Destination/Resort Grid */}
-      <section className={isResortCategory ? "home-masonry" : "destination-grid"}>
+      {/* Destination/Resort/Food Grid */}
+      <section
+        className={
+          isResortCategory || isFoodCategory ? "home-masonry" : "destination-grid"
+        }
+      >
         {isResortCategory ? (
           <ResortMasonry resorts={filteredResorts} />
+        ) : isFoodCategory ? (
+          <FoodMasonry foods={foodSpots} />
         ) : (
           visibleDestinations.map((destination) => (
             <DestinationCard

@@ -1,129 +1,44 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import "./FoodMasonry.css";
 
-const FoodCard = ({ food }) => {
-  const videoRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (!videoRef.current) return;
-
-    videoRef.current.currentTime = 0;
-
-    videoRef.current
-      .play()
-      .catch(() => {});
-  };
-
-  const handleMouseLeave = () => {
-    if (!videoRef.current) return;
-
-    videoRef.current.pause();
-
-    videoRef.current.currentTime = 0;
-  };
-
+const FoodCard = ({ food, size = "standard" }) => {
   return (
-    <article className="food-card">
-
-      <Link
-        to={`/food/${food.id}`}
-        className="food-card-link"
-      >
-
-        <div
-          className="food-media"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-
-          {/* IMAGE */}
-
-          {food.type === "image" && (
-            <img
-              src={food.media}
-              alt={food.title}
-              className="food-image"
-              loading="lazy"
-            />
-          )}
-
-
-          {/* VIDEO */}
-
-          {food.type === "video" && (
-            <video
-              ref={videoRef}
-              className="food-video"
-              src={food.media}
-              poster={food.poster}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
-          )}
-
-
-          {/* Gradient */}
-
-          <div className="food-gradient" />
-
-
-          {/* Video indicator */}
-
-          {food.type === "video" && (
-            <div className="video-indicator">
-              ▶
-            </div>
-          )}
-
-
-          {/* Category */}
-
-          <span className="food-category">
-            {food.category}
-          </span>
-
-
-          {/* Information */}
-
-          <div className="food-overlay-info">
-
-            <div className="food-title">
-              {food.title}
-            </div>
-
-            <div className="food-location">
-              {food.location}
-            </div>
-
-          </div>
-
-
-          {/* Stats */}
-
-          <div className="food-stats">
-
-            <span>
-              <span className="food-heart">♥</span>
-              {food.likes}
-            </span>
-
-            <span>
-              <span className="food-comment-icon">
-                ◯
-              </span>
-              {food.comments}
-            </span>
-
-          </div>
-
+    <article className={`food-card food-card-${size}`}>
+      <Link to={`/food/${food.id}`} className="food-card-link">
+        <div className="food-media">
+          <img
+            src={food.media}
+            alt={food.title}
+            className="food-image"
+            loading="lazy"
+          />
         </div>
 
-      </Link>
+        <div className="food-card-content">
+          <div className="food-card-header">
+            <div className="food-card-texts">
+              <span className="food-shop-name">{food.shopName || "Food Spot"}</span>
+              <span className="food-dish-name">{food.title}</span>
+            </div>
 
+            <span className="food-rating">★ {food.rating || "4.8"}</span>
+          </div>
+
+          <div className="food-meta-row">
+            <span>♥ {food.likes}</span>
+            <span>💬 {food.comments}</span>
+          </div>
+
+          <div className="food-card-footer">
+            <div className="food-card-location">{food.location}</div>
+
+            <Link to={`/food/${food.id}`} className="food-view-btn">
+              View
+            </Link>
+          </div>
+        </div>
+      </Link>
     </article>
   );
 };
