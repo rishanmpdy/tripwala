@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import FoodCard from "./FoodCard";
+import DestinationCard from "../DestinationCard/DestinationCard";
 
-import "./FoodMasonry.css";
+import "./DestinationMasonry.css";
 
 const getColumnCount = () => {
   if (window.innerWidth <= 600) return 2;
@@ -22,7 +22,7 @@ const getEstimatedHeight = (size) => {
   return heights[size] || 1.15;
 };
 
-const FoodMasonry = ({ foods = [] }) => {
+const DestinationMasonry = ({ destinations = [] }) => {
   const [columnCount, setColumnCount] = useState(getColumnCount);
 
   useEffect(() => {
@@ -35,10 +35,10 @@ const FoodMasonry = ({ foods = [] }) => {
   const columnHeights = Array(columnCount).fill(0);
   const columnCounts = Array(columnCount).fill(0);
 
-  const sortedFoods = [...foods].sort((a, b) => (b.id || 0) - (a.id || 0));
+  const sortedDestinations = [...destinations];
 
-  sortedFoods.forEach((food) => {
-    const size = food.cardSize || "standard";
+  sortedDestinations.forEach((destination) => {
+    const size = destination.cardSize || "standard";
     const estimatedHeight = getEstimatedHeight(size);
 
     let bestColumn = 0;
@@ -54,17 +54,21 @@ const FoodMasonry = ({ foods = [] }) => {
       }
     }
 
-    columns[bestColumn].push({ food, size });
+    columns[bestColumn].push({ destination, size });
     columnCounts[bestColumn] += 1;
     columnHeights[bestColumn] += estimatedHeight + 0.08;
   });
 
   return (
-    <section className="food-masonry">
+    <section className="destination-masonry">
       {columns.map((column, columnIndex) => (
-        <div className="food-masonry-column" key={columnIndex}>
-          {column.map(({ food, size }) => (
-            <FoodCard key={food.id} food={food} size={size} />
+        <div className="destination-masonry-column" key={columnIndex}>
+          {column.map(({ destination, size }) => (
+            <DestinationCard
+              key={destination.id}
+              destination={destination}
+              size={size}
+            />
           ))}
         </div>
       ))}
@@ -72,4 +76,4 @@ const FoodMasonry = ({ foods = [] }) => {
   );
 };
 
-export default FoodMasonry;
+export default DestinationMasonry;

@@ -29,44 +29,27 @@ const ResortCard = ({
             loading="lazy"
           />
 
+          <div className="resort-image-overlay">
+            {resort.badge && (
+              <span className={`resort-badge badge-${resort.badge.toLowerCase().replace(/\s+/g, '-')}`}>
+                {resort.badge}
+              </span>
+            )}
+
+            <div className="resort-stats">
+              <span className="resort-stat">
+                <span className="material-symbols-outlined heart-icon" style={{ fontVariationSettings: "'FILL' 1", fontSize: "14px", color: "#ff4d4d" }}>favorite</span>
+                {resort.likes}
+              </span>
+              <span className="resort-stat">
+                <span className="material-symbols-outlined comment-icon" style={{ fontVariationSettings: "'FILL' 1", fontSize: "14px", color: "#fff" }}>chat_bubble</span>
+                {resort.comments}
+              </span>
+            </div>
+          </div>
         </div>
 
       </Link>
-
-
-      {/* =========================
-          META
-      ========================= */}
-
-      <div className="resort-meta">
-
-        <span className="resort-badge">
-          {resort.badge}
-        </span>
-
-
-        <div className="resort-stats">
-
-          <span className="resort-stat">
-            <span className="heart-icon">
-              ♥
-            </span>
-
-            {resort.likes}
-          </span>
-
-
-          <span className="resort-stat">
-
-            <span className="comment-icon" />
-
-            {resort.comments}
-
-          </span>
-
-        </div>
-
-      </div>
 
 
       {/* =========================
@@ -74,19 +57,18 @@ const ResortCard = ({
       ========================= */}
 
       <div className="resort-content">
-
         <div className="resort-text">
-
+          <h3 className="resort-name">
+            {resort.name}
+          </h3>
           <p className="resort-description">
             {resort.description}
           </p>
-
-          <p className="resort-location">
+          <p className="resort-location" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "12px" }}>location_on</span>
             {resort.location}
           </p>
-
         </div>
-
 
         <Link
           to={`/resort/${resort.id}`}

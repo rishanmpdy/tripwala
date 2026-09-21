@@ -1,29 +1,19 @@
-/* =========================================
-   MASONRY CONTAINER
-========================================= */
-
-.food-masonry {
+.destination-masonry {
   width: 100%;
-
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   align-items: start;
 }
 
-.food-masonry-column {
+.destination-masonry-column {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-
-/* =========================================
-   FOOD CARD
-========================================= */
-
-.food-card {
+.destination-card {
   width: 100%;
   min-width: 0;
   overflow: hidden;
@@ -32,116 +22,67 @@
   box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
 }
 
-
-.food-card-link {
+.destination-card-link {
   display: block;
   width: 100%;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
-
-/* =========================================
-   MEDIA
-========================================= */
-
-.food-media {
-  position: relative;
+.destination-image-wrapper {
   width: 100%;
   overflow: hidden;
   border-radius: 18px 18px 0 0;
-  background: #e5e7eb;
+  background: #111;
+  line-height: 0;
 }
 
-
-.food-card-compact .food-image {
+.destination-card-compact .destination-image-wrapper {
   aspect-ratio: 1 / 1;
 }
 
-.food-card-standard .food-image {
+.destination-card-standard .destination-image-wrapper {
   aspect-ratio: 1 / 1.15;
 }
 
-.food-card-portrait .food-image {
+.destination-card-portrait .destination-image-wrapper {
   aspect-ratio: 1 / 1.3;
 }
 
-.food-card-tall .food-image {
+.destination-card-tall .destination-image-wrapper {
   aspect-ratio: 1 / 1.45;
 }
 
-
-.food-image {
+.destination-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.35s ease;
 }
 
-
-.food-card-link:hover .food-image {
+.destination-card-link:hover .destination-image {
   transform: scale(1.03);
 }
 
-
-.food-card-content {
-  padding: 10px 12px 12px;
+.destination-card-content {
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   background: #fff;
 }
 
-
-.food-card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-
-.food-card-texts {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-
-.food-shop-name {
-  font-size: 11px;
+.destination-spot-name {
+  font-size: 12px;
   font-weight: 700;
   color: #111827;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
-
-.food-dish-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #374151;
-  line-height: 1.35;
-  margin-top: 2px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-
-.food-rating {
-  flex-shrink: 0;
-  font-size: 10px;
-  font-weight: 700;
-  color: #f59e0b;
-  background: #fff7ed;
-  border-radius: 999px;
-  padding: 4px 8px;
-}
-
-
-.food-meta-row {
+.destination-meta-row {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -150,24 +91,21 @@
   font-weight: 600;
 }
 
-
-.food-card-footer {
+.destination-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
 
-
-.food-card-location {
+.destination-location {
   color: #4b5563;
   font-size: 11px;
   line-height: 1.4;
   flex: 1;
 }
 
-
-.food-view-btn {
+.destination-view-btn {
   flex-shrink: 0;
   padding: 7px 12px;
   border-radius: 999px;
@@ -177,45 +115,43 @@
   font-weight: 600;
   text-decoration: none;
   transition: background 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 
-
-.food-view-btn:hover {
+.destination-view-btn:hover {
   background: #1f2937;
 }
 
-
 @media (max-width: 1200px) {
-  .food-masonry {
+  .destination-masonry {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
   }
 
-  .food-masonry-column {
+  .destination-masonry-column {
     gap: 10px;
   }
 }
 
-
 @media (max-width: 900px) {
-  .food-masonry {
+  .destination-masonry {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
   }
 
-  .food-masonry-column {
+  .destination-masonry-column {
     gap: 10px;
   }
 }
 
-
 @media (max-width: 600px) {
-  .food-masonry {
+  .destination-masonry {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 
-  .food-masonry-column {
+  .destination-masonry-column {
     gap: 8px;
   }
 }

@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import Header from "../../Components/Header/Header";
 import Hero from "../../Components/Hero/Hero";
 import FilterBar from "../../Components/FilterBar/FilterBar";
 import DestinationCard from "../../Components/DestinationCard/DestinationCard";
+import DestinationMasonry from "../../Components/DestinationMasonry/DestinationMasonry";
 import ResortMasonry from "../../Components/Resort/ResortMasonry";
 import FoodMasonry from "../../Components/FoodMasonry/FoodMasonry";
 
@@ -15,11 +16,16 @@ import "./Home.css";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("places");
+  const listingRef = useRef(null);
+  const hasScrolledRef = useRef(false);
   const [selectedState, setSelectedState] = useState("Kerala");
   const [selectedDistrict, setSelectedDistrict] = useState("All");
 
   const isResortCategory = activeCategory === "resort";
   const isFoodCategory = activeCategory === "food-spot";
+  const isMasonryCategory = ["places", "hidden-spot", "must-watch"].includes(
+    activeCategory
+  );
 
   const visibleDestinations = useMemo(
     () =>
@@ -46,6 +52,16 @@ const Home = () => {
 
   const handleCategoryChange = (categoryId) => {
     setActiveCategory(categoryId);
+    
+    if (!hasScrolledRef.current) {
+      hasScrolledRef.current = true;
+      setTimeout(() => {
+        if (listingRef.current) {
+          listingRef.current.scrollIntoView({ behavior: "smooth" });
+          listingRef.current.focus({ preventScroll: true });
+        }
+      }, 100);
+    }
   };
 
   const handleStateChange = (nextState) => {
@@ -66,23 +82,29 @@ const Home = () => {
       />
 
       {/* Filters */}
-      <FilterBar
-        state={selectedState}
-        district={selectedDistrict}
-        onStateChange={handleStateChange}
-        onDistrictChange={setSelectedDistrict}
-      />
+      <div ref={listingRef} tabIndex={-1} style={{ scrollMarginTop: "20px", outline: "none" }}>
+        <FilterBar
+          state={selectedState}
+          district={selectedDistrict}
+          onStateChange={handleStateChange}
+          onDistrictChange={setSelectedDistrict}
+        />
+      </div>
 
       {/* Destination/Resort/Food Grid */}
       <section
         className={
-          isResortCategory || isFoodCategory ? "home-masonry" : "destination-grid"
+          isResortCategory || isFoodCategory || isMasonryCategory
+            ? "home-masonry"
+            : "destination-grid"
         }
       >
         {isResortCategory ? (
           <ResortMasonry resorts={filteredResorts} />
         ) : isFoodCategory ? (
           <FoodMasonry foods={foodSpots} />
+        ) : isMasonryCategory ? (
+          <DestinationMasonry destinations={visibleDestinations} />
         ) : (
           visibleDestinations.map((destination) => (
             <DestinationCard

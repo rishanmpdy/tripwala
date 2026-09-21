@@ -1,91 +1,159 @@
 .destination-card {
-  position: relative;
-
-    width: 100%;
-    height: 304px;
-
-  border-radius: 9px;
-
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+}
 
-  cursor: pointer;
+.destination-card-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
 
-  background: #eee;
+.destination-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  background: #e5e7eb;
+}
+
+/* =========================================
+   IMAGE ASPECT RATIOS
+========================================= */
+
+.destination-card-compact .destination-image {
+  aspect-ratio: 1 / 1;
+}
+
+.destination-card-standard .destination-image {
+  aspect-ratio: 1 / 1.15;
+}
+
+.destination-card-portrait .destination-image {
+  aspect-ratio: 1 / 1.3;
+}
+
+.destination-card-tall .destination-image {
+  aspect-ratio: 1 / 1.45;
 }
 
 .destination-image {
+  display: block;
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
-  display: block;
-
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
-.destination-card:hover .destination-image {
-  transform: scale(1.04);
+.destination-card-link:hover .destination-image {
+  transform: scale(1.03);
 }
 
-/* Bottom shadow */
-.card-gradient {
-  position: absolute;
+/* =========================================
+   CARD CONTENT
+========================================= */
 
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  height: 80px;
-
-  background: linear-gradient(
-    transparent,
-    rgba(0, 0, 0, 0.75)
-  );
-}
-
-/* Information */
-.card-info {
-  position: absolute;
-
-  left: 12px;
-  right: 10px;
-  bottom: 10px;
-
+.destination-card-content {
+  padding: 10px 12px 12px;
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+}
 
+.destination-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.destination-card-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.destination-spot-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.destination-description {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.35;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.destination-rating {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f59e0b;
+  background: #fff7ed;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+/* =========================================
+   META & FOOTER
+========================================= */
+
+.destination-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6b7280;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.destination-footer {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-
-  color: white;
+  gap: 10px;
+  margin-top: 4px;
 }
 
-.location {
-  font-size: 11px;
+.destination-location {
+  font-size: 10px;
+  color: #6b7280;
   font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.card-stats {
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
+.destination-view-btn {
+  flex-shrink: 0;
   font-size: 9px;
-}
-
-.like {
-  color: white;
-}
-
-.comments {
-  color: white;
-}
-
-
-.destination-card-link {
+  font-weight: 700;
+  color: #fff;
+  background: #3b82f6;
+  border-radius: 6px;
+  padding: 4px 8px;
   text-decoration: none;
-  color: inherit;
-  display: block;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.destination-view-btn:hover {
+  background: #2563eb;
 }

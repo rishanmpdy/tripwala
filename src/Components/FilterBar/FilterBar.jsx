@@ -51,6 +51,7 @@ const FilterBar = ({
       </div>
 
       <button className="filter-main" type="button">
+        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>tune</span>
         Filter
       </button>
     </div>

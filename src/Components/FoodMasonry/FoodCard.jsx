@@ -22,16 +22,28 @@ const FoodCard = ({ food, size = "standard" }) => {
               <span className="food-dish-name">{food.title}</span>
             </div>
 
-            <span className="food-rating">★ {food.rating || "4.8"}</span>
+            <span className="food-rating" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", fontSize: "12px" }}>star</span>
+              {food.rating || "4.8"}
+            </span>
           </div>
 
           <div className="food-meta-row">
-            <span>♥ {food.likes}</span>
-            <span>💬 {food.comments}</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", fontSize: "14px", color: "#ff4d4d" }}>favorite</span>
+              {food.likes}
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", fontSize: "14px", color: "#888" }}>chat_bubble</span>
+              {food.comments}
+            </span>
           </div>
 
           <div className="food-card-footer">
-            <div className="food-card-location">{food.location}</div>
+            <div className="food-card-location" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: "12px" }}>location_on</span>
+              {food.location}
+            </div>
 
             <Link to={`/food/${food.id}`} className="food-view-btn">
               View

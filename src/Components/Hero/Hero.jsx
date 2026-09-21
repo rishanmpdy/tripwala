@@ -17,7 +17,7 @@ const Hero = ({ categories, activeCategory, onCategoryChange }) => {
           />
 
           <button className="search-button">
-            🔍
+            <span className="material-symbols-outlined">search</span>
           </button>
         </div>
 

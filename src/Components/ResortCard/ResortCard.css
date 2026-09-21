@@ -38,45 +38,31 @@
 ========================================= */
 
 .resort-image-wrapper {
+  position: relative;
   width: 100%;
-
   overflow: hidden;
-
   background: #111;
-
   line-height: 0;
 }
 
-
 /* 1 */
-
-.resort-card-compact
-.resort-image-wrapper {
+.resort-card-compact .resort-image-wrapper {
   aspect-ratio: 1 / 1;
 }
 
-
 /* 2 */
-
-.resort-card-standard
-.resort-image-wrapper {
-  aspect-ratio: 1 / 1.25;
+.resort-card-standard .resort-image-wrapper {
+  aspect-ratio: 1 / 1.15;
 }
-
 
 /* 3 */
-
-.resort-card-portrait
-.resort-image-wrapper {
-  aspect-ratio: 1 / 1.5;
+.resort-card-portrait .resort-image-wrapper {
+  aspect-ratio: 1 / 1.3;
 }
 
-
 /* 4 */
-
-.resort-card-tall
-.resort-image-wrapper {
-  aspect-ratio: 1 / 1.75;
+.resort-card-tall .resort-image-wrapper {
+  aspect-ratio: 1 / 1.45;
 }
 
 
@@ -106,131 +92,91 @@
 
 
 /* =========================================
-   META
+   OVERLAY
 ========================================= */
 
-.resort-meta {
-  min-height: 31px;
-
+.resort-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-
-  align-items: center;
-
+  flex-direction: column;
   justify-content: space-between;
-
-  gap: 7px;
-
-  padding-right: 8px;
-
-  background: #eeeeee;
-
-  box-sizing: border-box;
+  padding: 12px;
+  pointer-events: none; /* Let clicks pass through */
 }
-
 
 /* =========================================
    BADGE
 ========================================= */
 
 .resort-badge {
+  align-self: flex-start;
   display: inline-flex;
-
   align-items: center;
-
   padding: 5px 10px;
-
   border-radius: 999px;
-
-  background: #009bd7;
-
   color: #fff;
-
   font-size: 9px;
-
   line-height: 1;
-
   font-weight: 600;
-
   white-space: nowrap;
+  /* Default background, to be overridden by dynamic classes */
+  background: #009bd7;
 }
 
+.badge-budget-friendly {
+  background: #10b981; /* Green */
+}
+
+.badge-popular {
+  background: #ef4444; /* Red */
+}
+
+.badge-premium {
+  background: #6366f1; /* Indigo */
+}
+
+.badge-luxury {
+  background: #8b5cf6; /* Purple */
+}
+
+.badge-new {
+  background: #f59e0b; /* Amber */
+}
+
+.badge-heritage {
+  background: #b45309; /* Brown/Amber */
+}
 
 /* =========================================
    STATS
 ========================================= */
 
 .resort-stats {
+  align-self: flex-end;
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
-  color: #6b7280;
-
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: #fff;
   font-size: 10px;
-
   line-height: 1;
-
   white-space: nowrap;
 }
 
-
 .resort-stat {
   display: flex;
-
   align-items: center;
-
   gap: 3px;
 }
 
 
-/* =========================================
-   HEART
-========================================= */
-
-.heart-icon {
-  color: #ed0000;
-
-  font-size: 17px;
-
-  line-height: 1;
-}
-
-
-/* =========================================
-   COMMENT
-========================================= */
-
-.comment-icon {
-  position: relative;
-
-  display: inline-block;
-
-  width: 14px;
-  height: 12px;
-
-  border: 1.5px solid #888;
-
-  border-radius: 50%;
-}
-
-
-.comment-icon::after {
-  content: "";
-
-  position: absolute;
-
-  right: -4px;
-  bottom: -3px;
-
-  width: 5px;
-  height: 5px;
-
-  border-left: 1.5px solid #888;
-
-  transform: rotate(-30deg);
-}
 
 
 /* =========================================
@@ -260,34 +206,44 @@
 
 .resort-text {
   flex: 1;
-
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
+.resort-name {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .resort-description {
   margin: 0;
-
-  color: #374151;
-
-  font-size: 11px;
-
+  color: #6b7280;
+  font-size: 10px;
   line-height: 1.4;
-
   font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-
 .resort-location {
-  margin: 3px 0 0;
-
+  margin: 0;
   color: #4b5563;
-
-  font-size: 11px;
-
-  line-height: 1.35;
-
+  font-size: 10px;
+  line-height: 1.2;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -333,122 +289,78 @@
 ========================================= */
 
 @media (max-width: 900px) {
-
   .resort-card {
     border-radius: 13px;
   }
-
-  .resort-meta {
-    min-height: 30px;
+  .resort-image-overlay {
+    padding: 10px;
   }
-
   .resort-badge {
-    min-height: 22px;
-
-    padding: 0 9px;
-
+    padding: 3px 8px;
     font-size: 7.5px;
   }
-
   .resort-stats {
     gap: 6px;
-
     font-size: 7.5px;
+    padding: 4px 8px;
   }
-
-  .heart-icon {
-    font-size: 15px;
-  }
-
-  .comment-icon {
-    width: 13px;
-    height: 11px;
-  }
-
   .resort-content {
     padding: 5px 7px 8px;
   }
-
+  .resort-name {
+    font-size: 11px;
+  }
   .resort-description {
     font-size: 8px;
   }
-
   .resort-location {
     font-size: 7.5px;
   }
-
   .resort-details-button {
     width: 54px;
-
     height: 24px;
-
     font-size: 7.5px;
   }
 }
-
 
 /* =========================================
    MOBILE
 ========================================= */
 
 @media (max-width: 600px) {
-
   .resort-card {
     border-radius: 11px;
   }
-
-  .resort-meta {
-    min-height: 28px;
-
-    padding-right: 6px;
+  .resort-image-overlay {
+    padding: 8px;
   }
-
   .resort-badge {
-    min-height: 21px;
-
-    padding: 0 8px;
-
+    padding: 2px 6px;
     font-size: 7px;
   }
-
   .resort-stats {
     gap: 5px;
-
     font-size: 7px;
+    padding: 3px 6px;
   }
-
-  .heart-icon {
-    font-size: 14px;
-  }
-
-  .comment-icon {
-    width: 12px;
-    height: 10px;
-  }
-
   .resort-content {
     gap: 5px;
-
     padding: 5px 6px 7px;
   }
-
+  .resort-name {
+    font-size: 10px;
+  }
   .resort-description {
     font-size: 7.5px;
-
     line-height: 1.3;
   }
-
   .resort-location {
     font-size: 7px;
   }
-
   .resort-details-button {
     width: 49px;
-
     height: 22px;
-
     border-radius: 12px;
-
     font-size: 7px;
   }
 }

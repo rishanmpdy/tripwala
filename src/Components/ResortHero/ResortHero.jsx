@@ -26,7 +26,7 @@ const ResortHero = () => {
           />
 
           <button>
-            🔍
+            <span className="material-symbols-outlined">search</span>
           </button>
 
         </div>

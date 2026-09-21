@@ -26,15 +26,14 @@ const getColumnCount = () => {
 
 
 const getEstimatedHeight = (size) => {
-
   const heights = {
     compact: 1,
-    standard: 1.25,
-    portrait: 1.5,
-    tall: 1.75,
+    standard: 1.15,
+    portrait: 1.3,
+    tall: 1.45,
   };
 
-  return heights[size] || 1.25;
+  return heights[size] || 1.15;
 };
 
 
