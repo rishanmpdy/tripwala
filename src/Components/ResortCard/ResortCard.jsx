@@ -2,48 +2,41 @@ import { Link } from "react-router-dom";
 
 import "./ResortCard.css";
 
-const ResortCard = ({ resort }) => {
-
-  const [
-    mainImage,
-    ...thumbnails
-  ] = resort.images;
-
+const ResortCard = ({
+  resort,
+  size = "standard",
+}) => {
   return (
-    <article className="resort-card">
+    <article
+      className={`resort-card resort-card-${size}`}
+    >
 
-      {/* Main image */}
+      {/* =========================
+          IMAGE
+      ========================= */}
 
-      <div className="resort-main-image">
+      <Link
+        to={`/resort/${resort.id}`}
+        className="resort-image-link"
+      >
 
-        <img
-          src={mainImage}
-          alt={resort.name}
-        />
+        <div className="resort-image-wrapper">
 
-      </div>
+          <img
+            src={resort.image}
+            alt={resort.name}
+            className="resort-image"
+            loading="lazy"
+          />
 
+        </div>
 
-      {/* Thumbnail strip */}
-
-      <div className="resort-thumbnails">
-
-        {thumbnails.slice(0, 5).map(
-          (image, index) => (
-
-            <img
-              key={`${image}-${index}`}
-              src={image}
-              alt=""
-            />
-
-          )
-        )}
-
-      </div>
+      </Link>
 
 
-      {/* Meta */}
+      {/* =========================
+          META
+      ========================= */}
 
       <div className="resort-meta">
 
@@ -54,12 +47,21 @@ const ResortCard = ({ resort }) => {
 
         <div className="resort-stats">
 
-          <span className="resort-like">
-            ❤️ {resort.likes}
+          <span className="resort-stat">
+            <span className="heart-icon">
+              ♥
+            </span>
+
+            {resort.likes}
           </span>
 
-          <span>
-            ◯ {resort.comments}
+
+          <span className="resort-stat">
+
+            <span className="comment-icon" />
+
+            {resort.comments}
+
           </span>
 
         </div>
@@ -67,13 +69,24 @@ const ResortCard = ({ resort }) => {
       </div>
 
 
-      {/* Description */}
+      {/* =========================
+          CONTENT
+      ========================= */}
 
-      <div className="resort-details">
+      <div className="resort-content">
 
-        <div className="resort-description">
-          {resort.description}
+        <div className="resort-text">
+
+          <p className="resort-description">
+            {resort.description}
+          </p>
+
+          <p className="resort-location">
+            {resort.location}
+          </p>
+
         </div>
+
 
         <Link
           to={`/resort/${resort.id}`}
@@ -81,10 +94,6 @@ const ResortCard = ({ resort }) => {
         >
           Details
         </Link>
-
-        <div className="resort-location">
-          {resort.location}
-        </div>
 
       </div>
 

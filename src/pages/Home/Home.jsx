@@ -3,7 +3,7 @@ import Header from "../../Components/Header/Header";
 import Hero from "../../Components/Hero/Hero";
 import FilterBar from "../../Components/FilterBar/FilterBar";
 import DestinationCard from "../../Components/DestinationCard/DestinationCard";
-import ResortCard from "../../Components/ResortCard/ResortCard";
+import ResortMasonry from "../../Components/Resort/ResortMasonry";
 
 import destinations from "./destinationData";
 import resorts from "../../data/resorts";
@@ -13,7 +13,10 @@ import "./Home.css";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("places");
-  const [showResorts, setShowResorts] = useState(false);
+  const [selectedState, setSelectedState] = useState("Kerala");
+  const [selectedDistrict, setSelectedDistrict] = useState("All");
+
+  const isResortCategory = activeCategory === "resort";
 
   const visibleDestinations = useMemo(
     () =>
@@ -23,17 +26,28 @@ const Home = () => {
     [activeCategory],
   );
 
-  const visibleResorts = useMemo(
-    () =>
-      resorts.filter(
-        (resort) => resort.category === activeCategory,
-      ),
-    [activeCategory],
-  );
+  const filteredResorts = useMemo(() => {
+    return resorts.filter((resort) => {
+      const locationText = resort.location.toLowerCase();
+
+      const matchesState =
+        selectedState === "Kerala" || locationText.includes(selectedState.toLowerCase());
+
+      const matchesDistrict =
+        selectedDistrict === "All" ||
+        locationText.includes(selectedDistrict.toLowerCase());
+
+      return matchesState && matchesDistrict;
+    });
+  }, [selectedState, selectedDistrict]);
 
   const handleCategoryChange = (categoryId) => {
     setActiveCategory(categoryId);
-    setShowResorts(categoryId === "resort");
+  };
+
+  const handleStateChange = (nextState) => {
+    setSelectedState(nextState);
+    setSelectedDistrict("All");
   };
 
   return (
@@ -49,14 +63,17 @@ const Home = () => {
       />
 
       {/* Filters */}
-      <FilterBar />
+      <FilterBar
+        state={selectedState}
+        district={selectedDistrict}
+        onStateChange={handleStateChange}
+        onDistrictChange={setSelectedDistrict}
+      />
 
       {/* Destination/Resort Grid */}
-      <section className="destination-grid">
-        {showResorts ? (
-          visibleResorts.map((resort) => (
-            <ResortCard key={resort.id} resort={resort} />
-          ))
+      <section className={isResortCategory ? "home-masonry" : "destination-grid"}>
+        {isResortCategory ? (
+          <ResortMasonry resorts={filteredResorts} />
         ) : (
           visibleDestinations.map((destination) => (
             <DestinationCard

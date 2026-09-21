@@ -1,0 +1,80 @@
+.resort-masonry {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+
+  align-items: start;
+}
+
+
+.resort-masonry-column {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+/* =========================================
+   4 COLUMNS
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .resort-masonry {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .resort-masonry-column {
+    gap: 10px;
+  }
+}
+
+
+/* =========================================
+   3 COLUMNS
+========================================= */
+
+@media (max-width: 900px) {
+
+  .resort-masonry {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .resort-masonry-column {
+    gap: 10px;
+  }
+}
+
+
+/* =========================================
+   2 COLUMNS
+========================================= */
+
+@media (max-width: 600px) {
+
+  .resort-masonry {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .resort-masonry-column {
+    gap: 8px;
+  }
+}

@@ -1,118 +1,384 @@
+/* =========================================
+   PAGE
+========================================= */
+
 .resorts-page {
   width: 100%;
 
+  max-width: 1440px;
+
   margin: 0 auto;
 
-  padding: 0 32px 70px;
+  padding: 0 32px 60px;
+
+  box-sizing: border-box;
+
+  background: #fff;
 }
 
 
-/* =========================
-   FILTER
-========================= */
+/* =========================================
+   HEADER
+========================================= */
 
-.resort-filter-bar {
+.resorts-header {
+  height: 76px;
+
   display: flex;
 
-  justify-content: space-between;
+  align-items: center;
+}
+
+
+.resorts-logo {
+  display: flex;
 
   align-items: center;
 
-  margin-top: 16px;
+  gap: 7px;
+
+  color: #111;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.05em;
 }
 
 
-.resort-filter-left {
+.resorts-logo-circle {
+  width: 27px;
+  height: 27px;
+
   display: flex;
 
-  gap: 7px;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #000;
+
+  color: #fff;
+
+  font-size: 12px;
 }
 
 
-.resort-filter-left button,
-.filter-button {
-  height: 42px;
+/* =========================================
+   HERO
+========================================= */
 
-  border: 1px solid #bdbdbd;
+.resorts-hero {
+  position: relative;
 
-  border-radius: 11px;
+  width: 100%;
 
-  background: white;
+  height: 240px;
 
-  padding: 0 25px;
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      rgba(0, 30, 45, 0.15),
+      rgba(0, 20, 30, 0.7)
+    ),
+    url("/images/resort-hero.jpg");
+
+  background-size: cover;
+
+  background-position: center;
+}
+
+
+.resorts-hero-content {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  color: #fff;
+}
+
+
+.resorts-hero h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  font-weight: 800;
+}
+
+
+.resorts-hero p {
+  margin: 7px 0 18px;
 
   font-size: 13px;
 
+  opacity: 0.9;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.resorts-search {
+  width: min(
+    420px,
+    calc(100% - 40px)
+  );
+
+  height: 43px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 16px;
+
+  border-radius: 24px;
+
+  background: #fff;
+
+  box-sizing: border-box;
+}
+
+
+.resorts-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
   color: #222;
 
+  font-size: 13px;
+}
+
+
+.resorts-search span {
+  color: #111;
+
+  font-size: 20px;
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+.resorts-filter {
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin: 14px 0 0;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+
+.resorts-filter::-webkit-scrollbar {
+  display: none;
+}
+
+
+.resorts-filter-left {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+}
+
+
+.resorts-filter button {
+  height: 36px;
+
+  padding: 0 17px;
+
+  border: 1px solid #c9c9c9;
+
+  border-radius: 19px;
+
+  background: #fff;
+
+  color: #333;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
   cursor: pointer;
+
+  white-space: nowrap;
 }
 
 
-.resort-filter-left button {
-  width: 190px;
+.resorts-filter-left button.active {
+  border-color: #009bd7;
 
-  text-align: left;
+  background: #009bd7;
+
+  color: #fff;
 }
 
 
+.resorts-filter
 .filter-button {
-  width: 105px;
+  margin-left: auto;
 
-  font-weight: 600;
+  flex-shrink: 0;
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================
+   LISTING
+========================================= */
 
-@media (max-width: 650px) {
+.resort-listing {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 18px 0 50px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .resorts-page {
+    padding: 0 20px 50px;
+  }
+
+  .resorts-header {
+    height: 68px;
+  }
+
+  .resorts-hero {
+    height: 220px;
+
+    border-radius: 17px;
+  }
+
+  .resorts-hero h1 {
+    font-size: 27px;
+  }
+
+  .resorts-hero p {
+    font-size: 12px;
+  }
+
+  .resort-listing {
+    padding-top: 14px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
 
   .resorts-page {
     padding: 0 12px 40px;
   }
 
+  .resorts-header {
+    height: 62px;
+  }
 
-  .resort-hero {
-    height: 240px;
+  .resorts-logo {
+    font-size: 21px;
+  }
+
+  .resorts-logo-circle {
+    width: 24px;
+    height: 24px;
+
+    font-size: 10px;
+  }
+
+  .resorts-hero {
+    height: 190px;
 
     border-radius: 14px;
   }
 
-
-  .resort-category-nav {
-    width: 100%;
-
-    padding: 0 12px;
-
-    overflow-x: auto;
-
-    justify-content: flex-start;
-
-    scrollbar-width: none;
+  .resorts-hero h1 {
+    font-size: 22px;
   }
 
+  .resorts-hero p {
+    max-width: 260px;
 
-  .resort-category-nav::-webkit-scrollbar {
-    display: none;
+    margin-bottom: 14px;
+
+    font-size: 10px;
+
+    line-height: 1.4;
   }
 
-
-  .resort-category-nav button {
-    flex-shrink: 0;
+  .resorts-search {
+    height: 38px;
   }
 
-
-  .resort-search {
-    width: calc(100% - 40px);
+  .resorts-search input {
+    font-size: 11px;
   }
 
-
-  .resort-filter-left button {
-    width: auto;
-
-    padding: 0 18px;
+  .resorts-filter {
+    margin-top: 9px;
   }
 
+  .resorts-filter button {
+    height: 32px;
+
+    padding: 0 13px;
+
+    font-size: 9px;
+  }
+
+  .resort-listing {
+    margin-top: 4px;
+
+    padding-top: 10px;
+  }
 }

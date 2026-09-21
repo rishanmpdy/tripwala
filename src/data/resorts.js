@@ -1,223 +1,219 @@
+import resort1 from "../assets/images/resort_img/resort1.jpg";
+import resort2 from "../assets/images/resort_img/resort2.jpg";
+import resort3 from "../assets/images/resort_img/resort3.jpg";
+import resort4 from "../assets/images/resort_img/resort4.jpg";
+import resort5 from "../assets/images/resort_img/resort5.jpg";
+import resort6 from "../assets/images/resort_img/resort6.jpg";
+
 const resorts = [
   {
-    id: "resort-1",
+    id: "resort-001",
+    name: "Wayanad Lake View Resort",
+    image: resort1,
 
-    name: "Wayanad Hills Resort",
-
-    location: "Wayanad, Kerala",
-
-    category: "resort",
-
-    description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+    imageWidth: 1200,
+    imageHeight: 1500,
 
     badge: "Budget friendly",
 
-    likes: "1.2k",
+    description:
+      "Private pool | viewpoint | Breakfast Games | Children's park ...",
 
+    location: "Wayanad, Kerala",
+
+    likes: "1.2k",
     comments: "325",
 
-    images: [
-      "/images/resort_img/resort1.jpg",
-      "/images/resort_img/resort2.jpg",
-      "/images/resort_img/resort3.jpg",
-      "/images/resort_img/resort4.jpg",
-
-    ],
+    createdAt: "2026-09-21",
   },
 
   {
-    id: "resort-2",
-
+    id: "resort-002",
     name: "Mountain View Resort",
+    image: resort2,
 
-    location: "Wayanad, Kerala",
+    imageWidth: 1200,
+    imageHeight: 900,
 
-    category: "resort",
+    badge: "Popular",
 
     description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+      "Mountain view | Private room | Breakfast | Parking ...",
 
-    badge: "Budget friendly",
+    location: "Vythiri, Wayanad",
 
-    likes: "1.2k",
+    likes: "986",
+    comments: "214",
 
-    comments: "325",
-
-    images: [
-      "/images/resort_img/resort2.jpg",
-      "/images/resort_img/resort3.jpg",
-      "/images/resort_img/resort4.jpg",
-      "/images/resort_img/resort5.jpg",
-    ],
+    createdAt: "2026-09-20",
   },
 
   {
-    id: "resort-3",
+    id: "resort-003",
+    name: "Forest Escape Resort",
+    image: resort3,
 
-    name: "Forest View Resort",
+    imageWidth: 900,
+    imageHeight: 1400,
 
-    location: "Wayanad, Kerala",
-
-    category: "hidden-spot",
+    badge: "Premium",
 
     description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+      "Forest stay | Private pool | Campfire | Family friendly ...",
 
-    badge: "Budget friendly",
+    location: "Meppadi, Wayanad",
 
-    likes: "1.2k",
+    likes: "2.4k",
+    comments: "438",
 
-    comments: "325",
-
-    images: [
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-    ],
+    createdAt: "2026-09-19",
   },
 
   {
-    id: "resort-4",
+    id: "resort-004",
+    name: "Nature View Homestay",
+    image: resort4,
 
-    name: "Lake View Resort",
-
-    location: "Wayanad, Kerala",
-
-    category: "resort",
-
-    description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+    imageWidth: 1200,
+    imageHeight: 800,
 
     badge: "Budget friendly",
 
-    likes: "1.2k",
+    description:
+      "Nature view | Breakfast | Parking | Family stay ...",
 
-    comments: "325",
+    location: "Kalpetta, Wayanad",
 
-    images: [
-      "/images/resort_img/resort3.jpg",
-      "/images/resort_img/resort4.jpg",
-      "/images/resort_img/resort5.jpg",
-      "/images/resort_img/resort6.jpg",
-      "/images/resort_img/resort1.jpg",
-      "/images/resort_img/resort2.jpg",
-    ],
+    likes: "754",
+    comments: "102",
+
+    createdAt: "2026-09-18",
   },
 
   {
-    id: "resort-5",
+    id: "resort-005",
+    name: "Luxury Hills Resort",
+    image: resort5,
 
+    imageWidth: 1000,
+    imageHeight: 1600,
+
+    badge: "Luxury",
+
+    description:
+      "Luxury rooms | Infinity pool | Restaurant | Mountain view ...",
+
+    location: "Vythiri, Wayanad",
+
+    likes: "3.1k",
+    comments: "562",
+
+    createdAt: "2026-09-17",
+  },
+
+  {
+    id: "resort-006",
     name: "Green Valley Resort",
+    image: resort6,
 
-    location: "Wayanad, Kerala",
+    imageWidth: 1200,
+    imageHeight: 950,
 
-    category: "hidden-spot",
+    badge: "Popular",
 
     description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+      "Valley view | Restaurant | Parking | Couple friendly ...",
 
-    badge: "Budget friendly",
+    location: "Sulthan Bathery, Wayanad",
 
-    likes: "1.2k",
+    likes: "1.5k",
+    comments: "267",
 
-    comments: "325",
-
-    images: [
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-    ],
+    createdAt: "2026-09-16",
   },
 
   {
-    id: "resort-6",
+    id: "resort-007",
+    name: "Lake Side Cottage",
+    image: resort1,
 
-    name: "Mist Valley Resort",
-
-    location: "Wayanad, Kerala",
-
-    category: "must-watch",
-
-    description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+    imageWidth: 800,
+    imageHeight: 1300,
 
     badge: "Budget friendly",
 
-    likes: "1.2k",
+    description:
+      "Lake side cottage | Breakfast | Fishing | Family stay ...",
 
-    comments: "325",
+    location: "Padinjarathara, Wayanad",
 
-    images: [
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-    ],
+    likes: "923",
+    comments: "141",
+
+    createdAt: "2026-09-15",
   },
 
   {
-    id: "resort-7",
+    id: "resort-008",
+    name: "Hidden Valley Resort",
+    image: resort2,
 
-    name: "Mountain Escape",
+    imageWidth: 1200,
+    imageHeight: 850,
 
-    location: "Wayanad, Kerala",
-
-    category: "resort",
+    badge: "New",
 
     description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+      "Hidden valley | Private pool | Campfire | Scenic location ...",
 
-    badge: "Budget friendly",
+    location: "Meppadi, Wayanad",
 
-    likes: "1.2k",
+    likes: "642",
+    comments: "87",
 
-    comments: "325",
-
-    images: [
-      "/images/resort_img/resort4.jpg",
-      "/images/resort_img/resort5.jpg",
-      "/images/resort_img/resort6.jpg",
-      "/images/resort_img/resort1.jpg",
-      "/images/resort_img/resort2.jpg",
-      "/images/resort_img/resort3.jpg",
-    ],
+    createdAt: "2026-09-14",
   },
 
   {
-    id: "resort-8",
+    id: "resort-009",
+    name: "Cloud View Resort",
+    image: resort3,
 
-    name: "Wayanad Nature Resort",
+    imageWidth: 900,
+    imageHeight: 1500,
 
-    location: "Wayanad, Kerala",
-
-    category: "food-spot",
+    badge: "Popular",
 
     description:
-      "Private pool | viewpoint | Breakfast Games | Chillters park ...",
+      "Cloud view | Balcony | Breakfast | Couple friendly ...",
 
-    badge: "Budget friendly",
+    location: "Vythiri, Wayanad",
 
-    likes: "1.2k",
+    likes: "1.8k",
+    comments: "329",
 
-    comments: "325",
+    createdAt: "2026-09-13",
+  },
 
-    images: [
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-      "/images/place-2.jpg",
-      "/images/place-1.jpg",
-    ],
+  {
+    id: "resort-010",
+    name: "Wayanad Heritage Resort",
+    image: resort4,
+
+    imageWidth: 1200,
+    imageHeight: 900,
+
+    badge: "Heritage",
+
+    description:
+      "Traditional stay | Local food | Garden | Family friendly ...",
+
+    location: "Kalpetta, Wayanad",
+
+    likes: "1.1k",
+    comments: "192",
+
+    createdAt: "2026-09-12",
   },
 ];
 

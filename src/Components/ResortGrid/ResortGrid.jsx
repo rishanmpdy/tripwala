@@ -7,12 +7,10 @@ const ResortGrid = ({ resorts }) => {
     <section className="resort-grid">
 
       {resorts.map((resort) => (
-
         <ResortCard
           key={resort.id}
           resort={resort}
         />
-
       ))}
 
     </section>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./DestinationCard.css";
 
 const DestinationCard = ({
@@ -10,9 +10,8 @@ const DestinationCard = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    navigate("/resorts");
+  const handleClick = () => {
+    navigate(`/place/${id}`);
   };
 
   return (

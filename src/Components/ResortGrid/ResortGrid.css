@@ -1,41 +1,38 @@
+/* =========================================
+   PINTEREST STYLE RESORT MASONRY
+========================================= */
+
 .resort-grid {
-  display: grid;
+  width: 100%;
 
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+  column-count: 4;
+  column-gap: 12px;
 
-  gap: 10px;
-
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 
-@media (max-width: 1000px) {
+/* =========================================
+   CARD
+========================================= */
 
-  .resort-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-  }
+.resort-card {
+  width: 100%;
 
-}
+  display: inline-block;
 
+  vertical-align: top;
 
-@media (max-width: 700px) {
+  break-inside: avoid;
+  page-break-inside: avoid;
 
-  .resort-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+  margin: 0 0 12px;
 
-    gap: 8px;
-  }
+  overflow: hidden;
 
-}
+  border-radius: 15px;
 
+  background: #eeeeee;
 
-@media (max-width: 480px) {
-
-  .resort-grid {
-    grid-template-columns: 1fr;
-  }
-
+  box-sizing: border-box;
 }

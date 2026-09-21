@@ -2,15 +2,17 @@ import { useState } from "react";
 import { districtsByState, states } from "../../data/locationData";
 import "./FilterBar.css";
 
-const FilterBar = () => {
-  const [state, setState] = useState("Kerala");
-  const [district, setDistrict] = useState("All");
+const FilterBar = ({
+  state = "Kerala",
+  district = "All",
+  onStateChange,
+  onDistrictChange,
+}) => {
   const districts = districtsByState[state] ?? [];
 
   const handleStateChange = (event) => {
     const selectedState = event.target.value;
-    setState(selectedState);
-    setDistrict(districtsByState[selectedState]?.[0] ?? "");
+    onStateChange(selectedState);
   };
 
   return (
@@ -32,7 +34,7 @@ const FilterBar = () => {
         <select
           className="filter-select"
           value={district}
-          onChange={(event) => setDistrict(event.target.value)}
+          onChange={(event) => onDistrictChange(event.target.value)}
           aria-label="Select district"
           disabled={districts.length === 0}
         >
@@ -48,7 +50,9 @@ const FilterBar = () => {
         </select>
       </div>
 
-      <button className="filter-main">Filter</button>
+      <button className="filter-main" type="button">
+        Filter
+      </button>
     </div>
   );
 };

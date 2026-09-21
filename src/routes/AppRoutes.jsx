@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import PlaceDetails from "../pages/PlaceDetails/PlaceDetails";
-import Resorts from "../pages/Resorts/Resorts";
+import FoodSpots from "../pages/FoodSpots/FoodSpots";
 
 const AppRoutes = () => {
   return (
@@ -11,7 +11,7 @@ const AppRoutes = () => {
 
       <Route path="/place/:id" element={<PlaceDetails />} />
 
-      <Route path="/resorts" element={<Resorts />} />
+      <Route path="/food" element={<FoodSpots />} />
     </Routes>
   );
 };
