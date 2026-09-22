@@ -6,10 +6,14 @@ import DestinationCard from "../../Components/DestinationCard/DestinationCard";
 import DestinationMasonry from "../../Components/DestinationMasonry/DestinationMasonry";
 import ResortMasonry from "../../Components/Resort/ResortMasonry";
 import FoodMasonry from "../../Components/FoodMasonry/FoodMasonry";
+import HomestayMasonry from "../../Components/HomestayMasonry/HomestayMasonry";
+import TaxiGrid from "../../Components/Taxi/TaxiGrid";
 
 import destinations from "./destinationData";
 import resorts from "../../data/resorts";
 import foodSpots from "../../data/foodSpots";
+import homestays from "../../data/homestays";
+import taxis from "../../data/taxis";
 import { categories } from "../../data/categoryData";
 
 import "./Home.css";
@@ -21,11 +25,11 @@ const Home = () => {
   const [selectedState, setSelectedState] = useState("Kerala");
   const [selectedDistrict, setSelectedDistrict] = useState("All");
 
-  const isResortCategory = activeCategory === "resort";
-  const isFoodCategory = activeCategory === "food-spot";
-  const isMasonryCategory = ["places", "hidden-spot", "must-watch"].includes(
-    activeCategory
-  );
+  const isResortCategory   = activeCategory === "resort";
+  const isFoodCategory     = activeCategory === "food-spot";
+  const isHomestayCategory = activeCategory === "homestay";
+  const isTaxiCategory     = activeCategory === "taxi";
+  const isMasonryCategory  = ["places", "hidden-spot", "must-watch"].includes(activeCategory);
 
   const visibleDestinations = useMemo(
     () =>
@@ -91,11 +95,13 @@ const Home = () => {
         />
       </div>
 
-      {/* Destination/Resort/Food Grid */}
+      {/* Destination/Resort/Food/Homestay/Taxi Grid */}
       <section
         className={
-          isResortCategory || isFoodCategory || isMasonryCategory
+          isResortCategory || isFoodCategory || isHomestayCategory || isMasonryCategory
             ? "home-masonry"
+            : isTaxiCategory
+            ? "home-taxi"
             : "destination-grid"
         }
       >
@@ -103,6 +109,10 @@ const Home = () => {
           <ResortMasonry resorts={filteredResorts} />
         ) : isFoodCategory ? (
           <FoodMasonry foods={foodSpots} />
+        ) : isHomestayCategory ? (
+          <HomestayMasonry homestays={homestays} />
+        ) : isTaxiCategory ? (
+          <TaxiGrid taxis={taxis} />
         ) : isMasonryCategory ? (
           <DestinationMasonry destinations={visibleDestinations} />
         ) : (

@@ -3,6 +3,7 @@
   padding: 24px 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
@@ -13,6 +14,7 @@
   font-size: 27px;
   font-weight: 700;
   color: #111;
+  text-decoration: none;
 }
 
 .logo-icon {
@@ -28,3 +30,6 @@
 
   font-size: 15px;
 }
+
+.admin-link { color: #067cab; border: 1px solid #bcddea; border-radius: 20px; padding: 8px 13px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.admin-link:hover { background: #edf9fd; }
