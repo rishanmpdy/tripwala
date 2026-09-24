@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import fallbackListingImage from "../../assets/images/place-1.jpg";
 import "./DestinationCard.css";
 
 const DestinationCard = ({
@@ -29,7 +30,7 @@ const DestinationCard = ({
             src={cardImage}
             alt={cardSpotName}
             className="destination-image"
-            loading="lazy"
+            loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackListingImage; }}
           />
         </div>
 

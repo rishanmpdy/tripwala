@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import fallbackListingImage from "../../assets/images/place-1.jpg";
 
 import "./ResortCard.css";
 
@@ -26,7 +27,7 @@ const ResortCard = ({
             src={resort.image}
             alt={resort.name}
             className="resort-image"
-            loading="lazy"
+            loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackListingImage; }}
           />
 
           <div className="resort-image-overlay">

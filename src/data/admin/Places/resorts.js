@@ -1,0 +1,140 @@
+const resorts = [
+  {
+    id: 1,
+
+    name: "Mountain Mist Resort",
+
+    type: "Luxury Resort",
+
+    shortDescription:
+      "A peaceful luxury resort surrounded by the mountains of Wayanad.",
+
+    description:
+      "Mountain Mist Resort offers comfortable accommodation, beautiful mountain views and premium facilities for families and travellers.",
+
+    priceRange: "₹₹₹",
+
+    image: "/images/resorts/mountain-mist.jpg",
+
+    gallery: [
+      "/images/resorts/mountain-mist-1.jpg",
+      "/images/resorts/mountain-mist-2.jpg",
+      "/images/resorts/mountain-mist-3.jpg",
+    ],
+
+    address: "Vythiri, Wayanad, Kerala",
+
+    area: "Vythiri",
+
+    district: "Wayanad",
+
+    latitude: "11.5520",
+
+    longitude: "76.0390",
+
+    mapsUrl: "https://maps.google.com/",
+
+    rooms: 18,
+
+    roomTypes: "Deluxe, Suite, Family",
+
+    guests: 50,
+
+    checkIn: "02:00 PM",
+
+    checkOut: "11:00 AM",
+
+    minimumStay: 1,
+
+    phone: "+91 9876543210",
+
+    whatsapp: "+91 9876543210",
+
+    website: "",
+
+    instagram: "",
+
+    facilities: [
+      "Swimming Pool",
+      "Restaurant",
+      "Parking",
+      "Wi-Fi",
+      "AC",
+      "Room Service",
+      "Campfire",
+    ],
+
+    status: "Active",
+
+    featured: true,
+
+    showOnHomepage: true,
+  },
+
+  {
+    id: 2,
+
+    name: "Forest Valley Resort",
+
+    type: "Nature Resort",
+
+    shortDescription:
+      "A nature-focused stay surrounded by lush greenery.",
+
+    description:
+      "Forest Valley Resort provides a relaxing stay experience close to nature with comfortable rooms and family-friendly facilities.",
+
+    priceRange: "₹₹",
+
+    image: "/images/resorts/forest-valley.jpg",
+
+    gallery: [],
+
+    address: "Meppadi, Wayanad, Kerala",
+
+    area: "Meppadi",
+
+    district: "Wayanad",
+
+    latitude: "11.6100",
+
+    longitude: "76.0800",
+
+    mapsUrl: "https://maps.google.com/",
+
+    rooms: 12,
+
+    roomTypes: "Standard, Deluxe",
+
+    guests: 35,
+
+    checkIn: "02:00 PM",
+
+    checkOut: "11:00 AM",
+
+    minimumStay: 1,
+
+    phone: "+91 9876543211",
+
+    whatsapp: "+91 9876543211",
+
+    website: "",
+
+    instagram: "",
+
+    facilities: [
+      "Parking",
+      "Wi-Fi",
+      "Restaurant",
+      "Campfire",
+    ],
+
+    status: "Active",
+
+    featured: false,
+
+    showOnHomepage: false,
+  },
+];
+
+export default resorts;

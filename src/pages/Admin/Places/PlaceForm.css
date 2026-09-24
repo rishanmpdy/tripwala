@@ -1,0 +1,239 @@
+.place-form-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.place-form-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+.place-back {
+  display: inline-block;
+
+  margin-bottom: 7px;
+
+  color: #888;
+
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.place-back:hover {
+  color: #111;
+}
+
+.place-form-header h2 {
+  margin: 0;
+
+  color: #111;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.place-form-header p {
+  margin: 5px 0 0;
+
+  color: #888;
+
+  font-size: 12px;
+}
+
+/* ACTIONS */
+
+.place-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.place-cancel-btn,
+.place-save-btn {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 15px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.place-cancel-btn {
+  border: 1px solid #e2e2e2;
+
+  background: #fff;
+  color: #555;
+}
+
+.place-save-btn {
+  border: 0;
+
+  background: #111;
+  color: #fff;
+}
+
+/* FORM CARD */
+
+.place-form-card {
+  padding: 22px;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+
+  background: #fff;
+}
+
+.place-form-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 17px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.place-form-card-header h3 {
+  margin: 0;
+
+  color: #222;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.place-form-card-header span {
+  color: #aaa;
+
+  font-size: 10px;
+}
+
+/* GRID */
+
+.place-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.place-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.place-field.full {
+  grid-column: 1 / -1;
+}
+
+.place-field label {
+  color: #444;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.place-field label span {
+  color: #777;
+}
+
+.place-field input,
+.place-field select,
+.place-field textarea {
+  width: 100%;
+
+  border: 1px solid #e1e1e1;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #fff;
+  color: #222;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  transition: border-color 0.2s;
+}
+
+.place-field input,
+.place-field select {
+  height: 40px;
+
+  padding: 0 11px;
+}
+
+.place-field textarea {
+  padding: 11px;
+
+  resize: vertical;
+}
+
+.place-field input:focus,
+.place-field select:focus,
+.place-field textarea:focus {
+  border-color: #111;
+}
+
+.place-field input::placeholder,
+.place-field textarea::placeholder {
+  color: #aaa;
+}
+
+.place-field small {
+  color: #999;
+
+  font-size: 9px;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .place-form-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .place-form-header h2 {
+    font-size: 20px;
+  }
+
+  .place-form-actions {
+    width: 100%;
+  }
+
+  .place-cancel-btn,
+  .place-save-btn {
+    flex: 1;
+  }
+
+  .place-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .place-field.full {
+    grid-column: auto;
+  }
+
+  .place-form-card {
+    padding: 16px;
+  }
+}

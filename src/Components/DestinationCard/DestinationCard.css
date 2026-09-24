@@ -26,19 +26,19 @@
    IMAGE ASPECT RATIOS
 ========================================= */
 
-.destination-card-compact .destination-image {
+.destination-card-compact .destination-media {
   aspect-ratio: 1 / 1;
 }
 
-.destination-card-standard .destination-image {
+.destination-card-standard .destination-media {
   aspect-ratio: 1 / 1.15;
 }
 
-.destination-card-portrait .destination-image {
+.destination-card-portrait .destination-media {
   aspect-ratio: 1 / 1.3;
 }
 
-.destination-card-tall .destination-image {
+.destination-card-tall .destination-media {
   aspect-ratio: 1 / 1.45;
 }
 

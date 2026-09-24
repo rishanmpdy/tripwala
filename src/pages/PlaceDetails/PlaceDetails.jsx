@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
-import places from "../../data/places";
+import { getPlaces } from "../../data/placeStore";
 
 import "./PlaceDetails.css";
 
@@ -9,6 +9,14 @@ const PlaceDetails = () => {
 
   const { id } = useParams();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [places, setPlaces] = useState(getPlaces);
+
+  useEffect(() => {
+    const refreshPlaces = () => setPlaces(getPlaces());
+    window.addEventListener("tripwala-places-updated", refreshPlaces);
+    window.addEventListener("storage", refreshPlaces);
+    return () => { window.removeEventListener("tripwala-places-updated", refreshPlaces); window.removeEventListener("storage", refreshPlaces); };
+  }, []);
 
   const place = places.find(
     (item) => item.id === id

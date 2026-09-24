@@ -1,20 +1,104 @@
-import { Link } from "react-router-dom";
-import { useAuth } from "../../auth/AuthContext";
-import taxis from "../../data/taxis";
-import places from "../../data/places";
-import resorts from "../../data/resorts";
-import "./Admin.css";
+import "./AdminDashboard.css";
+
+const stats = [
+  {
+    label: "Total Places",
+    value: "248",
+    change: "+12",
+  },
+  {
+    label: "Resorts",
+    value: "86",
+    change: "+8",
+  },
+  {
+    label: "Food Spots",
+    value: "134",
+    change: "+16",
+  },
+  {
+    label: "Registered Users",
+    value: "4,892",
+    change: "+124",
+  },
+];
 
 const AdminDashboard = () => {
-  const { session, logout } = useAuth();
-  return <main className="admin-dashboard"><header className="admin-topbar"><Link className="admin-brand" to="/">traveltri <span>Admin</span></Link><div><span>{session.email}</span><button onClick={logout}>Sign out</button></div></header>
-    <section className="admin-intro"><p>Operations centre</p><h1>Manage TripWala content</h1><span>Signed in as {session.email}</span></section>
-    <section className="admin-stats">
-      <article><strong>{places.length}</strong><span>Destinations</span></article><article><strong>{resorts.length}</strong><span>Stays & resorts</span></article><article><strong>{taxis.length}</strong><span>Taxi listings</span></article>
-    </section>
-    <section className="admin-actions"><h2>Management shortcuts</h2><div>
-      <Link to="/">View public site <span>→</span></Link><Link to="/taxi">Review taxi listings <span>→</span></Link><Link to="/food">Review food spots <span>→</span></Link>
-    </div><p>Connect these views to your API/database next to add, edit, publish, and remove live content.</p></section>
-  </main>;
+  return (
+    <div className="admin-dashboard">
+      {/* PAGE INTRO */}
+
+      <div className="admin-page-intro">
+        <div>
+          <h2>Good evening, Admin</h2>
+          <p>
+            Manage your Tripwala content and platform activity.
+          </p>
+        </div>
+
+        <button className="admin-primary-btn">
+          + Add New
+        </button>
+      </div>
+
+      {/* STATS */}
+
+      <div className="admin-stat-grid">
+        {stats.map((stat) => (
+          <div className="admin-stat-card" key={stat.label}>
+            <span>{stat.label}</span>
+
+            <div className="admin-stat-bottom">
+              <strong>{stat.value}</strong>
+
+              <small>{stat.change}</small>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CONTENT */}
+
+      <div className="admin-dashboard-grid">
+        <section className="admin-panel">
+          <div className="admin-panel-header">
+            <div>
+              <h3>Recent Places</h3>
+              <p>Recently added destinations</p>
+            </div>
+
+            <button>View all</button>
+          </div>
+
+          <div className="admin-empty">
+            <div className="admin-empty-icon">+</div>
+
+            <strong>No recent places</strong>
+
+            <span>
+              Newly added places will appear here.
+            </span>
+          </div>
+        </section>
+
+        <section className="admin-panel">
+          <div className="admin-panel-header">
+            <div>
+              <h3>Quick Actions</h3>
+              <p>Frequently used operations</p>
+            </div>
+          </div>
+
+          <div className="admin-quick-actions">
+            <button>+ Add Place</button>
+            <button>+ Add Resort</button>
+            <button>+ Add Food Spot</button>
+            <button>+ Add Taxi</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
 };
+
 export default AdminDashboard;

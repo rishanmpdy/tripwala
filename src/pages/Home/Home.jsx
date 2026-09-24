@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Header from "../../Components/Header/Header";
 import Hero from "../../Components/Hero/Hero";
 import FilterBar from "../../Components/FilterBar/FilterBar";
@@ -14,12 +14,27 @@ import resorts from "../../data/resorts";
 import foodSpots from "../../data/foodSpots";
 import homestays from "../../data/homestays";
 import taxis from "../../data/taxis";
-import { categories } from "../../data/categoryData";
+import { getCategories } from "../../data/categoryStore";
 
 import "./Home.css";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("places");
+  const [categories, setCategories] = useState(getCategories);
+
+  useEffect(() => {
+    const refreshCategories = () => {
+      const nextCategories = getCategories();
+      setCategories(nextCategories);
+      setActiveCategory((current) => nextCategories.some((item) => item.id === current) ? current : (nextCategories[0]?.id || ""));
+    };
+    window.addEventListener("tripwala-categories-updated", refreshCategories);
+    window.addEventListener("storage", refreshCategories);
+    return () => {
+      window.removeEventListener("tripwala-categories-updated", refreshCategories);
+      window.removeEventListener("storage", refreshCategories);
+    };
+  }, []);
   const listingRef = useRef(null);
   const hasScrolledRef = useRef(false);
   const [selectedState, setSelectedState] = useState("Kerala");

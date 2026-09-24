@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import fallbackTaxiImage from "../../assets/images/place-1.jpg";
 import "./TaxiCard.css";
 
 const TaxiCard = ({ taxi }) => {
@@ -12,7 +13,7 @@ const TaxiCard = ({ taxi }) => {
             src={taxi.image}
             alt={taxi.name}
             className="taxi-image"
-            loading="lazy"
+            loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackTaxiImage; }}
           />
           {/* Price badge on image */}
           <div className="taxi-price-badge">{taxi.price}</div>

@@ -1,0 +1,323 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import taxiData from "../../../data/admin/Places/taxiData";
+
+import "./Taxi.css";
+
+const Taxi = () => {
+  const [taxis, setTaxis] = useState(taxiData);
+
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const filteredTaxis = taxis.filter((taxi) => {
+    const searchText = search.toLowerCase();
+
+    const matchesSearch =
+      taxi.name.toLowerCase().includes(searchText) ||
+      taxi.driverName.toLowerCase().includes(searchText) ||
+      taxi.location.toLowerCase().includes(searchText) ||
+      taxi.vehicleName.toLowerCase().includes(searchText);
+
+    const matchesStatus =
+      statusFilter === "All" ||
+      taxi.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this taxi?"
+    );
+
+    if (!confirmDelete) return;
+
+    setTaxis((current) =>
+      current.filter((taxi) => taxi.id !== id)
+    );
+  };
+
+  return (
+    <div className="admin-taxi-page">
+
+      {/* PAGE HEADER */}
+      <div className="taxi-page-header">
+
+        <div>
+          <h1>Taxi</h1>
+
+          <p>
+            Manage taxi services, vehicles and operators.
+          </p>
+        </div>
+
+        <Link
+          to="/admin/taxi/add"
+          className="taxi-add-button"
+        >
+          <span>+</span>
+          Add Taxi
+        </Link>
+
+      </div>
+
+
+      {/* FILTER BAR */}
+      <div className="taxi-toolbar">
+
+        <div className="taxi-search">
+
+          <span>⌕</span>
+
+          <input
+            type="text"
+            placeholder="Search taxi, driver, vehicle..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
+
+        </div>
+
+
+        <select
+          value={statusFilter}
+          onChange={(e) =>
+            setStatusFilter(e.target.value)
+          }
+          className="taxi-status-filter"
+        >
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+
+      </div>
+
+
+      {/* TABLE */}
+      <div className="taxi-table-wrapper">
+
+        <table className="taxi-table">
+
+          <thead>
+            <tr>
+
+              <th>Taxi</th>
+
+              <th>Driver</th>
+
+              <th>Vehicle</th>
+
+              <th>Location</th>
+
+              <th>Pricing</th>
+
+              <th>Rating</th>
+
+              <th>Status</th>
+
+              <th>Actions</th>
+
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+            {filteredTaxis.map((taxi) => (
+
+              <tr key={taxi.id}>
+
+                {/* TAXI */}
+                <td>
+
+                  <div className="taxi-info">
+
+                    <img
+                      src={taxi.image}
+                      alt={taxi.name}
+                    />
+
+                    <div>
+
+                      <strong>
+                        {taxi.name}
+                      </strong>
+
+                      <span>
+                        #{taxi.id}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                {/* DRIVER */}
+                <td>
+
+                  <div className="driver-info">
+
+                    <strong>
+                      {taxi.driverName}
+                    </strong>
+
+                    <span>
+                      {taxi.phone}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                {/* VEHICLE */}
+                <td>
+
+                  <div className="vehicle-info">
+
+                    <strong>
+                      {taxi.vehicleName}
+                    </strong>
+
+                    <span>
+                      {taxi.vehicleNumber}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                {/* LOCATION */}
+                <td>
+                  {taxi.location}
+                </td>
+
+
+                {/* PRICE */}
+                <td>
+
+                  <div className="price-info">
+
+                    <strong>
+                      ₹{taxi.pricePerKm}/km
+                    </strong>
+
+                    <span>
+                      ₹{taxi.pricePerDay}/day
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                {/* RATING */}
+                <td>
+
+                  <div className="rating-info">
+
+                    <span>
+                      ★
+                    </span>
+
+                    {taxi.rating}
+
+                    <small>
+                      ({taxi.reviews})
+                    </small>
+
+                  </div>
+
+                </td>
+
+
+                {/* STATUS */}
+                <td>
+
+                  <span
+                    className={`taxi-status ${
+                      taxi.status === "Active"
+                        ? "active"
+                        : "inactive"
+                    }`}
+                  >
+                    {taxi.status}
+                  </span>
+
+                </td>
+
+
+                {/* ACTIONS */}
+                <td>
+
+                  <div className="taxi-actions">
+
+                    <Link
+                      to={`/admin/taxi/view/${taxi.id}`} className="taxi-action-button"
+                    >
+                      View
+                    </Link>
+
+                    <Link
+                      to={`/admin/taxi/edit/${taxi.id}`} className="taxi-action-button"
+                    >
+                      Edit
+                    </Link>
+
+                    <button
+                      onClick={() =>
+                        handleDelete(taxi.id)
+                      }
+                      title="Delete"
+                    >
+                      ×
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+
+        {/* EMPTY */}
+        {filteredTaxis.length === 0 && (
+
+          <div className="taxi-empty">
+
+            <div>⌕</div>
+
+            <h3>
+              No taxis found
+            </h3>
+
+            <p>
+              Try changing your search or filter.
+            </p>
+
+          </div>
+
+        )}
+
+      </div>
+
+    </div>
+  );
+};
+
+export default Taxi;
+

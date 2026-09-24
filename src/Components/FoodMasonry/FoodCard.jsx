@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import fallbackListingImage from "../../assets/images/place-1.jpg";
 
 import "./FoodMasonry.css";
 
@@ -11,7 +12,7 @@ const FoodCard = ({ food, size = "standard" }) => {
             src={food.media}
             alt={food.title}
             className="food-image"
-            loading="lazy"
+            loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackListingImage; }}
           />
         </div>
 

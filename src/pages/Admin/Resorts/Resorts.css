@@ -1,0 +1,804 @@
+.resort-admin-page,
+.resort-form-page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+
+/* HEADER */
+
+.resort-page-header,
+.resort-form-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.resort-page-header h1,
+.resort-form-header h1 {
+  margin: 0;
+  color: #111;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.resort-page-header p,
+.resort-form-header p {
+  margin: 6px 0 0;
+  color: #8b8b8b;
+  font-size: 11px;
+}
+
+
+/* BUTTONS */
+
+.resort-primary-button,
+.resort-secondary-button {
+  height: 39px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.resort-primary-button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+}
+
+.resort-primary-button:hover {
+  background: #292929;
+}
+
+.resort-secondary-button {
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  color: #444;
+}
+
+.resort-primary-button span {
+  font-size: 17px;
+}
+
+
+/* TOOLBAR */
+
+.resort-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.resort-search {
+  width: 310px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 11px;
+
+  border: 1px solid #e4e4e4;
+  border-radius: 7px;
+
+  background: #fff;
+}
+
+.resort-search span {
+  color: #999;
+  font-size: 18px;
+}
+
+.resort-search input {
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.resort-toolbar select {
+  height: 39px;
+
+  padding: 0 10px;
+
+  border: 1px solid #e4e4e4;
+  border-radius: 7px;
+
+  outline: 0;
+
+  background: #fff;
+
+  color: #555;
+
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.resort-count {
+  margin-left: auto;
+  color: #999;
+  font-size: 10px;
+}
+
+
+/* TABLE */
+
+.resort-table-card {
+  overflow-x: auto;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.resort-table {
+  width: 100%;
+  min-width: 1000px;
+
+  border-collapse: collapse;
+}
+
+.resort-table th {
+  height: 43px;
+
+  padding: 0 17px;
+
+  border-bottom: 1px solid #e8e8e8;
+
+  background: #fafafa;
+
+  color: #888;
+
+  text-align: left;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
+
+.resort-table td {
+  padding: 12px 17px;
+
+  border-bottom: 1px solid #eee;
+
+  vertical-align: middle;
+}
+
+.resort-table tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* RESORT ITEM */
+
+.resort-item {
+  min-width: 310px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.resort-image {
+  width: 62px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+
+  background: #eee;
+}
+
+.resort-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.resort-item-info strong {
+  display: block;
+
+  color: #222;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.resort-item-info p {
+  margin: 4px 0 0;
+
+  color: #999;
+
+  font-size: 9px;
+}
+
+
+/* BADGES */
+
+.resort-type {
+  display: inline-flex;
+
+  padding: 5px 8px;
+
+  border-radius: 5px;
+
+  background: #f3f3f3;
+
+  color: #555;
+
+  font-size: 9px;
+
+  white-space: nowrap;
+}
+
+.resort-location {
+  color: #555;
+  font-size: 10px;
+}
+
+.resort-rooms,
+.resort-price {
+  color: #333;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* STATUS */
+
+.resort-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 5px 8px;
+
+  border: 0;
+  border-radius: 5px;
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.resort-status span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+}
+
+.resort-status.active {
+  background: #f1f1f1;
+  color: #222;
+}
+
+.resort-status.active span {
+  background: #111;
+}
+
+.resort-status.inactive {
+  background: #f7f7f7;
+  color: #999;
+}
+
+.resort-status.inactive span {
+  background: #aaa;
+}
+
+
+/* ACTIONS */
+
+.resort-actions-head {
+  text-align: right !important;
+}
+
+.resort-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.resort-row-actions a,
+.resort-row-actions button {
+  padding: 5px 7px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+
+  color: #444;
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.resort-row-actions a:hover,
+.resort-row-actions button:hover {
+  background: #f2f2f2;
+}
+
+
+/* FORM */
+
+.resort-back-link {
+  display: inline-block;
+
+  margin-bottom: 7px;
+
+  color: #888;
+
+  font-size: 10px;
+
+  text-decoration: none;
+}
+
+.resort-form-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.resort-form-card {
+  overflow: hidden;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.resort-form-section {
+  padding: 22px;
+  border-bottom: 1px solid #eee;
+}
+
+.resort-form-section:last-child {
+  border-bottom: 0;
+}
+
+.resort-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 19px;
+}
+
+.resort-section-title h2 {
+  margin: 0;
+
+  color: #222;
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.resort-section-title p {
+  margin: 4px 0 0;
+
+  color: #999;
+
+  font-size: 9px;
+}
+
+.resort-section-title > span {
+  color: #aaa;
+  font-size: 9px;
+}
+
+
+/* FORM GRID */
+
+.resort-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 17px;
+}
+
+.resort-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resort-field.full {
+  grid-column: 1 / -1;
+}
+
+.resort-field label {
+  color: #444;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.resort-field input,
+.resort-field select,
+.resort-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #dedede;
+  border-radius: 6px;
+
+  outline: none;
+
+  background: #fff;
+
+  color: #222;
+
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.resort-field input,
+.resort-field select {
+  height: 39px;
+  padding: 0 10px;
+}
+
+.resort-field textarea {
+  padding: 10px;
+  resize: vertical;
+}
+
+.resort-field input:focus,
+.resort-field select:focus,
+.resort-field textarea:focus {
+  border-color: #111;
+}
+
+
+/* FACILITIES */
+
+.resort-facility-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.resort-facility-grid label {
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 10px;
+
+  border: 1px solid #eee;
+  border-radius: 6px;
+
+  color: #444;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.resort-facility-grid label:hover {
+  background: #fafafa;
+}
+
+.resort-facility-grid input,
+.resort-checkbox input {
+  accent-color: #111;
+}
+
+
+/* PUBLISH */
+
+.resort-publish-grid {
+  display: grid;
+
+  grid-template-columns:
+    180px 1fr 1fr;
+
+  gap: 20px;
+
+  align-items: end;
+}
+
+.resort-checkbox {
+  min-height: 39px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #444;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* VIEW */
+
+.resort-view-card {
+  display: grid;
+
+  grid-template-columns:
+    420px minmax(0, 1fr);
+
+  overflow: hidden;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.resort-view-image {
+  height: 330px;
+  background: #eee;
+}
+
+.resort-view-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.resort-view-content {
+  padding: 28px;
+}
+
+.resort-view-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 17px;
+}
+
+.resort-view-content h2 {
+  margin: 0;
+
+  color: #111;
+
+  font-size: 22px;
+}
+
+.resort-view-description {
+  max-width: 700px;
+
+  margin: 12px 0 25px;
+
+  color: #666;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.resort-view-details {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+.resort-view-details div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.resort-view-details small {
+  color: #999;
+  font-size: 9px;
+}
+
+.resort-view-details strong {
+  color: #333;
+  font-size: 11px;
+}
+
+.resort-view-facilities {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  margin-top: 25px;
+}
+
+.resort-view-facilities span {
+  padding: 6px 9px;
+
+  border-radius: 5px;
+
+  background: #f4f4f4;
+
+  color: #555;
+
+  font-size: 9px;
+}
+
+.resort-map-button {
+  display: inline-flex;
+
+  margin-top: 22px;
+
+  color: #111;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+
+/* EMPTY */
+
+.resort-empty {
+  height: 180px;
+  text-align: center;
+}
+
+.resort-empty strong {
+  display: block;
+  color: #444;
+  font-size: 12px;
+}
+
+.resort-empty span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #999;
+
+  font-size: 10px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+  .resort-facility-grid {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  .resort-view-card {
+    grid-template-columns: 1fr;
+  }
+
+  .resort-view-image {
+    height: 280px;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .resort-page-header,
+  .resort-form-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resort-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .resort-search {
+    width: 100%;
+  }
+
+  .resort-count {
+    margin-left: 0;
+  }
+
+  .resort-publish-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .resort-page-header h1,
+  .resort-form-header h1 {
+    font-size: 20px;
+  }
+
+  .resort-page-header
+    .resort-primary-button {
+    width: 100%;
+  }
+
+  .resort-form-actions {
+    width: 100%;
+  }
+
+  .resort-form-actions > * {
+    flex: 1;
+  }
+
+  .resort-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resort-field.full {
+    grid-column: auto;
+  }
+
+  .resort-form-section {
+    padding: 16px;
+  }
+
+  .resort-facility-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .resort-view-content {
+    padding: 20px;
+  }
+
+  .resort-view-details {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
