@@ -11,7 +11,7 @@ const FoodCard = ({ food, size = "standard" }) => {
           <img
             src={food.media}
             alt={food.title}
-            className="food-image"
+            className="fc-image-frame food-image"
             loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackListingImage; }}
           />
         </div>

@@ -9,7 +9,7 @@ const PlaceDetails = () => {
 
   const { id } = useParams();
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-  const [places, setPlaces] = useState(getPlaces);
+  const [places, setPlaces] = useState(() => placeStore.get());
 
   useEffect(() => {
     const refreshPlaces = () => setPlaces(placeStore.get());
@@ -21,7 +21,7 @@ const PlaceDetails = () => {
   const place = places.find(
     (item) => item.id === id
   );
-  const images = place?.images ?? [];
+  const images = place?.images?.length ? place.images : (place?.gallery?.length ? place.gallery : (place?.image ? [place.image] : []));
 
   const closeViewer = () => setSelectedImageIndex(null);
   const showPreviousImage = () => setSelectedImageIndex((index) =>

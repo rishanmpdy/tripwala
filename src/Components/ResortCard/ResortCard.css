@@ -70,23 +70,24 @@
    IMAGE
 ========================================= */
 
-.resort-image {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-
-  object-position: center;
-
-  transition:
-    transform 0.35s ease;
+.rc-image-frame,
+.resort-image,
+.resort-image-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.35s ease;
 }
 
-
-.resort-image-link:hover
-.resort-image {
+.resort-image-link:hover .rc-image-frame,
+.resort-image-link:hover .resort-image,
+.resort-image-link:hover .resort-image-wrapper img {
   transform: scale(1.025);
 }
 

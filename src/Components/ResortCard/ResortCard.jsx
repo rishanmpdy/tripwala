@@ -26,7 +26,7 @@ const ResortCard = ({
           <img
             src={resort.image}
             alt={resort.name}
-            className="resort-image"
+            className="rc-image-frame"
             loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = fallbackListingImage; }}
           />
 
