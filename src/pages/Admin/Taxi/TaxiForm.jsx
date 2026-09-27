@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import taxiData from "../../../data/admin/Places/taxiData";
+import { taxiStore } from "../../../data/stores";
 
 import "./TaxiForm.css";
 
@@ -13,7 +13,7 @@ const TaxiForm = () => {
 
   const isEdit = Boolean(id);
 
-  const existingTaxi = taxiData.find(
+  const existingTaxi = taxiStore.get().find(
     (taxi) => taxi.id === Number(id)
   );
 
@@ -623,3 +623,4 @@ const TaxiForm = () => {
 };
 
 export default TaxiForm;
+

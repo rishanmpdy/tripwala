@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import resorts from "../../../data/admin/Places/resorts";
+import { resortStore } from "../../../data/stores";
 
 import "./Resorts.css";
 
@@ -17,7 +17,7 @@ const ResortForm = () => {
 
 
   const existingResort = id
-    ? resorts.find(
+    ? resortStore.get().find(
         (item) =>
           String(item.id) ===
           String(id)
@@ -978,3 +978,4 @@ const ResortForm = () => {
 };
 
 export default ResortForm;
+

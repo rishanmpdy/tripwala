@@ -1,14 +1,25 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import homestaysData from "../../../data/admin/Places/homestays";
+import { homestayStore } from "../../../data/stores";
 
 import "./Homestays.css";
 
 const Homestays = () => {
 
-  const [homestays, setHomestays] =
-    useState(homestaysData);
+  const [homestays, setHomestaysState] = useState(homestayStore.get());
+  const setHomestays = (updateFn) => {
+    setHomestaysState((prev) => {
+       const next = typeof updateFn === "function" ? updateFn(prev) : updateFn;
+       homestayStore.save(next);
+       return next;
+    });
+  };
+  useEffect(() => {
+    const handleUpdate = () => setHomestaysState(homestayStore.get());
+    window.addEventListener("tripwala-homestays-updated", handleUpdate);
+    return () => window.removeEventListener("tripwala-homestays-updated", handleUpdate);
+  }, []);
 
   const [search, setSearch] =
     useState("");
@@ -417,3 +428,6 @@ const Homestays = () => {
 };
 
 export default Homestays;
+
+
+

@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-import taxiData from "../../../data/admin/Places/taxiData";
+import { taxiStore } from "../../../data/stores";
 
 import "./TaxiView.css";
 
@@ -8,7 +8,7 @@ const TaxiView = () => {
 
   const { id } = useParams();
 
-  const taxi = taxiData.find(
+  const taxi = taxiStore.get().find(
     (item) => item.id === Number(id)
   );
 
@@ -271,3 +271,4 @@ const TaxiView = () => {
 };
 
 export default TaxiView;
+

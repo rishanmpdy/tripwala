@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-import homestays from "../../../data/admin/Places/homestays";
+import { homestayStore } from "../../../data/stores";
 
 import "./Homestays.css";
 
@@ -8,7 +8,7 @@ const HomestayView = () => {
 
   const { id } = useParams();
 
-  const home = homestays.find(
+  const home = homestayStore.get().find(
     (item) =>
       String(item.id) ===
       String(id)
@@ -213,3 +213,4 @@ const HomestayView = () => {
 };
 
 export default HomestayView;
+

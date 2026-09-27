@@ -1,0 +1,91 @@
+/* ── Listings Page ──────────────────────────────── */
+.listings-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Consistent horizontal padding */
+.listings-page > * {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.listings-page .site-header {
+  padding: 18px 40px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+/* Filter bar — sticky, white, separated */
+.listings-filter-bar {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+/* The fb-root inside gets the padded container spacing */
+.listings-filter-bar .fb-root {
+  padding: 0;
+}
+
+.listings-filter-bar .fb-row {
+  padding: 0;
+}
+
+/* Listings grid */
+.listings-grid-section {
+  padding-top: 24px;
+  padding-bottom: 60px;
+}
+
+/* ── Empty state ──────────────────────────────────── */
+.listings-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 100px 40px;
+  text-align: center;
+}
+
+.listings-empty-icon {
+  font-size: 56px;
+  color: #d0d0d0;
+}
+
+.listings-empty p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #777;
+  margin: 0;
+}
+
+.listings-empty-reset {
+  height: 40px;
+  padding: 0 24px;
+  border: 1.5px solid #079bd3;
+  background: transparent;
+  color: #079bd3;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.listings-empty-reset:hover { background: #079bd3; color: #fff; }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 900px) {
+  .listings-page > * { padding-left: 24px; padding-right: 24px; }
+  .listings-page .site-header { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (max-width: 600px) {
+  .listings-page > * { padding-left: 16px; padding-right: 16px; }
+  .listings-page .site-header { padding-left: 16px; padding-right: 16px; }
+}

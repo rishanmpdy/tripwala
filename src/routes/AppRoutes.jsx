@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+﻿import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
+import Listings from "../pages/Listings/Listings";
 import PlaceDetails from "../pages/PlaceDetails/PlaceDetails";
 import FoodSpots from "../pages/FoodSpots/FoodSpots";
 import Taxi from "../pages/Taxi/Taxi";
@@ -9,12 +10,6 @@ import AdminLayout from "../pages/Admin/AdminLayout";
 import RequireAdmin from "../auth/RequireAdmin";
 import Places from "../pages/Admin/Places/Places";
 import PlaceForm from "../pages/Admin/Places/PlaceForm";
-import HiddenSpots from "../pages/Admin/HiddenSpots/HiddenSpots";
-import HiddenSpotForm from "../pages/Admin/HiddenSpots/HiddenSpotForm";
-import HiddenSpotView from "../pages/Admin/HiddenSpots/HiddenSpotView";
-import MustWatch from "../pages/Admin/MustWatch/MustWatch";
-import MustWatchForm from "../pages/Admin/MustWatch/MustWatchForm";
-import MustWatchView from "../pages/Admin/MustWatch/MustWatchView";
 import AdminFoodSpots from "../pages/Admin/FoodSpots/FoodSpots";
 import FoodSpotForm from "../pages/Admin/FoodSpots/FoodSpotForm";
 import FoodSpotView from "../pages/Admin/FoodSpots/FoodSpotView";
@@ -32,6 +27,7 @@ const AdminSectionPlaceholder = () => <section className="admin-section-placehol
 
 const AppRoutes = () => <Routes>
   <Route path="/" element={<Home />} />
+  <Route path="/listings" element={<Listings />} />
   <Route path="/place/:id" element={<PlaceDetails />} />
   <Route path="/food" element={<FoodSpots />} />
   <Route path="/taxi" element={<Taxi />} />
@@ -41,16 +37,7 @@ const AppRoutes = () => <Routes>
     <Route index element={<AdminDashboard />} />
     <Route path="places" element={<Places />} />
     <Route path="places/new" element={<PlaceForm />} />
-    <Route path="places/:id/edit" element={<PlaceForm />} />
-    <Route path="hidden-spots" element={<HiddenSpots />} />
-    <Route path="hidden-spots/new" element={<HiddenSpotForm />} />
-    <Route path="hidden-spots/:id" element={<HiddenSpotView />} />
-    <Route path="hidden-spots/:id/edit" element={<HiddenSpotForm />} />
-    <Route path="must-watch" element={<MustWatch />} />
-    <Route path="must-watch/new" element={<MustWatchForm />} />
-    <Route path="must-watch/:id" element={<MustWatchView />} />
-    <Route path="must-watch/:id/edit" element={<MustWatchForm />} />
-    <Route path="food-spots" element={<AdminFoodSpots />} />
+    <Route path="places/:id/edit" element={<PlaceForm />} />    <Route path="food-spots" element={<AdminFoodSpots />} />
     <Route path="food-spots/new" element={<FoodSpotForm />} />
     <Route path="food-spots/:id" element={<FoodSpotView />} />
     <Route path="food-spots/:id/edit" element={<FoodSpotForm />} />

@@ -1,13 +1,22 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-import resortsData from "../../../data/admin/Places/resorts";
-
+import { resortStore } from "../../../data/stores";
 import "./Resorts.css";
 
 const Resorts = () => {
-  const [resorts, setResorts] =
-    useState(resortsData);
+  const [resorts, setResortsState] = useState(resortStore.get());
+  const setResorts = (updateFn) => {
+    setResortsState((prev) => {
+       const next = typeof updateFn === "function" ? updateFn(prev) : updateFn;
+       resortStore.save(next);
+       return next;
+    });
+  };
+  useEffect(() => {
+    const handleUpdate = () => setResortsState(resortStore.get());
+    window.addEventListener("tripwala-resorts-updated", handleUpdate);
+    return () => window.removeEventListener("tripwala-resorts-updated", handleUpdate);
+  }, []);
 
   const [search, setSearch] =
     useState("");
@@ -420,4 +429,6 @@ const Resorts = () => {
 };
 
 export default Resorts;
+
+
 

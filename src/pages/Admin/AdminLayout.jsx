@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import "./AdminLayout.css";
@@ -31,12 +31,10 @@ const navigation = [
   { title: "Overview", items: [{ label: "Dashboard", path: "/admin", icon: "dashboard", end: true }] },
   { title: "Content", items: [
     { label: "Places", path: "/admin/places", icon: "places" },
-    { label: "Hidden Spots", path: "/admin/hidden-spots", icon: "hidden" },
     { label: "Food Spots", path: "/admin/food-spots", icon: "food" },
     { label: "Resorts", path: "/admin/resorts", icon: "resort" },
     { label: "Home Stays", path: "/admin/homestays", icon: "home" },
     { label: "Taxi", path: "/admin/taxi", icon: "taxi" },
-    { label: "Must Watch", path: "/admin/must-watch", icon: "video" },
   ] },
   { title: "Management", items: [
     { label: "Users", path: "/admin/users", icon: "users" },

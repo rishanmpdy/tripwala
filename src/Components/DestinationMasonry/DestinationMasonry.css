@@ -1,8 +1,13 @@
+/* =========================================
+   MASONRY GRID CONTAINER
+   Pinterest / Google-style column layout
+========================================= */
+
 .destination-masonry {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
   align-items: start;
 }
 
@@ -10,128 +15,19 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-.destination-card {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
-}
-
-.destination-card-link {
-  display: block;
-  width: 100%;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.destination-image-wrapper {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 18px 18px 0 0;
-  background: #111;
-  line-height: 0;
-}
-
-.destination-card-compact .destination-image-wrapper {
-  aspect-ratio: 1 / 1;
-}
-
-.destination-card-standard .destination-image-wrapper {
-  aspect-ratio: 1 / 1.15;
-}
-
-.destination-card-portrait .destination-image-wrapper {
-  aspect-ratio: 1 / 1.3;
-}
-
-.destination-card-tall .destination-image-wrapper {
-  aspect-ratio: 1 / 1.45;
-}
-
-.destination-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.35s ease;
-}
-
-.destination-card-link:hover .destination-image {
-  transform: scale(1.03);
-}
-
-.destination-card-content {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #fff;
-}
-
-.destination-spot-name {
-  font-size: 12px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.3;
-}
-
-.destination-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #6b7280;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.destination-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.destination-location {
-  color: #4b5563;
-  font-size: 11px;
-  line-height: 1.4;
-  flex: 1;
-}
-
-.destination-view-btn {
-  flex-shrink: 0;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: #111827;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.destination-view-btn:hover {
-  background: #1f2937;
-}
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 1200px) {
   .destination-masonry {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
   }
-
-  .destination-masonry-column {
-    gap: 10px;
-  }
+  .destination-masonry-column { gap: 12px; }
 }
 
 @media (max-width: 900px) {
@@ -139,10 +35,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
   }
-
-  .destination-masonry-column {
-    gap: 10px;
-  }
+  .destination-masonry-column { gap: 10px; }
 }
 
 @media (max-width: 600px) {
@@ -150,8 +43,5 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
-
-  .destination-masonry-column {
-    gap: 8px;
-  }
+  .destination-masonry-column { gap: 8px; }
 }

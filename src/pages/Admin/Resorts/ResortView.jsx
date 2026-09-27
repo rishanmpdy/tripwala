@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-import resorts from "../../../data/admin/Places/resorts";
+import { resortStore } from "../../../data/stores";
 
 import "./Resorts.css";
 
@@ -8,7 +8,7 @@ const ResortView = () => {
 
   const { id } = useParams();
 
-  const resort = resorts.find(
+  const resort = resortStore.get().find(
     (item) =>
       String(item.id) ===
       String(id)
@@ -213,3 +213,4 @@ const ResortView = () => {
 };
 
 export default ResortView;
+

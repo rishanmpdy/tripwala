@@ -1,13 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 
-import foodSpots from "../../../data/admin/Places/foodSpots";
+import { foodStore } from "../../../data/stores";
 
 import "./FoodSpots.css";
 
 const FoodSpotView = () => {
   const { id } = useParams();
 
-  const food = foodSpots.find(
+  const food = foodStore.get().find(
     (item) =>
       String(item.id) === String(id)
   );
@@ -215,3 +215,4 @@ const FoodSpotView = () => {
 };
 
 export default FoodSpotView;
+

@@ -1,24 +1,13 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { foodStore } from "../../../data/stores";
+import foodSpotsData from "../../../data/admin/Places/foodSpots";
 
 import "./FoodSpots.css";
 
 const FoodSpots = () => {
-  const [foodSpots, setFoodSpotsState] = useState(foodStore.get());
-  const setFoodSpots = (updateFn) => {
-    setFoodSpotsState((prev) => {
-       const next = typeof updateFn === "function" ? updateFn(prev) : updateFn;
-       foodStore.save(next);
-       return next;
-    });
-  };
-  useEffect(() => {
-    const handleUpdate = () => setFoodSpotsState(foodStore.get());
-    window.addEventListener("tripwala-food-updated", handleUpdate);
-    return () => window.removeEventListener("tripwala-food-updated", handleUpdate);
-  }, []);
+  const [foodSpots, setFoodSpots] =
+    useState(foodSpotsData);
 
   const [search, setSearch] =
     useState("");
@@ -426,6 +415,3 @@ const FoodSpots = () => {
 };
 
 export default FoodSpots;
-
-
-

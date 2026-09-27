@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import TaxiGrid from "../../Components/Taxi/TaxiGrid";
 
-import taxis from "../../data/taxis";
+import { getPublicTaxis } from "../../data/publicListings";
 
 import "./Taxi.css";
 
@@ -28,7 +28,7 @@ const Taxi = () => {
       }
 
 
-      return taxis.filter(
+      return getPublicTaxis().filter(
         (taxi) =>
           taxi.name
             .toLowerCase()
@@ -172,3 +172,5 @@ const Taxi = () => {
 
 
 export default Taxi;
+
+

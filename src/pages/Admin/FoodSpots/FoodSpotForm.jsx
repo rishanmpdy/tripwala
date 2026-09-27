@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import foodSpots from "../../../data/admin/Places/foodSpots";
+import { foodStore } from "../../../data/stores";
 
 import "./FoodSpots.css";
 
@@ -858,3 +858,5 @@ const FoodSpotForm = () => {
 };
 
 export default FoodSpotForm;
+
+

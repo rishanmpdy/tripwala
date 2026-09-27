@@ -3,97 +3,33 @@
   padding: 0 40px 60px;
 }
 
-.destination-grid {
-  display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
-  gap: 2px;
-}
-
-.home-masonry {
-  width: 100%;
-}
-
-
-/* Responsive design */
-
-
 @media (max-width: 900px) {
-
   .home-page {
     padding: 0 20px;
   }
-
-  .destination-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
 }
 
-
-/* for mobile responsive */
-
-
 @media (max-width: 650px) {
-
   .home-page {
     padding: 0 12px;
   }
-
   .hero {
     height: 420px;
   }
-
   .search-box {
     width: calc(100% - 40px);
   }
-
   .hero-categories {
     width: 100%;
-
     padding: 0 15px;
-
     overflow-x: auto;
-
     justify-content: flex-start;
-
     scrollbar-width: none;
   }
-
   .hero-categories::-webkit-scrollbar {
     display: none;
   }
-
   .hero-categories button {
     flex-shrink: 0;
   }
-
-  .filter-bar {
-    gap: 8px;
-  }
-
-  .filter-left {
-    width: 100%;
-  }
-
-  .filter-select {
-    width: 50%;
-  }
-
-  .filter-main {
-    width: 90px;
-    flex-shrink: 0;
-  }
-
-  .destination-grid {
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 2px;
-  }
-
-  .destination-card {
-    height: 210px;
-  }
-
 }

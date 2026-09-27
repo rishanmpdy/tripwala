@@ -1,12 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import taxiData from "../../../data/admin/Places/taxiData";
+import { taxiStore } from "../../../data/stores";
 
 import "./Taxi.css";
 
 const Taxi = () => {
-  const [taxis, setTaxis] = useState(taxiData);
+  const [taxis, setTaxisState] = useState(taxiStore.get());
+  const setTaxis = (updateFn) => {
+    setTaxisState((prev) => {
+       const next = typeof updateFn === "function" ? updateFn(prev) : updateFn;
+       taxiStore.save(next);
+       return next;
+    });
+  };
+  useEffect(() => {
+    const handleUpdate = () => setTaxisState(taxiStore.get());
+    window.addEventListener("tripwala-taxis-updated", handleUpdate);
+    return () => window.removeEventListener("tripwala-taxis-updated", handleUpdate);
+  }, []);
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -34,9 +46,7 @@ const Taxi = () => {
 
     if (!confirmDelete) return;
 
-    setTaxis((current) =>
-      current.filter((taxi) => taxi.id !== id)
-    );
+    updateTaxis(taxis.filter(taxi => taxi.id !== id));
   };
 
   return (
@@ -320,4 +330,7 @@ const Taxi = () => {
 };
 
 export default Taxi;
+
+
+
 

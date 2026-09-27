@@ -1,10 +1,19 @@
+/* =========================================
+   CARD SHELL
+========================================= */
+
 .destination-card {
   width: 100%;
   min-width: 0;
   overflow: hidden;
   border-radius: 18px;
   background: #fff;
-  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.08);
+  transition: box-shadow 0.2s ease;
+}
+
+.destination-card:hover {
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.13);
 }
 
 .destination-card-link {
@@ -14,39 +23,36 @@
   color: inherit;
 }
 
+/* =========================================
+   IMAGE WRAPPER
+   Use .destination-media (the class in JSX)
+========================================= */
+
 .destination-media {
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: 18px 18px 0 0;
   background: #e5e7eb;
+  line-height: 0;
 }
+
+/* Aspect ratios per card size */
+.destination-card-compact  .destination-media { aspect-ratio: 1 / 1;    }
+.destination-card-standard .destination-media { aspect-ratio: 1 / 1.15; }
+.destination-card-portrait .destination-media { aspect-ratio: 1 / 1.3;  }
+.destination-card-tall     .destination-media { aspect-ratio: 1 / 1.45; }
 
 /* =========================================
-   IMAGE ASPECT RATIOS
+   IMAGE
 ========================================= */
-
-.destination-card-compact .destination-media {
-  aspect-ratio: 1 / 1;
-}
-
-.destination-card-standard .destination-media {
-  aspect-ratio: 1 / 1.15;
-}
-
-.destination-card-portrait .destination-media {
-  aspect-ratio: 1 / 1.3;
-}
-
-.destination-card-tall .destination-media {
-  aspect-ratio: 1 / 1.45;
-}
 
 .destination-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.35s ease;
 }
 
@@ -84,11 +90,14 @@
   font-weight: 700;
   color: #111827;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .destination-description {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 500;
   color: #374151;
   line-height: 1.35;
   margin-top: 2px;
@@ -119,7 +128,6 @@
   color: #6b7280;
   font-size: 10px;
   font-weight: 600;
-  margin-top: 2px;
 }
 
 .destination-footer {
@@ -127,7 +135,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 4px;
 }
 
 .destination-location {
@@ -143,17 +150,17 @@
 
 .destination-view-btn {
   flex-shrink: 0;
-  font-size: 9px;
-  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #111827;
   color: #fff;
-  background: #3b82f6;
-  border-radius: 6px;
-  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.2s ease;
 }
 
 .destination-view-btn:hover {
-  background: #2563eb;
+  background: #1f2937;
 }

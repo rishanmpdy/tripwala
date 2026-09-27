@@ -3,7 +3,7 @@ import { useState } from "react";
 import Header from "../../Components/Header/Header";
 import FoodMasonry from "../../Components/FoodMasonry/FoodMasonry";
 
-import foodSpots from "../../data/foodSpots";
+import { getPublicFoodSpots } from "../../data/publicListings";
 
 import "./FoodSpots.css";
 
@@ -11,7 +11,7 @@ const FoodSpots = () => {
 
   const [search, setSearch] = useState("");
 
-  const filteredFoods = foodSpots.filter((food) =>
+  const filteredFoods = getPublicFoodSpots().filter((food) =>
     `${food.title} ${food.location}`
       .toLowerCase()
       .includes(search.toLowerCase())
@@ -102,3 +102,5 @@ const FoodSpots = () => {
 };
 
 export default FoodSpots;
+
+

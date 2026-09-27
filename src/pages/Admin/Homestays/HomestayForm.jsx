@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import homestays from "../../../data/admin/Places/homestays";
+import { homestayStore } from "../../../data/stores";
 
 import "./Homestays.css";
 
@@ -964,3 +964,5 @@ const HomestayForm = () => {
 };
 
 export default HomestayForm;
+
+
