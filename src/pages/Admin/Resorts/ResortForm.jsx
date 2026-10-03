@@ -25,165 +25,141 @@ const ResortForm = () => {
     : null;
 
 
-  const [form, setForm] = useState(
-    existingResort || {
-
-      name: "",
-
-      type: "",
-
-      shortDescription: "",
-
-      description: "",
-
-      priceRange: "₹₹",
-
-      image: "",
-
-      gallery: [],
-
-      address: "",
-
-      area: "",
-
-      district: "",
-
-      latitude: "",
-
-      longitude: "",
-
-      mapsUrl: "",
-
-      rooms: "",
-
-      roomTypes: "",
-
-      guests: "",
-
-      checkIn: "02:00 PM",
-
-      checkOut: "11:00 AM",
-
-      minimumStay: 1,
-
-      phone: "",
-
-      whatsapp: "",
-
-      website: "",
-
-      instagram: "",
-
-      facilities: [],
-
-      status: "Active",
-
-      featured: false,
-
-      showOnHomepage: false,
+  const [form, setForm] = useState(() => {
+    if (existingResort) {
+      return {
+        ...existingResort,
+        enquiryTargetType: existingResort.enquiryTargetType || "agent",
+        agentPhone: existingResort.agentPhone || "+91 94471 88990",
+        resortPhone: existingResort.resortPhone || existingResort.phone || existingResort.contact?.phone || "",
+        customPhone: existingResort.customPhone || "",
+        phone: existingResort.resortPhone || existingResort.phone || existingResort.contact?.phone || "",
+        whatsapp: existingResort.whatsapp || existingResort.contact?.whatsapp || "+91 94471 88990",
+        email: existingResort.email || existingResort.contact?.email || "",
+        website: existingResort.website || existingResort.contact?.website || "",
+        instagram: existingResort.instagram || existingResort.contact?.instagram || "",
+      };
     }
-  );
-
+    return {
+      name: "",
+      type: "",
+      shortDescription: "",
+      description: "",
+      priceRange: "₹₹",
+      image: "",
+      gallery: [],
+      address: "",
+      area: "",
+      district: "",
+      latitude: "",
+      longitude: "",
+      mapsUrl: "",
+      rooms: "",
+      roomTypes: "",
+      guests: "",
+      checkIn: "02:00 PM",
+      checkOut: "11:00 AM",
+      minimumStay: 1,
+      enquiryTargetType: "agent",
+      agentPhone: "+91 94471 88990",
+      resortPhone: "",
+      customPhone: "",
+      phone: "",
+      whatsapp: "+91 94471 88990",
+      email: "",
+      website: "",
+      instagram: "",
+      facilities: [],
+      status: "Active",
+      featured: false,
+      showOnHomepage: false,
+    };
+  });
 
   const handleChange = (e) => {
-
-    const {
-      name,
-      value,
-      type,
-      checked,
-    } = e.target;
-
+    const { name, value, type, checked } = e.target;
     setForm((current) => ({
       ...current,
-
-      [name]:
-        type === "checkbox"
-          ? checked
-          : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
-
   };
 
-
-  const toggleFacility = (
-    facility
-  ) => {
-
+  const toggleFacility = (facility) => {
     setForm((current) => {
-
-      const exists =
-        current.facilities.includes(
-          facility
-        );
-
+      const exists = current.facilities.includes(facility);
       return {
         ...current,
-
         facilities: exists
-          ? current.facilities.filter(
-              (item) =>
-                item !== facility
-            )
-          : [
-              ...current.facilities,
-              facility,
-            ],
+          ? current.facilities.filter((item) => item !== facility)
+          : [...current.facilities, facility],
       };
-
     });
-
   };
 
-
   const handleSubmit = (e) => {
-
     e.preventDefault();
 
-
     if (!form.name.trim()) {
-      alert(
-        "Resort name is required."
-      );
+      alert("Resort name is required.");
       return;
     }
-
 
     if (!form.type) {
-      alert(
-        "Please select resort type."
-      );
+      alert("Please select resort type.");
       return;
     }
-
 
     if (!form.address.trim()) {
-      alert(
-        "Address is required."
-      );
+      alert("Address is required.");
       return;
     }
 
+    const currentResorts = resortStore.get() || [];
+    const resortId = existingResort?.id || Date.now();
+    
+    // Determine effective WhatsApp recipient based on admin routing choice
+    const activeWhatsapp =
+      form.enquiryTargetType === "agent"
+        ? (form.agentPhone?.trim() || "+91 94471 88990")
+        : form.enquiryTargetType === "resort"
+        ? (form.resortPhone?.trim() || form.phone?.trim() || "")
+        : (form.customPhone?.trim() || form.agentPhone?.trim() || "");
 
-    console.log(
-      existingResort
-        ? "UPDATE RESORT"
-        : "CREATE RESORT",
-      form
-    );
+    const privateResortPhone = form.resortPhone?.trim() || form.phone?.trim() || "";
 
+    const resortDataToSave = {
+      ...existingResort,
+      ...form,
+      id: resortId,
+      name: form.name.trim(),
+      enquiryTargetType: form.enquiryTargetType || "agent",
+      agentPhone: form.agentPhone?.trim() || "+91 94471 88990",
+      resortPhone: privateResortPhone,
+      customPhone: form.customPhone?.trim() || "",
+      phone: privateResortPhone,
+      whatsapp: activeWhatsapp,
+      email: form.email?.trim() || "",
+      website: form.website?.trim() || "",
+      instagram: form.instagram?.trim() || "",
+      contact: {
+        phone: privateResortPhone,
+        whatsapp: activeWhatsapp,
+        email: form.email?.trim() || "",
+        website: form.website?.trim() || "",
+        address: form.address?.trim() || ""
+      }
+    };
 
-    /*
-      TanStack Query API:
-
-      POST /api/resorts
-
-      PUT /api/resorts/:id
-    */
-
+    if (existingResort) {
+      const updatedList = currentResorts.map((r) =>
+        String(r.id) === String(id) ? resortDataToSave : r
+      );
+      resortStore.save(updatedList);
+    } else {
+      resortStore.save([...currentResorts, resortDataToSave]);
+    }
 
     navigate("/admin/resorts");
-
   };
 
 
@@ -801,92 +777,148 @@ const ResortForm = () => {
 
         {/* CONTACT */}
 
+        {/* ENQUIRY ROUTING & RESORT CONTACT */}
         <section className="resort-form-section">
-
           <div className="resort-section-title">
-
             <div>
-
-              <h2>
-                Contact
-              </h2>
-
+              <h2>Enquiry Routing & Resort Contact Settings</h2>
               <p>
-                Contact and social information
+                Configure where customer website WhatsApp enquiries are routed. Resort direct contact numbers are strictly kept private for admin only.
               </p>
-
             </div>
-
+            <span style={{ background: "#e0f2fe", color: "#0369a1", border: "1px solid #bae6fd", padding: "4px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: "700" }}>
+              Enquiry Routing
+            </span>
           </div>
 
-
           <div className="resort-form-grid">
-
-            <div className="resort-field">
-
-              <label>
-                Phone
+            {/* 1. Routing Selector */}
+            <div className="resort-field full" style={{ background: "#f8fafc", padding: "14px", borderRadius: "8px", border: "1.5px solid #e2e8f0" }}>
+              <label style={{ fontSize: "12px", fontWeight: "700", color: "#0f172a", marginBottom: "8px", display: "block" }}>
+                🎯 Send Customer WhatsApp Enquiries To:
               </label>
-
-              <input
-                name="phone"
-                value={form.phone}
+              <select
+                name="enquiryTargetType"
+                value={form.enquiryTargetType || "agent"}
                 onChange={handleChange}
-                placeholder="+91..."
-              />
-
+                style={{ fontSize: "13px", fontWeight: "600", padding: "8px 12px", width: "100%", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+              >
+                <option value="agent">
+                  My Agent / Admin Number (Customer enquiry comes to me first, then I connect with resort)
+                </option>
+                <option value="resort">
+                  Direct Resort Number (Route directly to resort when agent is busy / direct booking)
+                </option>
+                <option value="custom">
+                  Custom WhatsApp Number (Enter specific recipient number)
+                </option>
+              </select>
+              <small style={{ color: "#64748b", fontSize: "11.5px", marginTop: "6px", display: "block" }}>
+                {form.enquiryTargetType === "agent" && (
+                  <span>✅ Customer details (Name, Phone number, dates, room category) will be sent to <strong>your WhatsApp number</strong>. The resort contact number stays completely hidden from the public.</span>
+                )}
+                {form.enquiryTargetType === "resort" && (
+                  <span>⚡ Enquiries will be routed directly to the resort's WhatsApp number without exposing it on the public page.</span>
+                )}
+                {form.enquiryTargetType === "custom" && (
+                  <span>⚙️ Enquiries will be routed to the custom WhatsApp number you enter below.</span>
+                )}
+              </small>
             </div>
 
-
+            {/* Agent / Admin Number */}
             <div className="resort-field">
-
-              <label>
-                WhatsApp
-              </label>
-
+              <label>Agent / Admin WhatsApp Number *</label>
               <input
-                name="whatsapp"
-                value={form.whatsapp}
+                name="agentPhone"
+                value={form.agentPhone}
                 onChange={handleChange}
-                placeholder="+91..."
+                placeholder="+91 94471 88990"
               />
-
+              <small style={{ color: "#059669", fontSize: "11px", marginTop: "3px", fontWeight: 600 }}>
+                Your number to receive guest booking details
+              </small>
             </div>
 
+            {/* Resort Phone (Private) */}
+            <div className="resort-field">
+              <label>
+                Resort Direct Contact Number *{" "}
+                <span style={{ color: "#dc2626", fontSize: "10.5px", fontWeight: 600 }}>(Admin Only - Hidden from Public)</span>
+              </label>
+              <input
+                name="resortPhone"
+                value={form.resortPhone}
+                onChange={handleChange}
+                placeholder="+91 98470 12345"
+              />
+              <small style={{ color: "#64748b", fontSize: "11px", marginTop: "3px" }}>
+                Resort management number for admin calling only
+              </small>
+            </div>
+
+            {/* Custom Number if selected */}
+            {form.enquiryTargetType === "custom" && (
+              <div className="resort-field full">
+                <label>Custom WhatsApp Number *</label>
+                <input
+                  name="customPhone"
+                  value={form.customPhone || ""}
+                  onChange={handleChange}
+                  placeholder="+91 98765 43210"
+                />
+              </div>
+            )}
+
+            {/* Active Routing Summary Badge */}
+            <div className="resort-field full">
+              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "10px 14px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <span className="material-symbols-outlined" style={{ color: "#16a34a", fontSize: "18px" }}>
+                  check_circle
+                </span>
+                <span style={{ fontSize: "12px", color: "#166534" }}>
+                  Currently Active Recipient: <strong>
+                    {form.enquiryTargetType === "agent"
+                      ? (form.agentPhone || "+91 94471 88990")
+                      : form.enquiryTargetType === "resort"
+                      ? (form.resortPhone || "Resort Phone")
+                      : (form.customPhone || "Custom Phone")}
+                  </strong> (Customer clicks "WhatsApp Enquiry" ➔ text sent directly here)
+                </span>
+              </div>
+            </div>
 
             <div className="resort-field">
+              <label>Official Email</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email || ""}
+                onChange={handleChange}
+                placeholder="stay@resortname.com"
+              />
+            </div>
 
-              <label>
-                Website
-              </label>
-
+            <div className="resort-field">
+              <label>Website URL</label>
               <input
                 name="website"
                 value={form.website}
                 onChange={handleChange}
-                placeholder="https://..."
+                placeholder="https://www.resortname.com"
               />
-
             </div>
 
-
-            <div className="resort-field">
-
-              <label>
-                Instagram
-              </label>
-
+            <div className="resort-field full">
+              <label>Instagram Handle</label>
               <input
                 name="instagram"
                 value={form.instagram}
                 onChange={handleChange}
-                placeholder="@username"
+                placeholder="@resortname"
               />
-
             </div>
-
           </div>
-
         </section>
 
 

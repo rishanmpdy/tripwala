@@ -1,7 +1,9 @@
-﻿import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Listings from "../pages/Listings/Listings";
-import PlaceDetails from "../pages/PlaceDetails/PlaceDetails";
+import PlaceDetails from "../pages/Places/PlaceDetails";
+import PlacesPage from "../pages/Places/Places";
+import ResortDetails from "../pages/Resorts/ResortDetails";
 import FoodSpots from "../pages/FoodSpots/FoodSpots";
 import Taxi from "../pages/Taxi/Taxi";
 import AdminLogin from "../pages/Admin/AdminLogin";
@@ -28,7 +30,11 @@ const AdminSectionPlaceholder = () => <section className="admin-section-placehol
 const AppRoutes = () => <Routes>
   <Route path="/" element={<Home />} />
   <Route path="/listings" element={<Listings />} />
+  <Route path="/places" element={<PlacesPage />} />
   <Route path="/place/:id" element={<PlaceDetails />} />
+  <Route path="/places/:id" element={<PlaceDetails />} />
+  <Route path="/resort/:id" element={<ResortDetails />} />
+  <Route path="/resorts/:id" element={<ResortDetails />} />
   <Route path="/food" element={<FoodSpots />} />
   <Route path="/taxi" element={<Taxi />} />
   <Route path="/taxi/:id" element={<PlaceDetails />} />
@@ -37,7 +43,8 @@ const AppRoutes = () => <Routes>
     <Route index element={<AdminDashboard />} />
     <Route path="places" element={<Places />} />
     <Route path="places/new" element={<PlaceForm />} />
-    <Route path="places/:id/edit" element={<PlaceForm />} />    <Route path="food-spots" element={<AdminFoodSpots />} />
+    <Route path="places/:id/edit" element={<PlaceForm />} />
+    <Route path="food-spots" element={<AdminFoodSpots />} />
     <Route path="food-spots/new" element={<FoodSpotForm />} />
     <Route path="food-spots/:id" element={<FoodSpotView />} />
     <Route path="food-spots/:id/edit" element={<FoodSpotForm />} />
@@ -45,7 +52,7 @@ const AppRoutes = () => <Routes>
     <Route path="homestays" element={<Homestays />} />
     <Route path="homestays/new" element={<HomestayForm />} />
     <Route path="homestays/:id" element={<HomestayView />} />
-    <Route path="homestays/:id/edit" element={<HomestayForm />} />
+    <Route path="homestays/:id/edit" element={<HomestayView />} />
     <Route path="resorts" element={<Resorts />} />
     <Route path="resorts/new" element={<ResortForm />} />
     <Route path="resorts/:id" element={<ResortView />} />

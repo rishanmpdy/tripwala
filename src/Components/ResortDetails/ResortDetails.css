@@ -1,0 +1,2243 @@
+/* ============================================================
+   RESORT DETAILS MODERN STYLING
+   Rich Luxury Travel Aesthetic with Glassmorphism & Animations
+   ============================================================ */
+
+:root {
+  --rd-primary: #0d9488;
+  --rd-primary-hover: #0f766e;
+  --rd-primary-light: #f0fdfa;
+  --rd-primary-border: #99f6e4;
+  --rd-accent: #d97706;
+  --rd-accent-light: #fef3c7;
+  --rd-dark: #0f172a;
+  --rd-slate: #334155;
+  --rd-muted: #64748b;
+  --rd-light-bg: #f8fafc;
+  --rd-surface: #ffffff;
+  --rd-border: #e2e8f0;
+  --rd-border-subtle: #f1f5f9;
+  --rd-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --rd-shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+  --rd-shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  --rd-radius-sm: 8px;
+  --rd-radius-md: 14px;
+  --rd-radius-lg: 20px;
+  --rd-radius-full: 9999px;
+  --rd-transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.resort-details-page {
+  background: var(--rd-light-bg);
+  min-height: 100vh;
+  color: var(--rd-dark);
+  font-family: inherit;
+  padding-bottom: 80px;
+}
+
+/* ---------------- Top Navbar / Breadcrumb Bar ---------------- */
+.rd-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--rd-border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.rd-topbar-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.rd-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.rd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rd-slate);
+  background: #f1f5f9;
+  padding: 7px 12px;
+  border-radius: var(--rd-radius-full);
+  text-decoration: none;
+  transition: var(--rd-transition);
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+
+.rd-back-btn:hover {
+  background: #e2e8f0;
+  color: var(--rd-dark);
+  transform: translateX(-2px);
+}
+
+.rd-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--rd-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rd-breadcrumbs a {
+  color: var(--rd-muted);
+  text-decoration: none;
+  transition: var(--rd-transition);
+}
+
+.rd-breadcrumbs a:hover {
+  color: var(--rd-primary);
+}
+
+.rd-breadcrumbs .active {
+  color: var(--rd-dark);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rd-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rd-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rd-slate);
+  cursor: pointer;
+  transition: var(--rd-transition);
+}
+
+.rd-action-btn:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  color: var(--rd-dark);
+}
+
+.rd-action-btn.active {
+  color: #ef4444;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.rd-action-btn.active .material-symbols-outlined {
+  font-variation-settings: "FILL" 1;
+}
+
+/* ---------------- Container ---------------- */
+.rd-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 20px 0;
+}
+
+/* ============================================================
+   RESORT HERO DETAILS SECTION (BELOW GALLERY)
+   ============================================================ */
+.resort-hero-details-section {
+  margin-bottom: 24px;
+}
+
+.resort-heading-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.resort-social-actions-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.resort-social-actions-right .rd-action-btn,
+.resort-social-actions-right .meta-likes-item {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12.5px;
+  box-sizing: border-box;
+}
+
+.resort-hero-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.resort-actions-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.resort-badges-bottom-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.resort-badges-bottom-cta .rd-cta-btn,
+.resort-badges-bottom-cta .rd-cta-btn-outline {
+  height: 36px;
+  padding: 0 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: var(--rd-radius-full);
+  white-space: nowrap;
+}
+
+.resort-badges-bottom-cta .rd-cta-btn {
+  background: var(--rd-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+}
+
+.resort-badges-bottom-cta .rd-cta-btn:hover {
+  background: var(--rd-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.4);
+}
+
+.resort-badges-bottom-cta .rd-cta-btn-outline:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.meta-likes-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--rd-slate);
+  font-weight: 500;
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: var(--rd-radius-full);
+}
+
+.meta-likes-item .material-symbols-outlined {
+  font-size: 16px;
+  color: var(--rd-primary);
+}
+
+.booking-guarantee-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rd-primary);
+  background: var(--rd-primary-light);
+  padding: 4px 10px;
+  border-radius: var(--rd-radius-full);
+  border: 1px solid var(--rd-primary-border);
+}
+
+/* ============================================================
+   UNIQUE & PREMIUM BADGE DESIGNS
+   ============================================================ */
+.resort-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 13px;
+  border-radius: var(--rd-radius-full);
+  font-size: 11.5px;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.resort-badge:hover {
+  transform: translateY(-1px);
+}
+
+.resort-badge .badge-icon,
+.resort-badge .material-symbols-outlined {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* 1. Verified Eco Choice (Rich Jewel Emerald) */
+.badge-eco-choice {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.28);
+}
+
+.badge-eco-choice .badge-icon {
+  color: #a7f3d0;
+  filter: drop-shadow(0 0 2px rgba(167, 243, 208, 0.5));
+}
+
+/* 2. Popular / Trending Choice (Electric Sapphire) */
+.badge-popular-choice {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.28);
+}
+
+.badge-popular-choice .badge-icon {
+  color: #fde047;
+}
+
+/* 3. Luxury Choice (Royal Imperial Amber) */
+.badge-luxury-choice {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28);
+}
+
+.badge-luxury-choice .badge-icon {
+  color: #fef08a;
+}
+
+/* 4. Budget Choice (Sky Blue) */
+.badge-budget-choice {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.28);
+}
+
+/* ============================================================
+   RESORT CATEGORY TYPE BADGES (DISTINCT & HARMONIOUS)
+   ============================================================ */
+/* Eco Resort (Fresh Botanical Sage) */
+.type-badge-eco {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  border: 1.5px solid #6ee7b7;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.14);
+}
+
+.type-badge-eco .badge-icon {
+  color: #059669;
+}
+
+/* Luxury Resort (Champagne Gold Glow) */
+.type-badge-luxury {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  color: #78350f;
+  border: 1.5px solid #fde68a;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.14);
+}
+
+.type-badge-luxury .badge-icon {
+  color: #d97706;
+}
+
+/* Nature Resort (Highland Blue Vista) */
+.type-badge-nature {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #0369a1;
+  border: 1.5px solid #7dd3fc;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.14);
+}
+
+.type-badge-nature .badge-icon {
+  color: #0284c7;
+}
+
+/* Private Villa (Regal Lavender) */
+.type-badge-villa {
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  color: #6b21a8;
+  border: 1.5px solid #d8b4fe;
+  box-shadow: 0 2px 6px rgba(168, 85, 247, 0.14);
+}
+
+.type-badge-villa .badge-icon {
+  color: #9333ea;
+}
+
+/* Fallback badge types */
+.badge-luxury {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  color: #78350f;
+  border: 1.5px solid #fde68a;
+}
+
+.badge-popular {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #1e40af;
+  border: 1.5px solid #93c5fd;
+}
+
+.badge-budget-friendly,
+.badge-budget {
+  background: linear-gradient(135deg, #ecfeff, #cffafe);
+  color: #0e7490;
+  border: 1.5px solid #67e8f9;
+}
+
+/* ============================================================
+   RATING PILL (OBSIDIAN & AMBER GLOW)
+   ============================================================ */
+.resort-rating-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  background: linear-gradient(135deg, #090d16 0%, #172033 100%);
+  color: #ffffff;
+  padding: 0 13px;
+  border-radius: var(--rd-radius-full);
+  font-size: 12px;
+  box-sizing: border-box;
+  line-height: 1;
+  border: 1px solid #334155;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.resort-rating-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.35);
+}
+
+.resort-rating-pill .star {
+  color: #f59e0b;
+  font-variation-settings: "FILL" 1;
+  font-size: 15px;
+  line-height: 1;
+  filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.6));
+}
+
+.resort-rating-pill .rating-score {
+  font-weight: 800;
+  font-size: 12.5px;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.resort-rating-pill .reviews-count {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.resort-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.resort-title-group {
+  flex: 1;
+  min-width: 280px;
+}
+
+.resort-title {
+  font-size: clamp(26px, 3.2vw, 38px);
+  font-weight: 800;
+  color: var(--rd-dark);
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+  margin: 0;
+}
+
+.resort-tagline {
+  font-size: clamp(14px, 1.4vw, 16px);
+  color: var(--rd-slate);
+  margin-top: 6px;
+  line-height: 1.5;
+  font-weight: 450;
+}
+
+.resort-meta-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: var(--rd-slate);
+  margin-top: 10px;
+}
+
+.meta-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-info-item .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--rd-primary);
+}
+
+.meta-map-link {
+  color: var(--rd-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  margin-left: 2px;
+  transition: var(--rd-transition);
+}
+
+.meta-map-link:hover {
+  color: var(--rd-primary-hover);
+}
+
+/* Price Card */
+.resort-price-card {
+  text-align: right;
+  background: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--rd-radius-md);
+  border: 1px solid var(--rd-border);
+  box-shadow: var(--rd-shadow-sm);
+  flex-shrink: 0;
+}
+
+.price-card-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rd-muted);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.price-card-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--rd-dark);
+  line-height: 1.1;
+}
+
+.price-card-old {
+  font-size: 13px;
+  color: var(--rd-muted);
+  text-decoration: line-through;
+  margin-right: 6px;
+  font-weight: 500;
+}
+
+.price-card-unit {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rd-muted);
+}
+
+/* ============================================================
+   RESORT GALLERY
+   ============================================================ */
+.resort-gallery-wrapper {
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.resort-gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 210px 210px;
+  gap: 10px;
+  border-radius: var(--rd-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--rd-shadow-md);
+  background: #e2e8f0;
+}
+
+.gallery-cell {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #cbd5e1;
+}
+
+.gallery-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.gallery-cell:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-cell-main {
+  grid-row: span 2;
+}
+
+.gallery-cell-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.08);
+  transition: var(--rd-transition);
+}
+
+.gallery-cell:hover .gallery-cell-overlay {
+  background: rgba(0, 0, 0, 0);
+}
+
+.gallery-cell-more {
+  position: relative;
+}
+
+.gallery-more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  backdrop-filter: blur(2px);
+  transition: var(--rd-transition);
+  font-weight: 700;
+}
+
+.gallery-cell:hover .gallery-more-overlay {
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.gallery-more-overlay .more-count {
+  font-size: 22px;
+}
+
+.gallery-more-overlay .more-text {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.gallery-floating-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  color: var(--rd-dark);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: var(--rd-radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: var(--rd-transition);
+  z-index: 5;
+}
+
+.gallery-floating-btn:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Lightbox Modal */
+.rd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 15, 25, 0.94);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.rd-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  color: #ffffff;
+}
+
+.rd-lightbox-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.rd-lightbox-close {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--rd-transition);
+}
+
+.rd-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.rd-lightbox-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 20px;
+  position: relative;
+  min-height: 0;
+}
+
+.rd-lightbox-img-wrapper {
+  max-width: 86vw;
+  max-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.rd-lightbox-img-wrapper img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--rd-radius-md);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.rd-lightbox-nav {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--rd-transition);
+  flex-shrink: 0;
+}
+
+.rd-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.rd-lightbox-thumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px 20px;
+  overflow-x: auto;
+}
+
+.rd-thumb {
+  width: 60px;
+  height: 44px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.5;
+  border: 2px solid transparent;
+  transition: var(--rd-transition);
+  flex-shrink: 0;
+}
+
+.rd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rd-thumb:hover {
+  opacity: 0.85;
+}
+
+.rd-thumb.active {
+  opacity: 1;
+  border-color: #38bdf8;
+  transform: scale(1.08);
+}
+
+/* ============================================================
+   RESORT SUMMARY (QUICK HIGHLIGHTS 2-COLUMN GRID)
+   ============================================================ */
+.resort-summary-card {
+  background: #ffffff;
+  border-radius: var(--rd-radius-lg);
+  padding: 20px 22px;
+  border: 1px solid var(--rd-border);
+  box-shadow: var(--rd-shadow-sm);
+  margin-bottom: 28px;
+}
+
+.resort-summary-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+  align-items: center;
+}
+
+.summary-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-feat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rd-radius-md);
+  background: var(--rd-primary-light);
+  color: var(--rd-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summary-feat-icon .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.summary-feat-text strong {
+  display: block;
+  font-size: 13.5px;
+  color: var(--rd-dark);
+}
+
+.summary-feat-text span {
+  font-size: 12px;
+  color: var(--rd-muted);
+}
+
+.summary-feat-cta-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rd-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rd-primary);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: var(--rd-radius-full);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+  transition: var(--rd-transition);
+  white-space: nowrap;
+}
+
+.rd-cta-btn:hover {
+  background: var(--rd-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45);
+}
+
+.rd-cta-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--rd-slate);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: var(--rd-radius-full);
+  border: 1px solid var(--rd-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--rd-transition);
+  white-space: nowrap;
+}
+
+.rd-cta-btn-outline:hover {
+  background: #f8fafc;
+  color: var(--rd-dark);
+  border-color: #cbd5e1;
+}
+
+/* ============================================================
+   MAIN TWO-COLUMN LAYOUT
+   ============================================================ */
+.rd-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 36px;
+  align-items: start;
+}
+
+.rd-main-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.rd-sidebar-column {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 76px;
+}
+
+#booking-widget,
+#rooms-section {
+  scroll-margin-top: 90px;
+}
+
+/* Section Shared Heading */
+.rd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rd-section-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f0fdfa;
+  color: var(--rd-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rd-section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--rd-dark);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.rd-section-subtitle {
+  font-size: 13px;
+  color: var(--rd-muted);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   RESORT OVERVIEW COMPONENT
+   ============================================================ */
+.resort-overview-card {
+  background: #ffffff;
+  border-radius: var(--rd-radius-lg);
+  padding: 28px;
+  border: 1px solid var(--rd-border);
+  box-shadow: var(--rd-shadow-sm);
+}
+
+.overview-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--rd-slate);
+  white-space: pre-line;
+  margin-bottom: 28px;
+}
+
+/* Highlights Grid */
+.highlights-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.highlight-item-card {
+  background: #f8fafc;
+  border: 1px solid var(--rd-border-subtle);
+  border-radius: var(--rd-radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: var(--rd-transition);
+}
+
+.highlight-item-card:hover {
+  background: #ffffff;
+  border-color: var(--rd-primary-border);
+  box-shadow: var(--rd-shadow-sm);
+  transform: translateY(-2px);
+}
+
+.highlight-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #e6fffa;
+  color: var(--rd-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.highlight-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  margin: 0 0 3px;
+}
+
+.highlight-info p {
+  font-size: 12.5px;
+  color: var(--rd-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Room Selection Cards in Overview */
+.rooms-section-wrapper {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rd-border);
+}
+
+.rooms-section-wrapper .rd-section-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rooms-section-wrapper .rd-section-subtitle {
+  font-size: 12px;
+}
+
+.rooms-section-wrapper .rd-section-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.rooms-section-wrapper .rd-section-icon-badge .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Simple Room Category List (Checkbox, Name with Tag, and Price) */
+.room-category-simple-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.room-category-simple-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border: 1.5px solid var(--rd-border);
+  border-radius: var(--rd-radius-md);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.room-category-simple-row:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.room-category-simple-row.selected {
+  border-color: var(--rd-primary);
+  background: #f0fdf9;
+  box-shadow: 0 3px 12px rgba(13, 148, 136, 0.12);
+}
+
+.room-simple-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.room-simple-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.room-category-simple-row:hover .room-simple-checkbox {
+  border-color: var(--rd-primary);
+}
+
+.room-simple-checkbox.checked {
+  background: var(--rd-primary);
+  border-color: var(--rd-primary);
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
+}
+
+.room-simple-checkbox .check-icon {
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.room-simple-name {
+  font-size: 14.5px;
+  font-weight: 650;
+  color: var(--rd-dark);
+}
+
+.room-category-simple-row.selected .room-simple-name {
+  color: var(--rd-primary-dark);
+  font-weight: 700;
+}
+
+.room-simple-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--rd-primary);
+  background: var(--rd-primary-light);
+  border: 1px solid var(--rd-primary-border);
+  padding: 3px 9px;
+  border-radius: var(--rd-radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.room-simple-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.room-price-amount {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--rd-dark);
+}
+
+.room-category-simple-row.selected .room-price-amount {
+  color: var(--rd-primary);
+}
+
+.room-price-unit {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--rd-muted);
+}
+
+.rooms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.room-card {
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-md);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  gap: 14px;
+  transition: var(--rd-transition);
+}
+
+.room-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--rd-shadow-md);
+}
+
+.room-card.selected {
+  border-color: var(--rd-primary);
+  background: #f0fdfa;
+  box-shadow: 0 3px 12px rgba(13, 148, 136, 0.12);
+}
+
+.room-card-image-wrap {
+  width: 105px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  background: #f1f5f9;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  display: block;
+}
+
+.room-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.room-card-image-wrap:hover .room-card-image {
+  transform: scale(1.08);
+}
+
+.room-image-overlay-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--rd-radius-full);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  line-height: 1;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.room-image-overlay-badge .material-symbols-outlined {
+  font-size: 11px;
+}
+
+.room-card-image-wrap:hover .room-image-overlay-badge {
+  background: var(--rd-primary);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.03);
+}
+
+.room-card-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.room-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.room-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.room-type-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--rd-primary);
+  background: var(--rd-primary-light);
+  border: 1px solid var(--rd-primary-border);
+  padding: 1.5px 6px;
+  border-radius: var(--rd-radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.room-specs {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--rd-muted);
+}
+
+.room-spec-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.room-spec-item .material-symbols-outlined {
+  font-size: 14px;
+  color: var(--rd-primary);
+}
+
+.room-features-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1px;
+}
+
+.room-feature-pill {
+  font-size: 10px;
+  background: #f1f5f9;
+  color: var(--rd-slate);
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  line-height: 1.2;
+}
+
+.room-feature-pill.room-feature-more {
+  background: var(--rd-primary-light);
+  color: var(--rd-primary);
+  font-weight: 700;
+  border: 1px solid var(--rd-primary-border);
+}
+
+.room-card-pricing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.room-price-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--rd-dark);
+  text-align: right;
+  line-height: 1.2;
+}
+
+.room-price-val span {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--rd-muted);
+}
+
+.room-original-price {
+  font-size: 10.5px;
+  text-decoration: line-through;
+  color: var(--rd-muted);
+  display: block;
+  text-align: right;
+  line-height: 1;
+}
+
+.room-select-btn {
+  background: var(--rd-primary);
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--rd-radius-full);
+  cursor: pointer;
+  transition: var(--rd-transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.room-select-btn:hover {
+  background: var(--rd-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Policies & House Rules */
+.policies-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rd-border);
+}
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.policy-box {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: var(--rd-radius-md);
+  border: 1px solid var(--rd-border-subtle);
+}
+
+.policy-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--rd-primary);
+  margin-bottom: 6px;
+}
+
+.policy-value {
+  font-size: 13.5px;
+  color: var(--rd-slate);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   RESORT AMENITIES COMPONENT
+   ============================================================ */
+.resort-amenities-card {
+  background: #ffffff;
+  border-radius: var(--rd-radius-lg);
+  padding: 28px;
+  border: 1px solid var(--rd-border);
+  box-shadow: var(--rd-shadow-sm);
+}
+
+.amenities-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.amenity-category-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amenity-category-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--rd-primary);
+}
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.amenity-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: var(--rd-radius-md);
+  border: 1px solid var(--rd-border-subtle);
+  transition: var(--rd-transition);
+}
+
+.amenity-pill:hover {
+  background: #ffffff;
+  border-color: var(--rd-primary-border);
+  transform: translateY(-2px);
+  box-shadow: var(--rd-shadow-sm);
+}
+
+.amenity-pill .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--rd-primary);
+}
+
+.amenity-name {
+  font-size: 13.5px;
+  font-weight: 550;
+  color: var(--rd-slate);
+}
+
+/* ============================================================
+   RESORT CONTACT & BOOKING COMPONENT (SIDEBAR & BOTTOM BAR)
+   ============================================================ */
+.resort-contact-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-booking-box {
+  background: #ffffff;
+  border-radius: var(--rd-radius-lg);
+  border: 1px solid var(--rd-border);
+  box-shadow: var(--rd-shadow-md);
+  padding: 18px 20px;
+  position: relative;
+  overflow: visible;
+}
+
+.contact-booking-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-top-left-radius: var(--rd-radius-lg);
+  border-top-right-radius: var(--rd-radius-lg);
+  background: linear-gradient(90deg, var(--rd-primary), #06b6d4, var(--rd-accent));
+}
+
+.booking-box-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rd-border);
+}
+
+.booking-rate {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--rd-dark);
+}
+
+.booking-rate span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rd-muted);
+}
+
+.booking-rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--rd-dark);
+}
+
+.booking-rating-pill .star {
+  color: #fbbf24;
+  font-variation-settings: "FILL" 1;
+  font-size: 15px;
+}
+
+/* Booking Form Elements */
+.rd-booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--rd-slate);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-sm);
+  font-size: 13px;
+  color: var(--rd-dark);
+  background: #ffffff;
+  outline: none;
+  transition: var(--rd-transition);
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--rd-primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+/* Calculation Breakdown */
+.booking-calc-breakdown {
+  margin: 6px 0;
+  padding: 9px 12px;
+  background: #f8fafc;
+  border-radius: var(--rd-radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+}
+
+.calc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--rd-slate);
+}
+
+.calc-row.calc-total {
+  font-weight: 800;
+  font-size: 14.5px;
+  color: var(--rd-dark);
+  padding-top: 6px;
+  border-top: 1px dashed var(--rd-border);
+}
+
+.whatsapp-book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 11px 16px;
+  border-radius: var(--rd-radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  transition: var(--rd-transition);
+  text-decoration: none;
+}
+
+.whatsapp-book-btn:hover {
+  background: #20ba5a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Quick Contact Card */
+.contact-info-card {
+  background: #ffffff;
+  border-radius: var(--rd-radius-lg);
+  border: 1px solid var(--rd-border);
+  padding: 20px;
+  box-shadow: var(--rd-shadow-sm);
+}
+
+.contact-info-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--rd-radius-md);
+  background: #f8fafc;
+  border: 1px solid var(--rd-border-subtle);
+  color: var(--rd-dark);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 550;
+  transition: var(--rd-transition);
+}
+
+.contact-item-btn:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  transform: translateX(3px);
+  box-shadow: var(--rd-shadow-sm);
+}
+
+.contact-item-btn .icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.icon-box.phone {
+  background: #0284c7;
+}
+
+.icon-box.whatsapp {
+  background: #25d366;
+}
+
+.icon-box.email {
+  background: #e11d48;
+}
+
+.icon-box.maps {
+  background: #16a34a;
+}
+
+/* Toast Notifications */
+.rd-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: var(--rd-radius-full);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  font-size: 13.5px;
+  font-weight: 600;
+  z-index: 1000;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+  .rd-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rd-sidebar-column {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .resort-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 240px 160px;
+  }
+
+  .gallery-cell-main {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .room-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .room-card-image-wrap {
+    width: 100%;
+    height: 190px;
+  }
+
+  .room-card-pricing {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rd-border-subtle);
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rd-container {
+    padding: 16px 14px 0;
+  }
+
+  .resort-gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px;
+    border-radius: var(--rd-radius-md);
+  }
+
+  .gallery-cell:not(.gallery-cell-main) {
+    display: none;
+  }
+
+  .resort-summary-card {
+    padding: 16px;
+  }
+
+  .resort-summary-features-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .resort-heading-top-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .resort-hero-right-col {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .resort-social-actions-right {
+    justify-content: flex-start;
+  }
+
+  .resort-hero-badges-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .resort-badges-bottom-cta {
+    width: 100%;
+  }
+
+  .form-date-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ============================================================
+   ROOM CATEGORY MULTI-SELECT DROPDOWN STYLING
+   ============================================================ */
+.room-category-group {
+  margin: 4px 0 6px;
+  position: relative;
+}
+
+.room-category-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.room-multiselect-hint {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rd-primary);
+  background: var(--rd-primary-light);
+  padding: 2px 8px;
+  border-radius: var(--rd-radius-full);
+}
+
+.room-dropdown-trigger {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1.5px solid var(--rd-border);
+  border-radius: var(--rd-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.room-dropdown-trigger:hover,
+.room-dropdown-trigger.open {
+  border-color: var(--rd-primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+.room-dropdown-selected-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.room-dropdown-selected-text .trigger-icon {
+  font-size: 18px;
+  color: var(--rd-primary);
+  flex-shrink: 0;
+}
+
+.trigger-text-content {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rd-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.room-dropdown-trigger-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.room-dropdown-count-badge {
+  background: var(--rd-primary);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--rd-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-chevron {
+  font-size: 20px;
+  color: var(--rd-muted);
+}
+
+.room-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-md);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+  z-index: 100;
+  padding: 12px;
+  animation: fadeIn 0.16s ease-out;
+}
+
+.room-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--rd-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--rd-border-subtle);
+}
+
+.dropdown-total-preview {
+  color: var(--rd-primary);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: none;
+}
+
+.room-dropdown-footer {
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid var(--rd-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.room-dropdown-done-btn {
+  background: var(--rd-primary);
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--rd-radius-full);
+  cursor: pointer;
+  transition: var(--rd-transition);
+}
+
+.room-dropdown-done-btn:hover {
+  background: var(--rd-primary-hover);
+  transform: translateY(-1px);
+}
+
+.room-multiselect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.room-multiselect-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.room-multiselect-list::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+.room-multiselect-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.room-multiselect-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.room-checkbox-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1.5px solid var(--rd-border);
+  border-radius: var(--rd-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.room-checkbox-card:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.room-checkbox-card.active {
+  border-color: var(--rd-primary);
+  background: #f0fdfa;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.12);
+}
+
+.room-check-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.custom-checkbox-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.18s ease;
+}
+
+.custom-checkbox-box.checked {
+  background: var(--rd-primary);
+  border-color: var(--rd-primary);
+}
+
+.room-meta-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.room-meta-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.room-meta-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rd-dark);
+  line-height: 1.3;
+}
+
+.room-meta-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #0369a1;
+  background: #e0f2fe;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.room-meta-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--rd-muted);
+}
+
+.room-meta-capacity,
+.room-meta-bed {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.room-price-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.room-price-number {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--rd-dark);
+}
+
+.room-price-unit {
+  font-size: 10.5px;
+  color: var(--rd-muted);
+}
+
+.room-checkbox-card.active .room-price-number {
+  color: var(--rd-primary);
+}
+
+.calc-sub-detail {
+  font-size: 11px;
+  color: var(--rd-muted);
+  margin-top: 2px;
+  font-weight: normal;
+}
+
+/* Overview Room Card Selected State */
+.room-select-btn.selected {
+  background: #0f172a;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+}
+
+.room-select-btn.selected:hover {
+  background: #334155;
+}

@@ -1,16 +1,9 @@
 import { useMemo, useState } from "react";
-
 import ResortMasonry from "../../Components/Resort/ResortMasonry";
-
-import resorts from "../../data/resorts";
-
+import resorts from "../../data/resortData";
 import "./Resorts.css";
 
-
-/* ─────────────────────────────────────
-   DATA – unique badge types from data
-───────────────────────────────────── */
-
+/* Unique badge types & locations from data */
 const allBadges = [
   "All",
   ...Array.from(new Set(resorts.map((r) => r.badge).filter(Boolean))),
@@ -22,30 +15,22 @@ const allLocations = [
 ];
 
 const SORT_OPTIONS = [
-  { value: "newest",  label: "Newest first"  },
-  { value: "oldest",  label: "Oldest first"  },
-  { value: "popular", label: "Most popular"  },
+  { value: "newest", label: "Newest first" },
+  { value: "oldest", label: "Oldest first" },
+  { value: "popular", label: "Most popular" },
 ];
 
-
 const Resorts = () => {
-
-  const [search,   setSearch]   = useState("");
+  const [search, setSearch] = useState("");
   const [location, setLocation] = useState("All");
-  const [badge,    setBadge]    = useState("All");
-  const [sortBy,   setSortBy]   = useState("newest");
+  const [badge, setBadge] = useState("All");
+  const [sortBy, setSortBy] = useState("newest");
 
-
-  /* =========================
-     FILTER + SORT
-  ========================= */
-
+  /* Filter + Sort */
   const filteredResorts = useMemo(() => {
-
     const query = search.trim().toLowerCase();
 
     let result = resorts.filter((resort) => {
-
       const matchesSearch =
         !query ||
         resort.name.toLowerCase().includes(query) ||
@@ -63,7 +48,6 @@ const Resorts = () => {
       return matchesSearch && matchesLocation && matchesBadge;
     });
 
-    /* Sort */
     if (sortBy === "newest") {
       result = [...result].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else if (sortBy === "oldest") {
@@ -76,86 +60,43 @@ const Resorts = () => {
     }
 
     return result;
-
   }, [search, location, badge, sortBy]);
-
 
   return (
     <main className="resorts-page">
-
-
-      {/* =================================
-          HEADER
-      ================================= */}
-
+      {/* Header */}
       <header className="resorts-header">
-
         <div className="resorts-logo">
-
           <div className="resorts-logo-circle">
             <span className="material-symbols-outlined" style={{ fontSize: "15px", color: "#fff" }}>travel_explore</span>
           </div>
-
-          <span>
-            traveltri
-          </span>
-
+          <span>traveltri</span>
         </div>
-
       </header>
 
-
-      {/* =================================
-          HERO
-      ================================= */}
-
+      {/* Hero */}
       <section className="resorts-hero">
-
         <div className="resorts-hero-overlay" />
-
         <div className="resorts-hero-content">
-
-          <h1>
-            Discover Resorts
-          </h1>
-
-          <p>
-            Find beautiful places to stay
-            around your destination
-          </p>
-
+          <h1>Discover Resorts</h1>
+          <p>Find beautiful places to stay around your destination</p>
 
           <div className="resorts-search">
-
             <input
               type="text"
               value={search}
-              onChange={(event) =>
-                setSearch(event.target.value)
-              }
+              onChange={(event) => setSearch(event.target.value)}
               placeholder="Search resorts..."
             />
-
-            <span className="material-symbols-outlined">
-              search
-            </span>
-
+            <span className="material-symbols-outlined">search</span>
           </div>
-
         </div>
-
       </section>
 
-
-      {/* =================================
-          FILTER BAR
-      ================================= */}
-
+      {/* Filter Bar */}
       <div className="resorts-filter">
-
         {/* Location pills */}
         <div className="resorts-filter-left">
-
           {allLocations.map((loc) => (
             <button
               key={loc}
@@ -165,13 +106,10 @@ const Resorts = () => {
               {loc}
             </button>
           ))}
-
         </div>
-
 
         {/* Badge type filter */}
         <div className="resorts-filter-badges">
-
           {allBadges.map((b) => (
             <button
               key={b}
@@ -181,9 +119,7 @@ const Resorts = () => {
               {b}
             </button>
           ))}
-
         </div>
-
 
         {/* Sort dropdown */}
         <div className="resorts-filter-sort">
@@ -198,14 +134,9 @@ const Resorts = () => {
             ))}
           </select>
         </div>
-
       </div>
 
-
-      {/* =================================
-          RESULTS COUNT
-      ================================= */}
-
+      {/* Results Count Bar */}
       <div className="resorts-results-bar">
         <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#888" }}>hotel</span>
         <span>{filteredResorts.length} resort{filteredResorts.length !== 1 ? "s" : ""} found</span>
@@ -221,13 +152,8 @@ const Resorts = () => {
         )}
       </div>
 
-
-      {/* =================================
-          LISTING
-      ================================= */}
-
+      {/* Listing */}
       <section className="resort-listing">
-
         {filteredResorts.length > 0 ? (
           <ResortMasonry resorts={filteredResorts} />
         ) : (
@@ -237,13 +163,9 @@ const Resorts = () => {
             <span>Try adjusting your filters</span>
           </div>
         )}
-
       </section>
-
-
     </main>
   );
 };
-
 
 export default Resorts;

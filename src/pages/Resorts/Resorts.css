@@ -1,200 +1,125 @@
 /* =========================================
    PAGE
 ========================================= */
-
 .resorts-page {
   width: 100%;
-
   max-width: 1440px;
-
   margin: 0 auto;
-
   padding: 0 32px 60px;
-
   box-sizing: border-box;
-
   background: #fff;
 }
-
 
 /* =========================================
    HEADER
 ========================================= */
-
 .resorts-header {
   height: 76px;
-
   display: flex;
-
   align-items: center;
 }
-
 
 .resorts-logo {
   display: flex;
-
   align-items: center;
-
   gap: 7px;
-
   color: #111;
-
   font-size: 24px;
-
   font-weight: 800;
-
   letter-spacing: -0.05em;
 }
-
 
 .resorts-logo-circle {
   width: 27px;
   height: 27px;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: #000;
-
   color: #fff;
-
   font-size: 12px;
 }
-
 
 /* =========================================
    HERO
 ========================================= */
-
 .resorts-hero {
   position: relative;
-
   width: 100%;
-
   height: 240px;
-
   overflow: hidden;
-
   border-radius: 20px;
-
   background:
-    linear-gradient(
-      rgba(0, 30, 45, 0.15),
-      rgba(0, 20, 30, 0.7)
-    ),
+    linear-gradient(rgba(0, 30, 45, 0.15), rgba(0, 20, 30, 0.7)),
     url("/images/resort-hero.jpg");
-
   background-size: cover;
-
   background-position: center;
 }
 
-
 .resorts-hero-content {
   position: absolute;
-
   inset: 0;
-
   z-index: 2;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
-
   text-align: center;
-
   color: #fff;
 }
 
-
 .resorts-hero h1 {
   margin: 0;
-
   font-size: 30px;
-
   font-weight: 800;
 }
 
-
 .resorts-hero p {
   margin: 7px 0 18px;
-
   font-size: 13px;
-
   opacity: 0.9;
 }
-
 
 /* =========================================
    SEARCH
 ========================================= */
-
 .resorts-search {
-  width: min(
-    420px,
-    calc(100% - 40px)
-  );
-
+  width: min(420px, calc(100% - 40px));
   height: 43px;
-
   display: flex;
-
   align-items: center;
-
   gap: 8px;
-
   padding: 0 16px;
-
   border-radius: 24px;
-
   background: #fff;
-
   box-sizing: border-box;
 }
 
-
 .resorts-search input {
   flex: 1;
-
   min-width: 0;
-
   border: 0;
-
   outline: none;
-
   background: transparent;
-
   color: #222;
-
   font-size: 13px;
 }
 
-
 .resorts-search span {
   color: #111;
-
   font-size: 20px;
 }
-
 
 /* =========================================
    FILTER
 ========================================= */
-
 .resorts-filter {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin: 14px 0 0;
+  margin: 18px 0 0;
 }
 
 .resorts-filter-left {
@@ -224,8 +149,7 @@
   color: #fff;
 }
 
-/* ─── Badge pills ─────────────────── */
-
+/* Badge pills */
 .resorts-filter-badges {
   display: flex;
   align-items: center;
@@ -247,16 +171,15 @@
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
-.badge-pill.active                    { border-color: #111827; background: #111827; color: #fff; }
-.badge-pill-budget-friendly.active    { border-color: #10b981; background: #10b981; color: #fff; }
-.badge-pill-popular.active            { border-color: #ef4444; background: #ef4444; color: #fff; }
-.badge-pill-premium.active            { border-color: #6366f1; background: #6366f1; color: #fff; }
-.badge-pill-luxury.active             { border-color: #8b5cf6; background: #8b5cf6; color: #fff; }
-.badge-pill-new.active                { border-color: #f59e0b; background: #f59e0b; color: #fff; }
-.badge-pill-heritage.active           { border-color: #b45309; background: #b45309; color: #fff; }
+.badge-pill.active { border-color: #111827; background: #111827; color: #fff; }
+.badge-pill-budget-friendly.active { border-color: #10b981; background: #10b981; color: #fff; }
+.badge-pill-popular.active { border-color: #ef4444; background: #ef4444; color: #fff; }
+.badge-pill-premium.active { border-color: #6366f1; background: #6366f1; color: #fff; }
+.badge-pill-luxury.active { border-color: #8b5cf6; background: #8b5cf6; color: #fff; }
+.badge-pill-new.active { border-color: #f59e0b; background: #f59e0b; color: #fff; }
+.badge-pill-heritage.active { border-color: #b45309; background: #b45309; color: #fff; }
 
-/* ─── Sort ─────────────────────────── */
-
+/* Sort */
 .resorts-filter-sort {
   display: flex;
   align-items: center;
@@ -287,8 +210,7 @@
   border-color: #009bd7;
 }
 
-/* ─── Results bar ────────────────────── */
-
+/* Results bar */
 .resorts-results-bar {
   display: flex;
   align-items: center;
@@ -319,8 +241,7 @@
   color: #374151;
 }
 
-/* ─── Empty state ────────────────────── */
-
+/* Empty state */
 .resorts-empty {
   display: flex;
   flex-direction: column;
@@ -347,24 +268,19 @@
   font-size: 12px;
 }
 
-
 /* =========================================
    LISTING
 ========================================= */
-
 .resort-listing {
   width: 100%;
-  margin-top: 10px;
-  padding: 18px 0 50px;
+  margin-top: 12px;
+  padding: 16px 0 50px;
 }
-
 
 /* =========================================
    TABLET
 ========================================= */
-
 @media (max-width: 900px) {
-
   .resorts-page {
     padding: 0 20px 50px;
   }
@@ -375,7 +291,6 @@
 
   .resorts-hero {
     height: 220px;
-
     border-radius: 17px;
   }
 
@@ -392,13 +307,10 @@
   }
 }
 
-
 /* =========================================
    MOBILE
 ========================================= */
-
 @media (max-width: 600px) {
-
   .resorts-page {
     padding: 0 12px 40px;
   }
@@ -414,13 +326,11 @@
   .resorts-logo-circle {
     width: 24px;
     height: 24px;
-
     font-size: 10px;
   }
 
   .resorts-hero {
     height: 190px;
-
     border-radius: 14px;
   }
 
@@ -430,11 +340,8 @@
 
   .resorts-hero p {
     max-width: 260px;
-
     margin-bottom: 14px;
-
     font-size: 10px;
-
     line-height: 1.4;
   }
 
@@ -452,15 +359,12 @@
 
   .resorts-filter button {
     height: 32px;
-
     padding: 0 13px;
-
     font-size: 9px;
   }
 
   .resort-listing {
     margin-top: 4px;
-
     padding-top: 10px;
   }
 }
