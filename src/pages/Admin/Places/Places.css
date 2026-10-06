@@ -343,6 +343,15 @@
   cursor: pointer;
 }
 
+.place-action.view {
+  color: #0284c7;
+}
+
+.place-action.view:hover {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
 .place-action.edit {
   color: #333;
 }

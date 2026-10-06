@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
-import { demoAdminEmail, isDemoAuth, sendPasswordReset } from "../../auth/authApi";
+import { isDemoAuth, sendPasswordReset } from "../../auth/authApi";
 import "./Admin.css";
 
 const AdminLogin = () => {
@@ -35,9 +35,45 @@ const AdminLogin = () => {
   return <main className="admin-auth-page"><section className="admin-auth-card">
     <Link className="admin-brand" to="/">traveltri <span>Admin</span></Link>
     <h1>Admin sign in</h1><p>{isDemoAuth ? "This is a local demo login. It will be replaced by your Python backend later." : "Use the administrator email and password configured in Firebase Authentication."}</p>
-    {isDemoAuth && <p className="admin-demo-account"><strong>Demo account</strong><br />Email: {demoAdminEmail}<br />Password: TripWala@123</p>}
+    {isDemoAuth && (
+      <div className="admin-demo-roles">
+        <span className="demo-roles-title">Choose role to test login:</span>
+        <div className="demo-roles-buttons">
+          <button
+            type="button"
+            className="btn-role-quick superadmin"
+            onClick={() => {
+              setEmail("superadmin@tripwala.demo");
+              setPassword("TripWala@123");
+            }}
+          >
+            ★ Superadmin
+          </button>
+          <button
+            type="button"
+            className="btn-role-quick admin"
+            onClick={() => {
+              setEmail("admin@tripwala.com");
+              setPassword("TripWala@123");
+            }}
+          >
+            🛡️ Admin
+          </button>
+          <button
+            type="button"
+            className="btn-role-quick user"
+            onClick={() => {
+              setEmail("user@tripwala.com");
+              setPassword("TripWala@123");
+            }}
+          >
+            👤 User / Staff
+          </button>
+        </div>
+      </div>
+    )}
     <form onSubmit={handleLogin}>
-      <label>Email address<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@gmail.com" autoComplete="email" required /></label>
+      <label>Email address<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="e.g. superadmin@tripwala.demo" autoComplete="email" required /></label>
       <label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required /></label>
       {error && <p className="admin-message error" role="alert">{error}</p>}
       {message && <p className="admin-message success">{message}</p>}

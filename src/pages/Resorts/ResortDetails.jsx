@@ -28,31 +28,27 @@ const getFutureDate = (days) => {
   return d.toISOString().split("T")[0];
 };
 
+const resolveResort = (id) => {
+  try {
+    const stored = resortStore?.get?.();
+    if (Array.isArray(stored)) {
+      const match = stored.find(
+        (r) => String(r.id) === String(id) || String(r.id) === String(id).replace("resort-", "")
+      );
+      if (match) {
+        const rich = resortData.find((rd) => String(rd.id) === String(match.id));
+        return { ...(rich || {}), ...match };
+      }
+    }
+  } catch {}
+  return getResortById(id);
+};
+
 const ResortDetails = () => {
   const { id } = useParams();
 
   // Find resort from local store or preloaded resortData
-  const resort = useMemo(() => {
-    // 1. Try finding in custom user data / admin store
-    try {
-      const stored = resortStore?.get?.();
-      if (Array.isArray(stored)) {
-        const match = stored.find(
-          (r) => String(r.id) === String(id) || String(r.id) === String(id).replace("resort-", "")
-        );
-        if (match) {
-          // Merge with resortData for richer attributes if available
-          const rich = resortData.find((rd) => String(rd.id) === String(match.id));
-          return { ...(rich || {}), ...match };
-        }
-      }
-    } catch {
-      // fallback
-    }
-
-    // 2. Lookup in rich dataset
-    return getResortById(id);
-  }, [id]);
+  const resort = useMemo(() => resolveResort(id), [id]);
 
   // Favorite / Like state
   const [isLiked, setIsLiked] = useState(() => {
@@ -103,6 +99,20 @@ const ResortDetails = () => {
     name: "",
     phone: ""
   });
+
+  const currentResortIdRef = React.useRef(id);
+
+  React.useEffect(() => {
+    if (currentResortIdRef.current !== id) {
+      currentResortIdRef.current = id;
+      const first = resort?.rooms?.[0]?.name || "Deluxe Villa";
+      setBooking((prev) => ({
+        ...prev,
+        roomTypes: [first],
+        roomType: first
+      }));
+    }
+  }, [id, resort]);
 
   const handleBookingChange = (field, value) => {
     setBooking((prev) => ({

@@ -5,41 +5,40 @@ const RoomGalleryViewer = ({
   setViewerData,
   onClose,
 }) => {
-  if (!viewerData) return null;
-
-  const {
-    roomName,
-    roomType,
-    images = [],
-    activeIndex = 0,
-  } = viewerData;
-
-  const previous = (e) => {
+  const previous = React.useCallback((e) => {
     e?.stopPropagation();
-    setViewerData((prev) => ({
-      ...prev,
-      activeIndex:
-        prev.activeIndex === 0
-          ? prev.images.length - 1
-          : prev.activeIndex - 1,
-    }));
-  };
+    setViewerData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        activeIndex:
+          prev.activeIndex === 0
+            ? prev.images.length - 1
+            : prev.activeIndex - 1,
+      };
+    });
+  }, [setViewerData]);
 
-  const next = (e) => {
+  const next = React.useCallback((e) => {
     e?.stopPropagation();
-    setViewerData((prev) => ({
-      ...prev,
-      activeIndex:
-        prev.activeIndex === prev.images.length - 1
-          ? 0
-          : prev.activeIndex + 1,
-    }));
-  };
+    setViewerData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        activeIndex:
+          prev.activeIndex === prev.images.length - 1
+            ? 0
+            : prev.activeIndex + 1,
+      };
+    });
+  }, [setViewerData]);
 
   React.useEffect(() => {
+    if (!viewerData) return;
+
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        onClose();
+        onClose?.();
       }
       if (event.key === "ArrowLeft") {
         previous(event);
@@ -57,7 +56,16 @@ const RoomGalleryViewer = ({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
     };
-  }, []);
+  }, [viewerData, onClose, next, previous]);
+
+  if (!viewerData) return null;
+
+  const {
+    roomName = "",
+    roomType = "",
+    images = [],
+    activeIndex = 0,
+  } = viewerData;
 
   return (
     <div

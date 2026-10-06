@@ -1,35 +1,333 @@
 .home-page {
   width: 100%;
   padding: 0 40px 60px;
+  box-sizing: border-box;
 }
 
+/* ── Section Shell (Center Aligned) ─────────────── */
+.home-section.center-align {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.section-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-badge-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.section-badge-center .material-symbols-outlined {
+  font-size: 13px;
+}
+
+.section-title-center {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+/* ── Center-Aligned Showcase Tabs ───────────────── */
+.showcase-tabs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.showcase-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.showcase-tab-btn .material-symbols-outlined {
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+
+.showcase-tab-btn:hover {
+  border-color: #cbd5e1;
+  color: #0f172a;
+  background: #f8fafc;
+  transform: translateY(-2px);
+}
+
+.showcase-tab-btn.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.2);
+  transform: translateY(-1px);
+}
+
+.showcase-tab-btn.active .material-symbols-outlined {
+  transform: scale(1.1);
+}
+
+.showcase-tab-count {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-weight: 600;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.showcase-tab-btn.active .showcase-tab-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.showcase-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  margin-left: 2px;
+  animation: pulse-dot 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+/* Auto-switch progress bar on active tab */
+.showcase-tab-btn.active.auto-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  width: 100%;
+  animation: tabProgress 4s linear infinite;
+  border-radius: 2px;
+}
+
+@keyframes tabProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* ── Smooth Showcase Pane Transition ────────────── */
+.home-showcase-content {
+  width: 100%;
+  min-height: 380px;
+}
+
+.showcase-tab-pane {
+  width: 100%;
+  animation: showcaseSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes showcaseSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.showcase-footer-center {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.showcase-view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 8px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.showcase-view-all-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+/* ── Overall Needs: Small Box Tiles (Center Grid) ─ */
+.home-needs-center-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  flex-wrap: wrap;
+}
+
+.home-need-box {
+  flex: 1 1 180px;
+  max-width: 210px;
+  min-width: 160px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  text-align: center;
+}
+
+.home-need-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+  border-color: #cbd5e1;
+}
+
+.home-need-box-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.home-need-box-icon.taxi { background: #fef3c7; color: #d97706; }
+.home-need-box-icon.homestay { background: #dcfce7; color: #15803d; }
+.home-need-box-icon.food { background: #ffedd5; color: #c2410c; }
+.home-need-box-icon.chat { background: #e0e7ff; color: #4338ca; }
+
+.home-need-box-icon .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.home-need-box-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.home-need-box-tag {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ── Minimal Trust Strip (Center Aligned) ───────── */
+.home-trust-strip-center {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.home-trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.home-trust-pill .material-symbols-outlined {
+  font-size: 18px;
+  color: #0284c7;
+}
+
+/* ── Responsive Queries ─────────────────────────── */
 @media (max-width: 900px) {
   .home-page {
-    padding: 0 20px;
+    padding: 0 20px 48px;
+  }
+  .home-needs-center-grid {
+    gap: 12px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
   .home-page {
-    padding: 0 12px;
+    padding: 0 12px 40px;
   }
-  .hero {
-    height: 420px;
+  .home-need-box {
+    flex: 1 1 140px;
+    max-width: none;
+    padding: 16px 12px;
   }
-  .search-box {
-    width: calc(100% - 40px);
-  }
-  .hero-categories {
-    width: 100%;
-    padding: 0 15px;
-    overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
-  }
-  .hero-categories::-webkit-scrollbar {
-    display: none;
-  }
-  .hero-categories button {
-    flex-shrink: 0;
+  .home-trust-strip-center {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }

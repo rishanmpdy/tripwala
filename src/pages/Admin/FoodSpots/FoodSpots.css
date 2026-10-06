@@ -258,26 +258,42 @@
   gap: 11px;
 }
 
-.food-item .food-image {
-  width: 62px;
-  height: 46px;
+.food-item .food-image,
+.food-item .food-table-image,
+.food-table-image {
+  width: 62px !important;
+  min-width: 62px !important;
+  max-width: 62px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
 
-  flex-shrink: 0;
+  flex: 0 0 62px !important;
 
-  overflow: hidden;
+  overflow: hidden !important;
 
   border-radius: 6px;
 
   background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.food-item .food-image img {
-  width: 100%;
-  height: 100%;
+.food-item .food-image img,
+.food-item .food-table-image img,
+.food-table-image img,
+.food-table-thumb {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 100% !important;
 
-  display: block;
+  display: block !important;
 
-  object-fit: cover;
+  object-fit: cover !important;
 }
 
 .food-item-info {
@@ -818,6 +834,233 @@
   color: #111;
 
   font-size: 11px;
+}
+
+
+/* =========================
+   MEDIA UPLOAD & GALLERY
+========================= */
+
+.food-media-upload-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.food-choose-file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 14px;
+  background: #111;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+
+.food-choose-file-btn:hover {
+  background: #2b2b2b;
+}
+
+.food-choose-file-btn span {
+  font-size: 15px;
+}
+
+.food-url-adder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.food-url-adder input {
+  height: 38px;
+  flex: 1;
+}
+
+.food-add-url-btn {
+  height: 38px;
+  padding: 0 14px;
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #333;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.food-add-url-btn:hover {
+  background: #eaeaea;
+  border-color: #ccc;
+}
+
+/* Cover Image Preview */
+.food-cover-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.food-cover-preview-thumb {
+  width: 54px;
+  height: 42px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #eee;
+  flex-shrink: 0;
+}
+
+.food-cover-preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.food-cover-preview-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.food-cover-preview-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.food-cover-preview-sub {
+  font-size: 9px;
+  color: #888;
+}
+
+/* Gallery Images List */
+.food-gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.food-gallery-empty {
+  padding: 24px;
+  text-align: center;
+  background: #fafafa;
+  border: 1px dashed #d5d5d5;
+  border-radius: 8px;
+  color: #888;
+  font-size: 11px;
+}
+
+.food-gallery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.food-gallery-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.food-gallery-item:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.food-gallery-thumb {
+  width: 52px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #eee;
+  flex-shrink: 0;
+  border: 1px solid #ececec;
+}
+
+.food-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.food-gallery-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.food-gallery-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.food-gallery-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 6px;
+  background: #f1f1f1;
+  color: #666;
+  border-radius: 4px;
+  font-size: 8.5px;
+  font-weight: 500;
+}
+
+.food-gallery-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: transparent;
+  border: 1px solid #f0dede;
+  border-radius: 6px;
+  color: #d32f2f;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.food-gallery-remove-btn:hover {
+  background: #fff1f1;
+  border-color: #ffcccc;
+  color: #b71c1c;
 }
 
 

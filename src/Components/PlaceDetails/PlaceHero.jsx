@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const PlaceHero = ({ place }) => {
-  const image = place.images?.[0] || place.image;
+  const rawImage = place.images?.[0] || place.image;
+  const image = typeof rawImage === "object" && rawImage !== null ? rawImage.url : rawImage;
 
   return (
     <section className="place-hero">

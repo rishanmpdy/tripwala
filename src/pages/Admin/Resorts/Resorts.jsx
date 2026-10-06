@@ -266,12 +266,13 @@ const Resorts = () => {
 
                       <div className="resort-item">
 
-                        <div className="resort-image">
+                        <div className="resort-table-image resort-image">
 
                           {resort.image && (
                             <img
                               src={resort.image}
                               alt={resort.name}
+                              className="resort-table-thumb"
                             />
                           )}
 

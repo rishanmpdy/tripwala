@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import FilterBar from "../../Components/FilterBar/FilterBar";
@@ -47,15 +47,14 @@ const sortItems = (items, sortBy) => {
 
 const Listings = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const categoryFromUrl = searchParams.get("category") || "places";
+  const activeCategory = searchParams.get("category") || "places";
 
   const [categories, setCategories] = useState(getCategories);
-  const [placesData, setPlacesData] = useState(getPublicDestinations());
-  const [resortsData, setResortsData] = useState(getPublicResorts());
-  const [foodData, setFoodData] = useState(getPublicFoodSpots());
-  const [homestaysData, setHomestaysData] = useState(getPublicHomestays());
-  const [taxisData, setTaxisData] = useState(getPublicTaxis());
-  const [activeCategory, setActiveCategory] = useState(categoryFromUrl);
+  const [placesData, setPlacesData] = useState(getPublicDestinations);
+  const [resortsData, setResortsData] = useState(getPublicResorts);
+  const [foodData, setFoodData] = useState(getPublicFoodSpots);
+  const [homestaysData, setHomestaysData] = useState(getPublicHomestays);
+  const [taxisData, setTaxisData] = useState(getPublicTaxis);
   const [selectedState, setSelectedState] = useState("Kerala");
   const [selectedDistrict, setSelectedDistrict] = useState("All");
   const [activeFilters, setActiveFilters] = useState({});
@@ -76,7 +75,8 @@ const Listings = () => {
     window.addEventListener("tripwala-food-updated", refreshData);
     window.addEventListener("tripwala-homestays-updated", refreshData);
     window.addEventListener("tripwala-taxis-updated", refreshData);
-    const handleStorage = () => { refresh(); refreshData(); }; window.addEventListener("storage", handleStorage);
+    const handleStorage = () => { refresh(); refreshData(); };
+    window.addEventListener("storage", handleStorage);
     return () => {
       window.removeEventListener("tripwala-categories-updated", refresh);
       window.removeEventListener("tripwala-places-updated", refreshData);
@@ -88,19 +88,11 @@ const Listings = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (categoryFromUrl !== activeCategory) setActiveCategory(categoryFromUrl);
-  }, [categoryFromUrl]);
-
-  useEffect(() => {
+  const handleCategoryChange = (categoryId) => {
+    setSearchParams({ category: categoryId });
     setActiveFilters({});
     setSortBy("");
     setSelectedDistrict("All");
-  }, [activeCategory]);
-
-  const handleCategoryChange = (categoryId) => {
-    setSearchParams({ category: categoryId });
-    setActiveCategory(categoryId);
   };
 
   const handleStateChange = (nextState) => {
@@ -112,7 +104,7 @@ const Listings = () => {
     setActiveFilters((prev) => ({ ...prev, [key]: values }));
   };
 
-  const locationMatch = (item) => {
+  const locationMatch = useCallback((item) => {
     const loc = (item.location || item.address || "").toLowerCase();
     const dist = (item.district || "").toLowerCase();
     const stateOk =
@@ -124,50 +116,50 @@ const Listings = () => {
       loc.includes(selectedDistrict.toLowerCase()) ||
       dist.includes(selectedDistrict.toLowerCase());
     return stateOk && distOk;
-  };
+  }, [selectedState, selectedDistrict]);
 
   const filteredPlaces = useMemo(() => {
     const f = activeFilters;
-    let items = placesData.filter((d) => locationMatch(d));
+    let items = placesData.filter(locationMatch);
     if (f.type?.length)    items = items.filter((d) => chipMatch(d.category, f.type));
     if (f.bestFor?.length) items = items.filter((d) => chipMatchArray(d.bestFor || d.tags, f.bestFor));
     return sortItems(items, sortBy);
-  }, [activeFilters, selectedState, selectedDistrict, sortBy, placesData, resortsData, foodData, homestaysData, taxisData]);
+  }, [placesData, locationMatch, activeFilters, sortBy]);
 
   const filteredResorts = useMemo(() => {
     const f = activeFilters;
-    let items = resortsData.filter((r) => locationMatch(r));
+    let items = resortsData.filter(locationMatch);
     if (f.type?.length)      items = items.filter((r) => chipMatch(r.type, f.type));
     if (f.amenities?.length) items = items.filter((r) => chipMatchArray(r.amenities || r.features, f.amenities));
     if (f.bestFor?.length)   items = items.filter((r) => chipMatchArray(r.bestFor || r.tags, f.bestFor));
     return sortItems(items, sortBy);
-  }, [activeFilters, selectedState, selectedDistrict, sortBy, placesData, resortsData, foodData, homestaysData, taxisData]);
+  }, [resortsData, locationMatch, activeFilters, sortBy]);
 
   const filteredFood = useMemo(() => {
     const f = activeFilters;
-    let items = foodData.filter((fs) => locationMatch(fs));
+    let items = foodData.filter(locationMatch);
     if (f.cuisine?.length)  items = items.filter((fs) => chipMatch(fs.cuisine || fs.category, f.cuisine));
     if (f.features?.length) items = items.filter((fs) => chipMatchArray(fs.features || fs.tags, f.features));
     if (f.mealTime?.length) items = items.filter((fs) => chipMatchArray(fs.mealTime || fs.timing, f.mealTime));
     return sortItems(items, sortBy);
-  }, [activeFilters, selectedState, selectedDistrict, sortBy, placesData, resortsData, foodData, homestaysData, taxisData]);
+  }, [foodData, locationMatch, activeFilters, sortBy]);
 
   const filteredHomestays = useMemo(() => {
     const f = activeFilters;
-    let items = homestaysData.filter((h) => locationMatch(h));
+    let items = homestaysData.filter(locationMatch);
     if (f.type?.length)      items = items.filter((h) => chipMatch(h.type, f.type));
     if (f.amenities?.length) items = items.filter((h) => chipMatchArray(h.amenities || h.features, f.amenities));
     if (f.bestFor?.length)   items = items.filter((h) => chipMatchArray(h.bestFor || h.tags, f.bestFor));
     return sortItems(items, sortBy);
-  }, [activeFilters, selectedState, selectedDistrict, sortBy, placesData, resortsData, foodData, homestaysData, taxisData]);
+  }, [homestaysData, locationMatch, activeFilters, sortBy]);
 
   const filteredTaxis = useMemo(() => {
     const f = activeFilters;
-    let items = taxisData.filter((t) => locationMatch(t));
+    let items = taxisData.filter(locationMatch);
     if (f.vehicleType?.length) items = items.filter((t) => chipMatch(t.vehicleType, f.vehicleType));
     if (f.features?.length)    items = items.filter((t) => chipMatchArray(t.features, f.features));
     return sortItems(items, sortBy);
-  }, [activeFilters, selectedState, selectedDistrict, sortBy, placesData, resortsData, foodData, homestaysData, taxisData]);
+  }, [taxisData, locationMatch, activeFilters, sortBy]);
 
   const isResortCategory   = activeCategory === "resort";
   const isFoodCategory     = activeCategory === "food-spot";

@@ -6,3 +6,15 @@
 .admin-primary { border: 0; border-radius: 9px; padding: 13px; background: #0789c3; color: #fff; cursor: pointer; font: inherit; font-weight: 700; }.admin-primary:disabled { opacity: .7; cursor: wait; }.admin-text-button, .admin-back-link { display: block; margin-top: 18px; padding: 0; border: 0; background: none; color: #067cab; cursor: pointer; font: inherit; font-size: 13px; text-decoration: none; }.admin-back-link { color: #607080; }
 .admin-message { margin: 0; border-radius: 8px; padding: 10px; font-size: 13px; }.admin-message.error { background: #fff0f0; color: #a32e2e; }.admin-message.success { background: #edf9f0; color: #19723a; }
 .admin-demo-account { margin: 0 0 22px !important; padding: 12px; border: 1px solid #bfe3f3; border-radius: 9px; background: #effaff; color: #245267 !important; font-size: 13px !important; line-height: 1.65 !important; }
+.admin-demo-roles { margin-bottom: 20px; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc; }
+.admin-demo-roles .roles-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.admin-demo-roles .roles-header span { color: #0284c7; font-weight: 700; text-transform: none; }
+.demo-roles-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.btn-role-quick { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 6px; border: 1.5px solid #cbd5e1; border-radius: 8px; background: #ffffff; cursor: pointer; transition: all 0.15s ease; }
+.btn-role-quick:hover { border-color: #0284c7; background: #f0f9ff; transform: translateY(-1px); }
+.btn-role-quick.active { border-color: #0284c7; background: #e0f2fe; box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); }
+.btn-role-quick strong { font-size: 12px; font-weight: 7px; color: #0f172a; }
+.btn-role-quick small { font-size: 10.5px; color: #64748b; }
+.btn-role-quick[data-role="superadmin"].active strong { color: #7c3aed; }
+.btn-role-quick[data-role="admin"].active strong { color: #0284c7; }
+.btn-role-quick[data-role="user"].active strong { color: #059669; }

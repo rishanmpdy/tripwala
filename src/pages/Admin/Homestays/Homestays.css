@@ -29,8 +29,8 @@
 .homestay-page-header p,
 .homestay-form-header p {
   margin: 6px 0 0;
-  color: #8b8b8b;
-  font-size: 11px;
+  color: #64748b;
+  font-size: 13px;
 }
 
 
@@ -38,7 +38,7 @@
 
 .homestay-primary-button,
 .homestay-secondary-button {
-  height: 39px;
+  height: 40px;
 
   display: inline-flex;
   align-items: center;
@@ -46,12 +46,12 @@
 
   gap: 7px;
 
-  padding: 0 14px;
+  padding: 0 16px;
 
   border-radius: 7px;
 
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 
   text-decoration: none;
@@ -207,26 +207,42 @@
   gap: 11px;
 }
 
-.homestay-item .homestay-image {
-  width: 62px;
-  height: 46px;
+.homestay-item .homestay-image,
+.homestay-item .homestay-table-image,
+.homestay-table-image {
+  width: 62px !important;
+  min-width: 62px !important;
+  max-width: 62px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
 
-  flex-shrink: 0;
+  flex: 0 0 62px !important;
 
-  overflow: hidden;
+  overflow: hidden !important;
 
   border-radius: 6px;
 
   background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.homestay-item .homestay-image img {
-  width: 100%;
-  height: 100%;
+.homestay-item .homestay-image img,
+.homestay-item .homestay-table-image img,
+.homestay-table-image img,
+.homestay-table-thumb {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 100% !important;
 
-  display: block;
+  display: block !important;
 
-  object-fit: cover;
+  object-fit: cover !important;
 }
 
 .homestay-item-info strong {
@@ -412,23 +428,23 @@
 .homestay-section-title h2 {
   margin: 0;
 
-  color: #222;
+  color: #0f172a;
 
-  font-size: 13px;
-  font-weight: 650;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .homestay-section-title p {
   margin: 4px 0 0;
 
-  color: #999;
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 12.5px;
 }
 
 .homestay-section-title > span {
-  color: #aaa;
-  font-size: 9px;
+  color: #94a3b8;
+  font-size: 12px;
 }
 
 
@@ -454,9 +470,9 @@
 }
 
 .homestay-field label {
-  color: #444;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -466,34 +482,35 @@
   width: 100%;
   box-sizing: border-box;
 
-  border: 1px solid #dedede;
-  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
 
   outline: none;
 
   background: #fff;
 
-  color: #222;
+  color: #0f172a;
 
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13.5px;
 }
 
 .homestay-field input,
 .homestay-field select {
-  height: 39px;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 12px;
 }
 
 .homestay-field textarea {
-  padding: 10px;
+  padding: 10px 12px;
   resize: vertical;
 }
 
 .homestay-field input:focus,
 .homestay-field select:focus,
 .homestay-field textarea:focus {
-  border-color: #111;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
 }
 
 
@@ -509,32 +526,34 @@
 }
 
 .homestay-facility-grid label {
-  min-height: 38px;
+  min-height: 40px;
 
   display: flex;
   align-items: center;
 
   gap: 8px;
 
-  padding: 0 10px;
+  padding: 0 12px;
 
-  border: 1px solid #eee;
-  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
 
-  color: #444;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 12.5px;
+  font-weight: 500;
 
   cursor: pointer;
 }
 
 .homestay-facility-grid label:hover {
-  background: #fafafa;
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
 .homestay-facility-grid input,
 .homestay-checkbox input {
-  accent-color: #111;
+  accent-color: #0284c7;
 }
 
 
@@ -552,17 +571,17 @@
 }
 
 .homestay-checkbox {
-  min-height: 39px;
+  min-height: 40px;
 
   display: flex;
   align-items: center;
 
   gap: 8px;
 
-  color: #444;
+  color: #334155;
 
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 

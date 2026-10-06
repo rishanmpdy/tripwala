@@ -15,7 +15,7 @@ const FoodSpotForm = () => {
   const navigate = useNavigate();
 
   const existingFood = id
-    ? foodSpots.find(
+    ? foodStore.get().find(
         (item) =>
           String(item.id) === String(id)
       )
@@ -23,43 +23,141 @@ const FoodSpotForm = () => {
 
 
   const [form, setForm] = useState(
-    existingFood || {
-      name: "",
-      category: "",
-      shortDescription: "",
-      description: "",
+    existingFood
+      ? {
+          ...existingFood,
+          rating: existingFood.rating || "4.6",
+          reviews: existingFood.reviews || "45",
+          gallery: Array.isArray(existingFood.gallery) ? existingFood.gallery : [],
+        }
+      : {
+          name: "",
+          category: "",
+          shortDescription: "",
+          description: "",
 
-      cuisine: "",
-      speciality: "",
-      priceRange: "₹",
+          cuisine: "",
+          speciality: "",
+          priceRange: "₹",
+          rating: "4.6",
+          reviews: "45",
 
-      image: "",
-      gallery: [],
+          image: "",
+          gallery: [],
 
-      address: "",
-      area: "",
-      district: "",
+          address: "",
+          area: "",
+          district: "",
 
-      latitude: "",
-      longitude: "",
-      mapsUrl: "",
+          latitude: "",
+          longitude: "",
+          mapsUrl: "",
 
-      phone: "",
-      whatsapp: "",
-      website: "",
-      instagram: "",
+          phone: "",
+          whatsapp: "",
+          website: "",
+          instagram: "",
 
-      vegetarian: false,
-      nonVegetarian: false,
-      delivery: false,
-      takeaway: false,
+          vegetarian: false,
+          nonVegetarian: false,
+          delivery: false,
+          takeaway: false,
 
-      status: "Active",
-      featured: false,
-      showOnHomepage: false,
-    }
+          status: "Active",
+          featured: false,
+          showOnHomepage: false,
+        }
   );
 
+  const [galleryUrlInput, setGalleryUrlInput] = useState("");
+
+  const parseGalleryItem = (item, index) => {
+    if (typeof item === "object" && item !== null) {
+      return {
+        id: item.id || `gallery-${index}`,
+        url: item.url || "",
+        name:
+          item.name ||
+          (item.url ? item.url.split("/").pop().split("?")[0] : `Image ${index + 1}`),
+      };
+    }
+    const url = String(item || "");
+    const name = url.startsWith("data:")
+      ? `Uploaded-Image-${index + 1}.png`
+      : url.split("/").pop().split("?")[0] || `Image ${index + 1}`;
+    return {
+      id: `gallery-${index}`,
+      url,
+      name,
+    };
+  };
+
+  const handleCoverUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setForm((prev) => ({
+        ...prev,
+        image: event.target.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const handleGalleryUpload = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    files.forEach((file, i) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const newItem = {
+          id: `upload-${Date.now()}-${i}-${Math.random().toString(36).slice(2, 6)}`,
+          url: event.target.result,
+          name: file.name,
+        };
+        setForm((prev) => ({
+          ...prev,
+          gallery: [
+            ...(Array.isArray(prev.gallery) ? prev.gallery : []),
+            newItem,
+          ],
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+
+    e.target.value = "";
+  };
+
+  const handleAddGalleryUrl = () => {
+    if (!galleryUrlInput.trim()) return;
+    const url = galleryUrlInput.trim();
+    const name = url.split("/").pop().split("?")[0] || "Online Image";
+    setForm((prev) => ({
+      ...prev,
+      gallery: [
+        ...(Array.isArray(prev.gallery) ? prev.gallery : []),
+        {
+          id: `url-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          url,
+          name,
+        },
+      ],
+    }));
+    setGalleryUrlInput("");
+  };
+
+  const handleRemoveGalleryImage = (indexToRemove) => {
+    setForm((prev) => ({
+      ...prev,
+      gallery: (Array.isArray(prev.gallery) ? prev.gallery : []).filter(
+        (_, index) => index !== indexToRemove
+      ),
+    }));
+  };
 
   const handleChange = (e) => {
     const {
@@ -83,7 +181,9 @@ const FoodSpotForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.name.trim()) {
+    const name = String(form.name ?? "").trim();
+
+    if (!name) {
       alert("Food spot name is required.");
       return;
     }
@@ -93,33 +193,33 @@ const FoodSpotForm = () => {
       return;
     }
 
-    if (!form.address.trim()) {
+    if (!String(form.address ?? "").trim()) {
       alert("Address is required.");
       return;
     }
 
 
-    console.log(
+    const currentSpots = foodStore.get();
+    const foodId = existingFood?.id ? existingFood.id : Date.now();
+
+    const galleryUrls = (Array.isArray(form.gallery) ? form.gallery : [])
+      .map((item) => (typeof item === "object" && item !== null ? item.url : item))
+      .filter(Boolean);
+
+    const foodDataToSave = {
+      ...existingFood,
+      ...form,
+      id: foodId,
+      name,
+      gallery: galleryUrls,
+    };
+
+    const saved = foodStore.save(
       existingFood
-        ? "UPDATE FOOD SPOT"
-        : "CREATE FOOD SPOT",
-      form
+        ? currentSpots.map((item) => (String(item.id) === String(id) ? foodDataToSave : item))
+        : [...currentSpots, foodDataToSave]
     );
-
-
-    /*
-      Later replace this with:
-
-      TanStack Query mutation
-      POST /api/food-spots
-
-      or
-
-      PUT /api/food-spots/:id
-    */
-
-
-    navigate("/admin/food-spots");
+    if (saved) navigate("/admin/food-spots");
   };
 
 
@@ -349,6 +449,43 @@ const FoodSpotForm = () => {
             </div>
 
 
+            <div className="food-field">
+
+              <label>
+                Rating (1-5)
+              </label>
+
+              <input
+                type="number"
+                step="0.1"
+                min="1"
+                max="5"
+                name="rating"
+                value={form.rating}
+                onChange={handleChange}
+                placeholder="4.6"
+              />
+
+            </div>
+
+
+            <div className="food-field">
+
+              <label>
+                Total Reviews
+              </label>
+
+              <input
+                type="number"
+                name="reviews"
+                value={form.reviews}
+                onChange={handleChange}
+                placeholder="45"
+              />
+
+            </div>
+
+
             <div className="food-field full">
 
               <label>
@@ -544,16 +681,51 @@ const FoodSpotForm = () => {
                 Cover Image *
               </label>
 
-              <input
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-                placeholder="/images/food-spots/restaurant.jpg"
-              />
+              <div className="food-media-upload-bar">
+                <input
+                  name="image"
+                  value={form.image}
+                  onChange={handleChange}
+                  placeholder="/images/food-spots/restaurant.jpg or choose file"
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="food-cover-upload"
+                  style={{ display: "none" }}
+                  onChange={handleCoverUpload}
+                />
+                <label htmlFor="food-cover-upload" className="food-choose-file-btn">
+                  Choose File
+                </label>
+              </div>
+
+              {form.image && (
+                <div className="food-cover-preview">
+                  <div className="food-cover-preview-thumb">
+                    <img src={form.image} alt="Cover Preview" />
+                  </div>
+                  <div className="food-cover-preview-info">
+                    <span className="food-cover-preview-name">
+                      {form.image.startsWith("data:")
+                        ? "Uploaded Cover Image"
+                        : (form.image.split("/").pop().split("?")[0] || form.image)}
+                    </span>
+                    <span className="food-cover-preview-sub">Cover image selected</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="food-gallery-remove-btn"
+                    onClick={() => setForm((prev) => ({ ...prev, image: "" }))}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
 
               <small>
-                Later this can be replaced with
-                your image upload API.
+                Later this can be replaced with your image upload API.
               </small>
 
             </div>
@@ -562,26 +734,81 @@ const FoodSpotForm = () => {
             <div className="food-field full">
 
               <label>
-                Gallery Images
+                Gallery Images ({Array.isArray(form.gallery) ? form.gallery.length : 0})
               </label>
 
-              <textarea
-                rows="4"
-                placeholder="One image URL per line"
-                value={form.gallery.join("\n")}
-                onChange={(e) =>
-                  setForm((current) => ({
-                    ...current,
-                    gallery:
-                      e.target.value
-                        .split("\n")
-                        .map((item) =>
-                          item.trim()
-                        )
-                        .filter(Boolean),
-                  }))
-                }
-              />
+              <div className="food-media-upload-bar">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  id="food-gallery-upload"
+                  style={{ display: "none" }}
+                  onChange={handleGalleryUpload}
+                />
+                <label htmlFor="food-gallery-upload" className="food-choose-file-btn">
+                  Choose Files
+                </label>
+
+                <div className="food-url-adder">
+                  <input
+                    value={galleryUrlInput}
+                    onChange={(e) => setGalleryUrlInput(e.target.value)}
+                    placeholder="Or enter image URL..."
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleAddGalleryUrl();
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="food-add-url-btn"
+                    onClick={handleAddGalleryUrl}
+                  >
+                    Add URL
+                  </button>
+                </div>
+              </div>
+
+              {/* Gallery Listing */}
+              <div className="food-gallery-container">
+                {(!Array.isArray(form.gallery) || form.gallery.length === 0) ? (
+                  <div className="food-gallery-empty">
+                    No gallery images added yet. Click &quot;Choose Files&quot; above to select images.
+                  </div>
+                ) : (
+                  <div className="food-gallery-list">
+                    {form.gallery.map((item, index) => {
+                      const parsed = parseGalleryItem(item, index);
+                      return (
+                        <div key={parsed.id || index} className="food-gallery-item">
+                          <div className="food-gallery-thumb">
+                            <img src={parsed.url} alt={parsed.name} />
+                          </div>
+                          <div className="food-gallery-info">
+                            <span className="food-gallery-name" title={parsed.name}>
+                              {parsed.name}
+                            </span>
+                            <span className="food-gallery-badge">
+                              {parsed.url.startsWith("data:") ? "Uploaded File" : "Image URL"}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className="food-gallery-remove-btn"
+                            onClick={() => handleRemoveGalleryImage(index)}
+                            title="Remove image"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
             </div>
 

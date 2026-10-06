@@ -1,133 +1,198 @@
-/* ── Section ─────────────────────────────────────────── */
-.category-grid-section {
+/* ── Category Section ──────────────────────────────── */
+.category-section.center-align {
   margin-top: 36px;
-}
-
-.category-grid-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111;
-  margin: 0 0 18px 0;
-  letter-spacing: -0.3px;
-}
-
-/* ── Grid row ────────────────────────────────────────── */
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 12px;
-}
-
-/* ── Card ────────────────────────────────────────────── */
-.category-grid-card {
-  border: none;
-  padding: 0;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 16px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
-  text-align: left;
+  align-items: center;
+  text-align: center;
 }
 
-.category-grid-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+.section-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* ── 2x2 photo collage ───────────────────────────────── */
-.category-collage {
-  position: relative;
+.section-badge-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.section-badge-center .material-symbols-outlined {
+  font-size: 13px;
+}
+
+.section-title-center {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+/* ── Small Boxes Tiles Container ───────────────────── */
+.category-boxes-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 14px;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px;
-  overflow: hidden;
-  background: #e5e7eb;
+  max-width: 980px;
+  flex-wrap: wrap;
 }
 
-.category-collage-cell {
-  overflow: hidden;
+/* ── Small Box Tile ────────────────────────────────── */
+.category-box-tile {
   position: relative;
+  flex: 1 1 160px;
+  max-width: 180px;
+  min-width: 140px;
+  height: 105px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: #0f172a;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+  outline: none;
 }
 
-.category-collage-img {
+.category-box-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+/* ── Background & Dark Overlay ─────────────────────── */
+.category-box-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.category-box-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   display: block;
   transition: transform 0.35s ease;
 }
 
-.category-grid-card:hover .category-collage-img {
-  transform: scale(1.06);
+.category-box-tile:hover .category-box-img {
+  transform: scale(1.08);
 }
 
-/* Subtle dark gradient over entire collage */
-.category-collage-overlay {
+.category-box-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    160deg,
-    rgba(0,0,0,0) 50%,
-    rgba(0,0,0,0.18) 100%
+    180deg,
+    rgba(15, 23, 42, 0.5) 0%,
+    rgba(15, 23, 42, 0.88) 100%
   );
-  pointer-events: none;
+  transition: background 0.22s ease;
 }
 
-/* ── Label below collage ─────────────────────────────── */
-.category-grid-label {
+.category-box-tile:hover .category-box-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.4) 0%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+}
+
+/* ── Centered Box Content ──────────────────────────── */
+.category-box-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 8px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.category-box-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 10px 12px;
-  background: #fff;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s ease;
 }
 
-.category-grid-icon {
+.category-box-icon .material-symbols-outlined {
   font-size: 18px;
+  color: var(--cat-accent, #38bdf8);
   font-variation-settings: "FILL" 1;
-  color: #111;
-  flex-shrink: 0;
 }
 
-.category-grid-name {
-  font-size: 12px;
+.category-box-tile:hover .category-box-icon {
+  transform: scale(1.1);
+}
+
+.category-box-name {
+  font-size: 13px;
   font-weight: 700;
-  color: #111;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #ffffff;
+  line-height: 1.2;
 }
 
-/* ── Responsive ──────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .category-grid {
-    grid-template-columns: repeat(4, 1fr);
+.category-box-count {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 1px 8px;
+  border-radius: 999px;
+  line-height: 1.3;
+}
+
+/* ── Responsive Queries ────────────────────────────── */
+@media (max-width: 768px) {
+  .category-boxes-container {
     gap: 10px;
   }
-}
-
-@media (max-width: 700px) {
-  .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+  .category-box-tile {
+    flex: 1 1 120px;
+    height: 95px;
   }
-  .category-grid-title {
-    font-size: 17px;
-    margin-bottom: 14px;
+  .category-box-name {
+    font-size: 12px;
   }
 }
 
-@media (max-width: 460px) {
-  .category-grid {
+@media (max-width: 480px) {
+  .category-boxes-container {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
+  }
+  .category-box-tile {
+    max-width: none;
+    min-width: 0;
   }
 }

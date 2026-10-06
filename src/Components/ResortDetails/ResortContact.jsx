@@ -1,28 +1,14 @@
 import React from "react";
+import { contactNumberStore } from "../../data/stores";
 
 const ResortContact = ({
   resort,
   booking = {},
   onChangeBooking = () => {},
   onToggleRoom,
-  onSubmitBooking = () => {},
+  _onSubmitBooking = () => {},
   onShowToast = () => {}
 }) => {
-  if (!resort) return null;
-
-  const enquiryTargetPhone =
-    resort.whatsapp ||
-    resort.agentPhone ||
-    resort.contact?.whatsapp ||
-    "+91 94471 88990";
-
-  // Clean phone number: strictly numeric for WhatsApp wa.me API
-  let cleanPhone = enquiryTargetPhone.replace(/[^0-9]/g, "");
-  // Prepend 91 if it is a standard 10-digit Indian phone number
-  if (cleanPhone.length === 10) {
-    cleanPhone = `91${cleanPhone}`;
-  }
-
   // Dropdown state for Room Category multi-select
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const dropdownRef = React.useRef(null);
@@ -39,6 +25,7 @@ const ResortContact = ({
 
   // Safe normalized room list
   const availableRooms = React.useMemo(() => {
+    if (!resort) return [];
     if (Array.isArray(resort.rooms) && resort.rooms.length > 0) {
       return resort.rooms;
     }
@@ -51,15 +38,7 @@ const ResortContact = ({
       })).filter((r) => r.name);
     }
     return [];
-  }, [resort.rooms, resort.roomTypes, resort.pricePerNight]);
-
-  // Night calculation
-  const today = new Date().toISOString().split("T")[0];
-  const checkInDate = new Date(booking.checkIn || Date.now());
-  const checkOutDate = new Date(booking.checkOut || Date.now());
-  const diffTime = checkOutDate - checkInDate;
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  const nights = diffDays > 0 ? diffDays : 1;
+  }, [resort]);
 
   // Selected room names (supports array or legacy single string)
   const selectedRoomNames = React.useMemo(() => {
@@ -78,14 +57,6 @@ const ResortContact = ({
     return availableRooms.filter((r) => selectedRoomNames.includes(r.name));
   }, [availableRooms, selectedRoomNames]);
 
-  // Combined nightly rate for all selected rooms (or resort starting rate if none selected)
-  const baseRate = selectedRoomsList.length > 0
-    ? selectedRoomsList.reduce((sum, r) => sum + (r.price || 0), 0)
-    : resort.pricePerNight || 6500;
-
-  const subtotal = baseRate * nights;
-  const total = subtotal;
-
   const triggerSummaryText = React.useMemo(() => {
     if (selectedRoomsList.length === 0) return "Select room categories (optional)...";
     if (selectedRoomsList.length === 1) {
@@ -93,6 +64,43 @@ const ResortContact = ({
     }
     return `${selectedRoomsList.length} categories: ${selectedRoomsList.map((r) => r.name).join(", ")}`;
   }, [selectedRoomsList]);
+
+  if (!resort) return null;
+
+  let dynamicDefault = "+91 94471 88990";
+  try {
+    const defaultContact = contactNumberStore.get()?.find((c) => c.isDefaultResorts && c.status === "Active");
+    if (defaultContact?.whatsapp) dynamicDefault = defaultContact.whatsapp;
+  } catch {}
+
+  const enquiryTargetPhone =
+    resort.whatsapp ||
+    resort.agentPhone ||
+    resort.contact?.whatsapp ||
+    dynamicDefault;
+
+  // Clean phone number: strictly numeric for WhatsApp wa.me API
+  let cleanPhone = enquiryTargetPhone.replace(/[^0-9]/g, "");
+  // Prepend 91 if it is a standard 10-digit Indian phone number
+  if (cleanPhone.length === 10) {
+    cleanPhone = `91${cleanPhone}`;
+  }
+
+  // Night calculation without calling impure Date.now() during render
+  const today = new Date().toISOString().split("T")[0];
+  const checkInDate = new Date(booking.checkIn || today);
+  const checkOutDate = new Date(booking.checkOut || today);
+  const diffTime = checkOutDate - checkInDate;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const nights = diffDays > 0 ? diffDays : 1;
+
+  // Combined nightly rate for all selected rooms (or resort starting rate if none selected)
+  const baseRate = selectedRoomsList.length > 0
+    ? selectedRoomsList.reduce((sum, r) => sum + (r.price || 0), 0)
+    : resort.pricePerNight || 6500;
+
+  const subtotal = baseRate * nights;
+  const total = subtotal;
 
   const handleToggleRoom = (roomName) => {
     if (onToggleRoom) {

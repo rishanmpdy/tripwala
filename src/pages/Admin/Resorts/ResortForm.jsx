@@ -5,9 +5,12 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { resortStore } from "../../../data/stores";
+import { resortStore, contactNumberStore } from "../../../data/stores";
+import { resortData } from "../../../data/resortData";
 
 import "./Resorts.css";
+
+const getNextResortId = (existingId) => existingId || Date.now();
 
 const ResortForm = () => {
 
@@ -15,6 +18,11 @@ const ResortForm = () => {
 
   const navigate = useNavigate();
 
+  const configuredContacts = (contactNumberStore.get() || []).filter(
+    (c) => c.status === "Active" && (c.category === "Resorts" || c.category === "All")
+  );
+  const defaultResortContact =
+    configuredContacts.find((c) => c.isDefaultResorts) || configuredContacts[0];
 
   const existingResort = id
     ? resortStore.get().find(
@@ -24,17 +32,60 @@ const ResortForm = () => {
       )
     : null;
 
+  const richResort = id
+    ? resortData.find(
+        (item) =>
+          String(item.id) === String(id) ||
+          String(item.id) === String(id).replace("resort-", "")
+      )
+    : null;
+
+  const defaultSampleRooms = [
+    {
+      id: "room-sample-1",
+      name: "Lakefront Deluxe Villa",
+      type: "Private Villa",
+      price: 6500,
+      originalPrice: 8500,
+      size: "480 sq.ft",
+      bed: "1 King Bed",
+      capacity: "2 Adults + 1 Child",
+      features: ["Waterfront Balcony", "King Size Bed", "Rain Shower", "Free Breakfast"],
+      image: existingResort?.image || richResort?.image || "",
+      gallery: []
+    }
+  ];
+
+  const rawRooms = Array.isArray(existingResort?.rooms) && existingResort.rooms.length > 0
+    ? existingResort.rooms
+    : Array.isArray(richResort?.rooms) && richResort.rooms.length > 0
+    ? richResort.rooms
+    : defaultSampleRooms;
+
+  const loadedRooms = rawRooms.map((room) => ({
+    ...room,
+    gallery: Array.isArray(room.gallery) && room.gallery.length > 0
+      ? room.gallery
+      : room.image ? [room.image] : []
+  }));
 
   const [form, setForm] = useState(() => {
     if (existingResort) {
       return {
         ...existingResort,
-        enquiryTargetType: existingResort.enquiryTargetType || "agent",
-        agentPhone: existingResort.agentPhone || "+91 94471 88990",
+        roomsList: loadedRooms,
+        facilities: Array.isArray(existingResort.facilities) ? existingResort.facilities : [],
+        gallery: Array.isArray(existingResort.gallery) ? existingResort.gallery : [],
+        enquiryTargetType:
+          existingResort.enquiryTargetType ||
+          (existingResort.enquiryContactId ? existingResort.enquiryContactId : (defaultResortContact ? defaultResortContact.id : "agent")),
+        enquiryContactId:
+          existingResort.enquiryContactId || (defaultResortContact ? defaultResortContact.id : ""),
+        agentPhone: existingResort.agentPhone || defaultResortContact?.whatsapp || "+91 94471 88990",
         resortPhone: existingResort.resortPhone || existingResort.phone || existingResort.contact?.phone || "",
         customPhone: existingResort.customPhone || "",
         phone: existingResort.resortPhone || existingResort.phone || existingResort.contact?.phone || "",
-        whatsapp: existingResort.whatsapp || existingResort.contact?.whatsapp || "+91 94471 88990",
+        whatsapp: existingResort.whatsapp || defaultResortContact?.whatsapp || "+91 94471 88990",
         email: existingResort.email || existingResort.contact?.email || "",
         website: existingResort.website || existingResort.contact?.website || "",
         instagram: existingResort.instagram || existingResort.contact?.instagram || "",
@@ -54,8 +105,9 @@ const ResortForm = () => {
       latitude: "",
       longitude: "",
       mapsUrl: "",
-      rooms: "",
-      roomTypes: "",
+      rooms: "12",
+      roomsList: defaultSampleRooms,
+      roomTypes: "Lakefront Deluxe Villa",
       guests: "",
       checkIn: "02:00 PM",
       checkOut: "11:00 AM",
@@ -76,6 +128,96 @@ const ResortForm = () => {
     };
   });
 
+  const [galleryUrlInput, setGalleryUrlInput] = useState("");
+
+  const parseGalleryItem = (item, index) => {
+    if (typeof item === "object" && item !== null) {
+      return {
+        id: item.id || `gallery-${index}`,
+        url: item.url || "",
+        name:
+          item.name ||
+          (item.url ? item.url.split("/").pop().split("?")[0] : `Image ${index + 1}`),
+      };
+    }
+    const url = String(item || "");
+    const name = url.startsWith("data:")
+      ? `Uploaded-Image-${index + 1}.png`
+      : url.split("/").pop().split("?")[0] || `Image ${index + 1}`;
+    return {
+      id: `gallery-${index}`,
+      url,
+      name,
+    };
+  };
+
+  const handleCoverUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setForm((prev) => ({
+        ...prev,
+        image: event.target.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const handleGalleryUpload = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    files.forEach((file, i) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const newItem = {
+          id: `upload-${Date.now()}-${i}-${Math.random().toString(36).slice(2, 6)}`,
+          url: event.target.result,
+          name: file.name,
+        };
+        setForm((prev) => ({
+          ...prev,
+          gallery: [
+            ...(Array.isArray(prev.gallery) ? prev.gallery : []),
+            newItem,
+          ],
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+
+    e.target.value = "";
+  };
+
+  const handleAddGalleryUrl = () => {
+    if (!galleryUrlInput.trim()) return;
+    const url = galleryUrlInput.trim();
+    const name = url.split("/").pop().split("?")[0] || "Online Image";
+    setForm((prev) => ({
+      ...prev,
+      gallery: [
+        ...(Array.isArray(prev.gallery) ? prev.gallery : []),
+        {
+          id: `url-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          url,
+          name,
+        },
+      ],
+    }));
+    setGalleryUrlInput("");
+  };
+
+  const handleRemoveGalleryImage = (indexToRemove) => {
+    setForm((prev) => ({
+      ...prev,
+      gallery: (Array.isArray(prev.gallery) ? prev.gallery : []).filter(
+        (_, index) => index !== indexToRemove
+      ),
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((current) => ({
@@ -86,20 +228,207 @@ const ResortForm = () => {
 
   const toggleFacility = (facility) => {
     setForm((current) => {
-      const exists = current.facilities.includes(facility);
+      const curFacilities = Array.isArray(current.facilities) ? current.facilities : [];
+      const exists = curFacilities.includes(facility);
       return {
         ...current,
         facilities: exists
-          ? current.facilities.filter((item) => item !== facility)
-          : [...current.facilities, facility],
+          ? curFacilities.filter((item) => item !== facility)
+          : [...curFacilities, facility],
       };
+    });
+  };
+
+  /* =========================================================================
+     ROOM CATEGORY OPERATIONS
+     ========================================================================= */
+  const handleAddRoom = () => {
+    const newRoomIndex = (form.roomsList?.length || 0) + 1;
+    const newRoom = {
+      id: `room-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      name: `Category ${newRoomIndex} - Deluxe Room`,
+      type: "Deluxe Room",
+      price: 5500,
+      originalPrice: 7000,
+      size: "420 sq.ft",
+      bed: "1 King Bed",
+      capacity: "2 Adults + 1 Child",
+      features: ["Balcony View", "Free Breakfast", "Air Conditioning"],
+      image: form.image || "",
+      gallery: []
+    };
+    setForm((prev) => ({
+      ...prev,
+      roomsList: [...(prev.roomsList || []), newRoom]
+    }));
+  };
+
+  const handleUpdateRoom = (index, field, value) => {
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      updated[index] = {
+        ...updated[index],
+        [field]: value
+      };
+      return {
+        ...prev,
+        roomsList: updated
+      };
+    });
+  };
+
+  const handleRemoveRoom = (index) => {
+    if ((form.roomsList || []).length <= 1) {
+      alert("At least one room category is required for customer booking.");
+      return;
+    }
+    const roomNameToRemove = form.roomsList[index]?.name || "this room";
+    if (window.confirm(`Are you sure you want to remove "${roomNameToRemove}"?`)) {
+      setForm((prev) => ({
+        ...prev,
+        roomsList: prev.roomsList.filter((_, i) => i !== index)
+      }));
+    }
+  };
+
+  const handleDuplicateRoom = (index) => {
+    const sourceRoom = form.roomsList[index];
+    if (!sourceRoom) return;
+    const duplicatedRoom = {
+      ...sourceRoom,
+      id: `room-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      name: `${sourceRoom.name} (Copy)`
+    };
+    const updated = [...(form.roomsList || [])];
+    updated.splice(index + 1, 0, duplicatedRoom);
+    setForm((prev) => ({
+      ...prev,
+      roomsList: updated
+    }));
+  };
+
+  const handleMoveRoom = (index, direction) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= (form.roomsList || []).length) return;
+    const updated = [...(form.roomsList || [])];
+    const [movedRoom] = updated.splice(index, 1);
+    updated.splice(targetIndex, 0, movedRoom);
+    setForm((prev) => ({
+      ...prev,
+      roomsList: updated
+    }));
+  };
+
+  const handleRoomAddFeature = (roomIndex, text) => {
+    if (!text || !text.trim()) return;
+    const featureToAdd = text.trim();
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      const currentFeatures = Array.isArray(updated[roomIndex]?.features)
+        ? updated[roomIndex].features
+        : [];
+      if (!currentFeatures.includes(featureToAdd)) {
+        updated[roomIndex] = {
+          ...updated[roomIndex],
+          features: [...currentFeatures, featureToAdd]
+        };
+      }
+      return { ...prev, roomsList: updated };
+    });
+  };
+
+  const handleRoomRemoveFeature = (roomIndex, featureIndex) => {
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      const currentFeatures = Array.isArray(updated[roomIndex]?.features)
+        ? updated[roomIndex].features
+        : [];
+      updated[roomIndex] = {
+        ...updated[roomIndex],
+        features: currentFeatures.filter((_, i) => i !== featureIndex)
+      };
+      return { ...prev, roomsList: updated };
+    });
+  };
+
+  const handleRoomFilesUpload = (roomIndex, fileList) => {
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setForm((prev) => {
+          const updated = [...(prev.roomsList || [])];
+          const currentRoom = updated[roomIndex];
+          const currentGallery = Array.isArray(currentRoom.gallery)
+            ? currentRoom.gallery
+            : (currentRoom.image ? [currentRoom.image] : []);
+          const newGallery = [...currentGallery, e.target.result];
+          updated[roomIndex] = {
+            ...currentRoom,
+            gallery: newGallery,
+            image: currentRoom.image || newGallery[0]
+          };
+          return { ...prev, roomsList: updated };
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleRoomAddLink = (roomIndex, url) => {
+    if (!url || !url.trim()) return;
+    const cleanUrl = url.trim();
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      const currentRoom = updated[roomIndex];
+      const currentGallery = Array.isArray(currentRoom.gallery)
+        ? currentRoom.gallery
+        : (currentRoom.image ? [currentRoom.image] : []);
+      const newGallery = [...currentGallery, cleanUrl];
+      updated[roomIndex] = {
+        ...currentRoom,
+        gallery: newGallery,
+        image: currentRoom.image || newGallery[0]
+      };
+      return { ...prev, roomsList: updated };
+    });
+  };
+
+  const handleRoomRemovePhoto = (roomIndex, photoIndex) => {
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      const currentRoom = updated[roomIndex];
+      const currentGallery = Array.isArray(currentRoom.gallery) ? currentRoom.gallery : [];
+      const photoToRemove = currentGallery[photoIndex];
+      const newGallery = currentGallery.filter((_, i) => i !== photoIndex);
+      const newCover = currentRoom.image === photoToRemove ? (newGallery[0] || "") : currentRoom.image;
+      updated[roomIndex] = {
+        ...currentRoom,
+        gallery: newGallery,
+        image: newCover
+      };
+      return { ...prev, roomsList: updated };
+    });
+  };
+
+  const handleRoomSetCoverPhoto = (roomIndex, photoUrl) => {
+    setForm((prev) => {
+      const updated = [...(prev.roomsList || [])];
+      updated[roomIndex] = {
+        ...updated[roomIndex],
+        image: photoUrl
+      };
+      return { ...prev, roomsList: updated };
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.name.trim()) {
+    const clean = (value) => String(value ?? "").trim();
+
+    if (!clean(form.name)) {
       alert("Resort name is required.");
       return;
     }
@@ -109,57 +438,85 @@ const ResortForm = () => {
       return;
     }
 
-    if (!form.address.trim()) {
+    if (!clean(form.address)) {
       alert("Address is required.");
       return;
     }
 
-    const currentResorts = resortStore.get() || [];
-    const resortId = existingResort?.id || Date.now();
+    const currentResorts = resortStore.get();
+    const resortId = getNextResortId(existingResort?.id);
     
     // Determine effective WhatsApp recipient based on admin routing choice
-    const activeWhatsapp =
-      form.enquiryTargetType === "agent"
-        ? (form.agentPhone?.trim() || "+91 94471 88990")
-        : form.enquiryTargetType === "resort"
-        ? (form.resortPhone?.trim() || form.phone?.trim() || "")
-        : (form.customPhone?.trim() || form.agentPhone?.trim() || "");
+    const matchedContact = configuredContacts.find(
+      (c) => c.id === form.enquiryTargetType || c.id === form.enquiryContactId
+    );
 
-    const privateResortPhone = form.resortPhone?.trim() || form.phone?.trim() || "";
+    let activeWhatsapp = "";
+    let enquiryContactName = "";
+
+    if (matchedContact) {
+      activeWhatsapp = matchedContact.whatsapp;
+      enquiryContactName = matchedContact.name;
+    } else if (form.enquiryTargetType === "resort") {
+      activeWhatsapp = clean(form.resortPhone) || clean(form.phone);
+      enquiryContactName = "Direct Resort Number";
+    } else if (form.enquiryTargetType === "custom") {
+      activeWhatsapp = clean(form.customPhone);
+      enquiryContactName = "Custom WhatsApp Number";
+    } else {
+      activeWhatsapp = defaultResortContact?.whatsapp || clean(form.agentPhone) || "+91 94471 88990";
+      enquiryContactName = defaultResortContact?.name || "Agent Number";
+    }
+
+    const privateResortPhone = clean(form.resortPhone) || clean(form.phone);
+    const email = clean(form.email);
+    const website = clean(form.website);
+
+    const galleryUrls = (Array.isArray(form.gallery) ? form.gallery : [])
+      .map((item) => (typeof item === "object" && item !== null ? item.url : item))
+      .filter(Boolean);
+
+    const effectiveRooms = form.roomsList || [];
+    const startingRate = effectiveRooms.length > 0
+      ? Math.min(...effectiveRooms.map((r) => Number(r.price) || 999999))
+      : Number(form.pricePerNight) || 6500;
 
     const resortDataToSave = {
+      ...richResort,
       ...existingResort,
       ...form,
       id: resortId,
-      name: form.name.trim(),
-      enquiryTargetType: form.enquiryTargetType || "agent",
-      agentPhone: form.agentPhone?.trim() || "+91 94471 88990",
+      name: clean(form.name),
+      gallery: galleryUrls,
+      rooms: effectiveRooms,
+      roomTypes: effectiveRooms.map((r) => r.name).join(", "),
+      pricePerNight: startingRate === 999999 ? 6500 : startingRate,
+      enquiryTargetType: form.enquiryTargetType,
+      enquiryContactId: matchedContact ? matchedContact.id : form.enquiryTargetType,
+      enquiryContactName: enquiryContactName,
+      agentPhone: matchedContact ? matchedContact.whatsapp : (clean(form.agentPhone) || "+91 94471 88990"),
       resortPhone: privateResortPhone,
-      customPhone: form.customPhone?.trim() || "",
+      customPhone: clean(form.customPhone),
       phone: privateResortPhone,
       whatsapp: activeWhatsapp,
-      email: form.email?.trim() || "",
-      website: form.website?.trim() || "",
-      instagram: form.instagram?.trim() || "",
+      email,
+      website,
+      instagram: clean(form.instagram),
       contact: {
         phone: privateResortPhone,
         whatsapp: activeWhatsapp,
-        email: form.email?.trim() || "",
-        website: form.website?.trim() || "",
-        address: form.address?.trim() || ""
+        email,
+        website,
+        address: clean(form.address)
       }
     };
 
-    if (existingResort) {
-      const updatedList = currentResorts.map((r) =>
-        String(r.id) === String(id) ? resortDataToSave : r
-      );
-      resortStore.save(updatedList);
-    } else {
-      resortStore.save([...currentResorts, resortDataToSave]);
-    }
-
-    navigate("/admin/resorts");
+    const saved = resortStore.save(
+      existingResort
+        ? currentResorts.map((r) => (String(r.id) === String(id) ? resortDataToSave : r))
+        : [...currentResorts, resortDataToSave]
+    );
+    if (saved) navigate("/admin/resorts");
   };
 
 
@@ -519,133 +876,407 @@ const ResortForm = () => {
         </section>
 
 
-        {/* STAY */}
-
+        {/* ROOM CATEGORIES & RATES */}
         <section className="resort-form-section">
-
-          <div className="resort-section-title">
-
+          <div className="resort-section-title" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
             <div>
-
-              <h2>
-                Stay Information
-              </h2>
-
-              <p>
-                Room and guest information
-              </p>
-
+              <h2>Room Categories & Rates</h2>
             </div>
-
+            <button
+              type="button"
+              className="btn-add-room-category"
+              onClick={handleAddRoom}
+            >
+              + Add Room
+            </button>
           </div>
 
+          <div className="room-category-manager">
+            <div className="room-category-list">
+              {(form.roomsList || []).map((room, index) => {
+                const roomFeatures = Array.isArray(room.features) ? room.features : [];
+                return (
+                  <div className="room-category-card" key={room.id || index}>
+                    {/* Header */}
+                    <div className="room-cat-header">
+                      <div className="room-cat-header-left">
+                        <span className="room-cat-num">{index + 1}</span>
+                        <strong className="room-cat-title">{room.name || `Room ${index + 1}`}</strong>
+                        {room.type && <span className="room-cat-type-badge">{room.type}</span>}
+                        {room.price && (
+                          <span className="room-cat-rate-badge">
+                            ₹{Number(room.price).toLocaleString()} / night
+                          </span>
+                        )}
+                      </div>
 
-          <div className="resort-form-grid">
+                      <div className="room-cat-header-actions">
+                        <button
+                          type="button"
+                          className="room-btn-action"
+                          onClick={() => handleMoveRoom(index, -1)}
+                          disabled={index === 0}
+                          title="Move Up"
+                        >
+                          ▲
+                        </button>
+                        <button
+                          type="button"
+                          className="room-btn-action"
+                          onClick={() => handleMoveRoom(index, 1)}
+                          disabled={index === (form.roomsList || []).length - 1}
+                          title="Move Down"
+                        >
+                          ▼
+                        </button>
+                        <button
+                          type="button"
+                          className="room-btn-action"
+                          onClick={() => handleDuplicateRoom(index)}
+                          title="Clone"
+                        >
+                          ⧉ Clone
+                        </button>
+                        <button
+                          type="button"
+                          className="room-btn-action delete"
+                          onClick={() => handleRemoveRoom(index)}
+                          title="Delete"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
 
-            <div className="resort-field">
+                    {/* Body Fields */}
+                    <div className="room-cat-body">
+                      {/* Row 1: Name, Type, Pricing */}
+                      <div className="room-cat-grid-4">
+                        <div className="room-field-item">
+                          <label>Room Name</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Lakefront Deluxe Villa"
+                            value={room.name || ""}
+                            onChange={(e) => handleUpdateRoom(index, "name", e.target.value)}
+                          />
+                        </div>
 
-              <label>
-                Number of Rooms
-              </label>
+                        <div className="room-field-item">
+                          <label>Type</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Villa, Suite, Cottage"
+                            value={room.type || ""}
+                            onChange={(e) => handleUpdateRoom(index, "type", e.target.value)}
+                          />
+                        </div>
 
-              <input
-                type="number"
-                min="0"
-                name="rooms"
-                value={form.rooms}
-                onChange={handleChange}
-                placeholder="18"
-              />
+                        <div className="room-field-item">
+                          <label>Rate (₹)</label>
+                          <input
+                            type="number"
+                            min="0"
+                            placeholder="6500"
+                            value={room.price ?? ""}
+                            onChange={(e) => handleUpdateRoom(index, "price", Number(e.target.value))}
+                          />
+                        </div>
 
+                        <div className="room-field-item">
+                          <label>Original Price (₹)</label>
+                          <input
+                            type="number"
+                            min="0"
+                            placeholder="8500"
+                            value={room.originalPrice ?? ""}
+                            onChange={(e) => handleUpdateRoom(index, "originalPrice", Number(e.target.value))}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Row 2: Specs (Size, Bed, Capacity) */}
+                      <div className="room-cat-grid-3">
+                        <div className="room-field-item">
+                          <label>Size</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. 480 sq.ft"
+                            value={room.size || ""}
+                            onChange={(e) => handleUpdateRoom(index, "size", e.target.value)}
+                          />
+                        </div>
+
+                        <div className="room-field-item">
+                          <label>Bed</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. 1 King Bed"
+                            value={room.bed || ""}
+                            onChange={(e) => handleUpdateRoom(index, "bed", e.target.value)}
+                          />
+                        </div>
+
+                        <div className="room-field-item">
+                          <label>Capacity</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. 2 Adults, 1 Child"
+                            value={room.capacity || ""}
+                            onChange={(e) => handleUpdateRoom(index, "capacity", e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Room Photos (Multiple with Files & Link) */}
+                      {(() => {
+                        const roomGallery = Array.isArray(room.gallery) && room.gallery.length > 0
+                          ? room.gallery
+                          : room.image ? [room.image] : [];
+                        return (
+                          <div className="room-photos-box">
+                            <div className="room-photos-header">
+                              <label>
+                                Room Photos ({roomGallery.length})
+                              </label>
+
+                              <div className="room-photos-inputs">
+                                {/* Choose Files */}
+                                <label className="btn-room-file-upload">
+                                  📁 Choose Files
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    style={{ display: "none" }}
+                                    onChange={(e) => {
+                                      if (e.target.files) {
+                                        handleRoomFilesUpload(index, e.target.files);
+                                        e.target.value = "";
+                                      }
+                                    }}
+                                  />
+                                </label>
+
+                                {/* Add Link / URL */}
+                                <div className="room-url-input-wrap">
+                                  <input
+                                    type="text"
+                                    placeholder="Paste photo link..."
+                                    id={`room-photo-url-${index}`}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        handleRoomAddLink(index, e.target.value);
+                                        e.target.value = "";
+                                      }
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const el = document.getElementById(`room-photo-url-${index}`);
+                                      if (el && el.value.trim()) {
+                                        handleRoomAddLink(index, el.value);
+                                        el.value = "";
+                                      }
+                                    }}
+                                  >
+                                    + Add Link
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Photos Grid */}
+                            {roomGallery.length > 0 ? (
+                              <div className="room-photos-grid">
+                                {roomGallery.map((imgUrl, pIdx) => {
+                                  const isCover = (room.image === imgUrl) || (!room.image && pIdx === 0);
+                                  return (
+                                    <div className={`room-photo-item ${isCover ? "is-cover" : ""}`} key={pIdx}>
+                                      <img
+                                        src={imgUrl}
+                                        alt=""
+                                        onError={(e) => { e.target.style.display = "none"; }}
+                                      />
+                                      {isCover && <span className="room-cover-badge">Cover</span>}
+                                      <div className="room-photo-actions">
+                                        <button
+                                          type="button"
+                                          className="room-photo-del-btn"
+                                          onClick={() => handleRoomRemovePhoto(index, pIdx)}
+                                          title="Remove photo"
+                                        >
+                                          ×
+                                        </button>
+                                        {!isCover && (
+                                          <button
+                                            type="button"
+                                            className="room-photo-set-cover-btn"
+                                            onClick={() => handleRoomSetCoverPhoto(index, imgUrl)}
+                                            title="Set as cover photo"
+                                          >
+                                            Set Cover
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <div className="room-photos-empty">
+                                No photos added yet. Click <strong>Choose Files</strong> or enter a link to add room photos.
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
+
+                      {/* Features */}
+                      <div className="room-features-box">
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <label style={{ fontSize: "12px", fontWeight: "700", color: "#334155" }}>
+                            Features
+                          </label>
+                        </div>
+
+                        {/* Feature Chips */}
+                        {roomFeatures.length > 0 && (
+                          <div className="room-features-chips-wrap">
+                            {roomFeatures.map((feat, fIdx) => (
+                              <span className="room-feature-chip" key={fIdx}>
+                                {feat}
+                                <button
+                                  type="button"
+                                  onClick={() => handleRoomRemoveFeature(index, fIdx)}
+                                >
+                                  ×
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Quick Suggestions & Input */}
+                        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+                          <div className="room-quick-suggestions">
+                            {[
+                              "Balcony",
+                              "Free Breakfast",
+                              "Jacuzzi",
+                              "Pool View",
+                              "King Bed",
+                              "AC",
+                              "Wi-Fi"
+                            ].map((suggest) => (
+                              <span
+                                key={suggest}
+                                className="room-quick-tag"
+                                onClick={() => handleRoomAddFeature(index, suggest)}
+                              >
+                                + {suggest}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="room-feature-input-row" style={{ flex: "1 1 200px" }}>
+                            <input
+                              type="text"
+                              placeholder="Add feature and press Enter..."
+                              id={`custom-feature-input-${index}`}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  handleRoomAddFeature(index, e.target.value);
+                                  e.target.value = "";
+                                }
+                              }}
+                            />
+                            <button
+                              type="button"
+                              className="room-btn-action"
+                              onClick={() => {
+                                const el = document.getElementById(`custom-feature-input-${index}`);
+                                if (el && el.value.trim()) {
+                                  handleRoomAddFeature(index, el.value);
+                                  el.value = "";
+                                }
+                              }}
+                            >
+                              + Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
-
-            <div className="resort-field">
-
-              <label>
-                Maximum Guests
-              </label>
-
-              <input
-                type="number"
-                min="0"
-                name="guests"
-                value={form.guests}
-                onChange={handleChange}
-                placeholder="50"
-              />
-
-            </div>
-
-
-            <div className="resort-field full">
-
-              <label>
-                Room Types
-              </label>
-
-              <input
-                name="roomTypes"
-                value={form.roomTypes}
-                onChange={handleChange}
-                placeholder="Deluxe, Suite, Family"
-              />
-
-            </div>
-
-
-            <div className="resort-field">
-
-              <label>
-                Check-in
-              </label>
-
-              <input
-                name="checkIn"
-                value={form.checkIn}
-                onChange={handleChange}
-              />
-
-            </div>
-
-
-            <div className="resort-field">
-
-              <label>
-                Check-out
-              </label>
-
-              <input
-                name="checkOut"
-                value={form.checkOut}
-                onChange={handleChange}
-              />
-
-            </div>
-
-
-            <div className="resort-field">
-
-              <label>
-                Minimum Stay
-              </label>
-
-              <input
-                type="number"
-                min="1"
-                name="minimumStay"
-                value={
-                  form.minimumStay
-                }
-                onChange={handleChange}
-              />
-
-            </div>
-
           </div>
 
+          {/* General Stay Settings */}
+          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #e2e8f0" }}>
+            <div className="resort-form-grid">
+              <div className="resort-field">
+                <label>Total Rooms</label>
+                <input
+                  type="number"
+                  min="0"
+                  name="rooms"
+                  value={form.rooms}
+                  onChange={handleChange}
+                  placeholder="18"
+                />
+              </div>
+
+              <div className="resort-field">
+                <label>Max Guests</label>
+                <input
+                  type="number"
+                  min="0"
+                  name="guests"
+                  value={form.guests}
+                  onChange={handleChange}
+                  placeholder="50"
+                />
+              </div>
+
+              <div className="resort-field">
+                <label>Check-in</label>
+                <input
+                  name="checkIn"
+                  value={form.checkIn}
+                  onChange={handleChange}
+                  placeholder="02:00 PM"
+                />
+              </div>
+
+              <div className="resort-field">
+                <label>Check-out</label>
+                <input
+                  name="checkOut"
+                  value={form.checkOut}
+                  onChange={handleChange}
+                  placeholder="11:00 AM"
+                />
+              </div>
+
+              <div className="resort-field">
+                <label>Minimum Stay (Nights)</label>
+                <input
+                  type="number"
+                  min="1"
+                  name="minimumStay"
+                  value={form.minimumStay}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
         </section>
-
 
         {/* MEDIA */}
 
@@ -676,12 +1307,48 @@ const ResortForm = () => {
                 Cover Image *
               </label>
 
-              <input
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-                placeholder="/images/resorts/resort.jpg"
-              />
+              <div className="admin-media-upload-bar">
+                <input
+                  name="image"
+                  value={form.image}
+                  onChange={handleChange}
+                  placeholder="/images/resorts/resort.jpg or choose file"
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="resort-cover-upload"
+                  style={{ display: "none" }}
+                  onChange={handleCoverUpload}
+                />
+                <label htmlFor="resort-cover-upload" className="admin-choose-file-btn">
+                  Choose File
+                </label>
+              </div>
+
+              {form.image && (
+                <div className="admin-cover-preview">
+                  <div className="admin-cover-preview-thumb">
+                    <img src={form.image} alt="Cover Preview" />
+                  </div>
+                  <div className="admin-cover-preview-info">
+                    <span className="admin-cover-preview-name">
+                      {form.image.startsWith("data:")
+                        ? "Uploaded Cover Image"
+                        : (form.image.split("/").pop().split("?")[0] || form.image)}
+                    </span>
+                    <span className="admin-cover-preview-sub">Cover image selected</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="admin-gallery-remove-btn"
+                    onClick={() => setForm((prev) => ({ ...prev, image: "" }))}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
 
             </div>
 
@@ -689,29 +1356,81 @@ const ResortForm = () => {
             <div className="resort-field full">
 
               <label>
-                Gallery Images
+                Gallery Images ({Array.isArray(form.gallery) ? form.gallery.length : 0})
               </label>
 
-              <textarea
-                rows="5"
-                value={form.gallery.join(
-                  "\n"
-                )}
-                onChange={(e) =>
-                  setForm((current) => ({
-                    ...current,
+              <div className="admin-media-upload-bar">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  id="resort-gallery-upload"
+                  style={{ display: "none" }}
+                  onChange={handleGalleryUpload}
+                />
+                <label htmlFor="resort-gallery-upload" className="admin-choose-file-btn">
+                  Choose Files
+                </label>
 
-                    gallery:
-                      e.target.value
-                        .split("\n")
-                        .map((item) =>
-                          item.trim()
-                        )
-                        .filter(Boolean),
-                  }))
-                }
-                placeholder="One image URL per line"
-              />
+                <div className="admin-url-adder">
+                  <input
+                    value={galleryUrlInput}
+                    onChange={(e) => setGalleryUrlInput(e.target.value)}
+                    placeholder="Or enter image URL..."
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleAddGalleryUrl();
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="admin-add-url-btn"
+                    onClick={handleAddGalleryUrl}
+                  >
+                    Add URL
+                  </button>
+                </div>
+              </div>
+
+              {/* Gallery Listing */}
+              <div className="admin-gallery-container">
+                {(!Array.isArray(form.gallery) || form.gallery.length === 0) ? (
+                  <div className="admin-gallery-empty">
+                    No gallery images added yet. Click &quot;Choose Files&quot; above to select images.
+                  </div>
+                ) : (
+                  <div className="admin-gallery-list">
+                    {form.gallery.map((item, index) => {
+                      const parsed = parseGalleryItem(item, index);
+                      return (
+                        <div key={parsed.id || index} className="admin-gallery-item">
+                          <div className="admin-gallery-thumb">
+                            <img src={parsed.url} alt={parsed.name} />
+                          </div>
+                          <div className="admin-gallery-info">
+                            <span className="admin-gallery-name" title={parsed.name}>
+                              {parsed.name}
+                            </span>
+                            <span className="admin-gallery-badge">
+                              {parsed.url.startsWith("data:") ? "Uploaded File" : "Image URL"}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className="admin-gallery-remove-btn"
+                            onClick={() => handleRemoveGalleryImage(index)}
+                            title="Remove image"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
             </div>
 
@@ -753,9 +1472,7 @@ const ResortForm = () => {
 
                   <input
                     type="checkbox"
-                    checked={form.facilities.includes(
-                      facility
-                    )}
+                    checked={Boolean((form.facilities || []).includes(facility))}
                     onChange={() =>
                       toggleFacility(
                         facility
@@ -781,86 +1498,58 @@ const ResortForm = () => {
         <section className="resort-form-section">
           <div className="resort-section-title">
             <div>
-              <h2>Enquiry Routing & Resort Contact Settings</h2>
-              <p>
-                Configure where customer website WhatsApp enquiries are routed. Resort direct contact numbers are strictly kept private for admin only.
-              </p>
+              <h2>Contact & Enquiry</h2>
             </div>
-            <span style={{ background: "#e0f2fe", color: "#0369a1", border: "1px solid #bae6fd", padding: "4px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: "700" }}>
-              Enquiry Routing
-            </span>
           </div>
 
           <div className="resort-form-grid">
-            {/* 1. Routing Selector */}
-            <div className="resort-field full" style={{ background: "#f8fafc", padding: "14px", borderRadius: "8px", border: "1.5px solid #e2e8f0" }}>
-              <label style={{ fontSize: "12px", fontWeight: "700", color: "#0f172a", marginBottom: "8px", display: "block" }}>
-                🎯 Send Customer WhatsApp Enquiries To:
-              </label>
+            <div className="resort-field">
+              <label>WhatsApp Enquiry Routing</label>
               <select
                 name="enquiryTargetType"
-                value={form.enquiryTargetType || "agent"}
-                onChange={handleChange}
-                style={{ fontSize: "13px", fontWeight: "600", padding: "8px 12px", width: "100%", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+                value={form.enquiryTargetType}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const match = configuredContacts.find((c) => c.id === val);
+                  setForm((prev) => ({
+                    ...prev,
+                    enquiryTargetType: val,
+                    enquiryContactId: match ? match.id : "",
+                    whatsapp: match
+                      ? match.whatsapp
+                      : val === "resort"
+                      ? prev.resortPhone
+                      : prev.whatsapp,
+                  }));
+                }}
               >
-                <option value="agent">
-                  My Agent / Admin Number (Customer enquiry comes to me first, then I connect with resort)
-                </option>
-                <option value="resort">
-                  Direct Resort Number (Route directly to resort when agent is busy / direct booking)
-                </option>
-                <option value="custom">
-                  Custom WhatsApp Number (Enter specific recipient number)
-                </option>
+                <optgroup label="Saved Enquiry Desks">
+                  {configuredContacts.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name} ({c.whatsapp})
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Direct / Custom">
+                  <option value="resort">Direct Resort Phone</option>
+                  <option value="custom">Custom Number</option>
+                </optgroup>
               </select>
-              <small style={{ color: "#64748b", fontSize: "11.5px", marginTop: "6px", display: "block" }}>
-                {form.enquiryTargetType === "agent" && (
-                  <span>✅ Customer details (Name, Phone number, dates, room category) will be sent to <strong>your WhatsApp number</strong>. The resort contact number stays completely hidden from the public.</span>
-                )}
-                {form.enquiryTargetType === "resort" && (
-                  <span>⚡ Enquiries will be routed directly to the resort's WhatsApp number without exposing it on the public page.</span>
-                )}
-                {form.enquiryTargetType === "custom" && (
-                  <span>⚙️ Enquiries will be routed to the custom WhatsApp number you enter below.</span>
-                )}
-              </small>
             </div>
 
-            {/* Agent / Admin Number */}
             <div className="resort-field">
-              <label>Agent / Admin WhatsApp Number *</label>
-              <input
-                name="agentPhone"
-                value={form.agentPhone}
-                onChange={handleChange}
-                placeholder="+91 94471 88990"
-              />
-              <small style={{ color: "#059669", fontSize: "11px", marginTop: "3px", fontWeight: 600 }}>
-                Your number to receive guest booking details
-              </small>
-            </div>
-
-            {/* Resort Phone (Private) */}
-            <div className="resort-field">
-              <label>
-                Resort Direct Contact Number *{" "}
-                <span style={{ color: "#dc2626", fontSize: "10.5px", fontWeight: 600 }}>(Admin Only - Hidden from Public)</span>
-              </label>
+              <label>Resort Direct Phone</label>
               <input
                 name="resortPhone"
                 value={form.resortPhone}
                 onChange={handleChange}
                 placeholder="+91 98470 12345"
               />
-              <small style={{ color: "#64748b", fontSize: "11px", marginTop: "3px" }}>
-                Resort management number for admin calling only
-              </small>
             </div>
 
-            {/* Custom Number if selected */}
             {form.enquiryTargetType === "custom" && (
-              <div className="resort-field full">
-                <label>Custom WhatsApp Number *</label>
+              <div className="resort-field">
+                <label>Custom WhatsApp Number</label>
                 <input
                   name="customPhone"
                   value={form.customPhone || ""}
@@ -870,26 +1559,8 @@ const ResortForm = () => {
               </div>
             )}
 
-            {/* Active Routing Summary Badge */}
-            <div className="resort-field full">
-              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "10px 14px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <span className="material-symbols-outlined" style={{ color: "#16a34a", fontSize: "18px" }}>
-                  check_circle
-                </span>
-                <span style={{ fontSize: "12px", color: "#166534" }}>
-                  Currently Active Recipient: <strong>
-                    {form.enquiryTargetType === "agent"
-                      ? (form.agentPhone || "+91 94471 88990")
-                      : form.enquiryTargetType === "resort"
-                      ? (form.resortPhone || "Resort Phone")
-                      : (form.customPhone || "Custom Phone")}
-                  </strong> (Customer clicks "WhatsApp Enquiry" ➔ text sent directly here)
-                </span>
-              </div>
-            </div>
-
             <div className="resort-field">
-              <label>Official Email</label>
+              <label>Email</label>
               <input
                 type="email"
                 name="email"
@@ -900,7 +1571,7 @@ const ResortForm = () => {
             </div>
 
             <div className="resort-field">
-              <label>Website URL</label>
+              <label>Website</label>
               <input
                 name="website"
                 value={form.website}

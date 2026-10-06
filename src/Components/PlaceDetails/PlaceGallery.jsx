@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const PlaceGallery = ({ place }) => {
-  const images = place.images?.length
+  const rawImages = place.images?.length
     ? place.images
+    : place.gallery?.length
+    ? place.gallery
     : place.image
     ? [place.image]
     : [];
+  const images = rawImages
+    .map((img) => (typeof img === "object" && img !== null ? img.url : img))
+    .filter(Boolean);
 
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const closeViewer = () => {
+  const closeViewer = useCallback(() => {
     setActiveIndex(null);
-  };
+  }, []);
 
-  const previousImage = () => {
+  const previousImage = useCallback(() => {
     setActiveIndex((current) =>
       current === 0 ? images.length - 1 : current - 1
     );
-  };
+  }, [images.length]);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setActiveIndex((current) =>
       current === images.length - 1 ? 0 : current + 1
     );
-  };
+  }, [images.length]);
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -50,7 +55,7 @@ const PlaceGallery = ({ place }) => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = oldOverflow;
     };
-  }, [activeIndex, images.length]);
+  }, [activeIndex, closeViewer, previousImage, nextImage]);
 
   if (!images.length) {
     return null;

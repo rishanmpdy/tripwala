@@ -1,63 +1,37 @@
 import { Link, useParams } from "react-router-dom";
-
 import { taxiStore } from "../../../data/stores";
-
 import "./TaxiView.css";
 
 const TaxiView = () => {
-
   const { id } = useParams();
 
   const taxi = taxiStore.get().find(
-    (item) => item.id === Number(id)
+    (item) => String(item.id) === String(id)
   );
 
-
   if (!taxi) {
-
     return (
       <div className="taxi-view-empty">
-
-        <h2>
-          Taxi not found
-        </h2>
-
-        <Link to="/admin/taxi">
-          Back to Taxi
-        </Link>
-
+        <h2>Taxi not found</h2>
+        <p>The taxi service you are looking for does not exist or has been removed.</p>
+        <Link to="/admin/taxi">Back to Taxi</Link>
       </div>
     );
-
   }
 
+  const features = Array.isArray(taxi.features) ? taxi.features : [];
 
   return (
     <div className="taxi-view-page">
-
       {/* HEADER */}
-
       <div className="taxi-view-header">
-
         <div>
-
-          <Link
-            to="/admin/taxi"
-            className="taxi-back"
-          >
+          <Link to="/admin/taxi" className="taxi-back">
             ← Back to Taxi
           </Link>
-
-          <h1>
-            {taxi.name}
-          </h1>
-
-          <p>
-            Taxi service details
-          </p>
-
+          <h1>{taxi.name}</h1>
+          <p>{taxi.vehicleName} • {taxi.location || "Wayanad"}</p>
         </div>
-
 
         <Link
           to={`/admin/taxi/edit/${taxi.id}`}
@@ -65,210 +39,148 @@ const TaxiView = () => {
         >
           Edit Taxi
         </Link>
-
       </div>
-
 
       {/* MAIN */}
-
       <div className="taxi-view-grid">
-
         {/* IMAGE */}
-
         <div className="taxi-view-image">
-
-          <img
-            src={taxi.image}
-            alt={taxi.name}
-          />
-
+          {taxi.image ? (
+            <img src={taxi.image} alt={taxi.name} />
+          ) : (
+            <div style={{ height: "320px", display: "flex", alignItems: "center", justifyContent: "center", background: "#f0f0f0", color: "#888" }}>
+              No Vehicle Image
+            </div>
+          )}
         </div>
-
 
         {/* INFO */}
-
         <div className="taxi-view-card">
-
           <div className="view-card-header">
-
-            <h2>
-              Service Information
-            </h2>
-
+            <h2>Service Information</h2>
             <span
               className={`taxi-status ${
-                taxi.status === "Active"
-                  ? "active"
-                  : "inactive"
+                taxi.status === "Active" ? "active" : "inactive"
               }`}
             >
+              <span />
               {taxi.status}
             </span>
-
           </div>
-
 
           <div className="view-info-grid">
+            <div>
+              <small>Driver Name</small>
+              <strong>{taxi.driverName || "—"}</strong>
+            </div>
 
             <div>
-              <small>
-                Driver
-              </small>
-
+              <small>Phone Number</small>
               <strong>
-                {taxi.driverName}
+                {taxi.phone ? (
+                  <a href={`tel:${taxi.phone}`} style={{ color: "#111" }}>
+                    {taxi.phone}
+                  </a>
+                ) : (
+                  "—"
+                )}
               </strong>
             </div>
 
-
             <div>
-              <small>
-                Phone
-              </small>
-
+              <small>WhatsApp</small>
               <strong>
-                {taxi.phone}
+                {taxi.whatsapp ? (
+                  <a
+                    href={`https://wa.me/${taxi.whatsapp.replace(/[^0-9]/g, "")}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "#16a34a" }}
+                  >
+                    {taxi.whatsapp} ↗
+                  </a>
+                ) : (
+                  "—"
+                )}
               </strong>
             </div>
 
+            <div>
+              <small>Vehicle Model</small>
+              <strong>{taxi.vehicleName || "—"}</strong>
+            </div>
 
             <div>
-              <small>
-                Vehicle
-              </small>
+              <small>Vehicle Number</small>
+              <strong>{taxi.vehicleNumber || "—"}</strong>
+            </div>
 
+            <div>
+              <small>Vehicle Type</small>
+              <strong>{taxi.vehicleType || "Sedan / SUV"}</strong>
+            </div>
+
+            <div>
+              <small>Location / Base</small>
               <strong>
-                {taxi.vehicleName}
+                {taxi.location || "—"}
+                {taxi.district ? `, ${taxi.district}` : ""}
               </strong>
             </div>
 
+            <div>
+              <small>State</small>
+              <strong>{taxi.state || "Kerala"}</strong>
+            </div>
 
             <div>
-              <small>
-                Vehicle Number
-              </small>
-
-              <strong>
-                {taxi.vehicleNumber}
+              <small>Rate / Kilometer</small>
+              <strong style={{ color: "#0284c7" }}>
+                {taxi.pricePerKm ? `₹${taxi.pricePerKm}/km` : "—"}
               </strong>
             </div>
 
-
             <div>
-              <small>
-                Vehicle Type
-              </small>
-
-              <strong>
-                {taxi.vehicleType}
+              <small>Rate / Full Day</small>
+              <strong style={{ color: "#0284c7" }}>
+                {taxi.pricePerDay ? `₹${taxi.pricePerDay}/day` : "—"}
               </strong>
             </div>
 
-
             <div>
-              <small>
-                Location
-              </small>
-
-              <strong>
-                {taxi.location}
-              </strong>
+              <small>Rating</small>
+              <strong style={{ color: "#b45309" }}>★ {taxi.rating || "4.8"}</strong>
             </div>
 
-
             <div>
-              <small>
-                Price / KM
-              </small>
-
-              <strong>
-                ₹{taxi.pricePerKm}
-              </strong>
+              <small>Total Trips / Reviews</small>
+              <strong>{taxi.reviews || "0"} reviews</strong>
             </div>
-
-
-            <div>
-              <small>
-                Price / Day
-              </small>
-
-              <strong>
-                ₹{taxi.pricePerDay}
-              </strong>
-            </div>
-
-
-            <div>
-              <small>
-                Rating
-              </small>
-
-              <strong>
-                ★ {taxi.rating}
-              </strong>
-            </div>
-
-
-            <div>
-              <small>
-                Reviews
-              </small>
-
-              <strong>
-                {taxi.reviews}
-              </strong>
-            </div>
-
           </div>
-
         </div>
-
       </div>
-
 
       {/* DESCRIPTION */}
-
-      <div className="taxi-view-section">
-
-        <h2>
-          Description
-        </h2>
-
-        <p>
-          {taxi.description}
-        </p>
-
-      </div>
-
+      {taxi.description && (
+        <div className="taxi-view-section">
+          <h2>About Service</h2>
+          <p>{taxi.description}</p>
+        </div>
+      )}
 
       {/* FEATURES */}
-
-      <div className="taxi-view-section">
-
-        <h2>
-          Features
-        </h2>
-
-
-        <div className="view-features">
-
-          {taxi.features.map(
-            (feature) => (
-
-              <span key={feature}>
-                {feature}
-              </span>
-
-            )
-          )}
-
+      {features.length > 0 && (
+        <div className="taxi-view-section">
+          <h2>Features & Inclusions</h2>
+          <div className="view-features">
+            {features.map((feature) => (
+              <span key={feature}>{feature}</span>
+            ))}
+          </div>
         </div>
-
-      </div>
-
+      )}
     </div>
   );
 };
 
 export default TaxiView;
-

@@ -1,6 +1,16 @@
+import { useState } from "react";
 import "./Hero.css";
 
-const Hero = ({ categories, activeCategory, onCategoryChange }) => {
+const Hero = ({ categories, activeCategory, onCategoryChange, onSearch }) => {
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSearch && query.trim()) {
+      onSearch(query.trim());
+    }
+  };
+
   return (
     <section className="hero">
 
@@ -10,16 +20,18 @@ const Hero = ({ categories, activeCategory, onCategoryChange }) => {
       {/* Search */}
       <div className="hero-content">
 
-        <div className="search-box">
+        <form className="search-box" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Hi, Where is next destination ?"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
 
-          <button className="search-button">
+          <button type="submit" className="search-button" aria-label="Search destination">
             <span className="material-symbols-outlined">search</span>
           </button>
-        </div>
+        </form>
 
         <div className="hero-categories">
           {categories.map((category) => (

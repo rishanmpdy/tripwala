@@ -1,4 +1,3 @@
-import fallbackImage from "../assets/images/place-1.jpg";
 import p1 from "../assets/images/places/1.webp";
 import p2 from "../assets/images/places/2.jpg";
 import r1 from "../assets/images/resort_img/resort1.jpg";

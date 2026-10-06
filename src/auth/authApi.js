@@ -36,12 +36,50 @@ const request = async (action, body) => {
   return data;
 };
 
+import { userStore, defaultAdminUsers } from "../data/stores";
+
 export const signInWithEmail = async (email, password) => {
   if (authMode === "demo") {
-    if (email.trim().toLowerCase() === demoAdminEmail && password === demoAdminPassword) {
-      return { email: demoAdminEmail, idToken: "demo-admin-session" };
+    const cleanEmail = email.trim().toLowerCase();
+    const allUsers = userStore?.get() || defaultAdminUsers;
+    const matchedUser = allUsers.find(
+      (u) => u.email.toLowerCase() === cleanEmail
+    );
+
+    if (matchedUser) {
+      if (matchedUser.password !== password) {
+        throw new Error("The password you entered is incorrect.");
+      }
+      if (matchedUser.status === "Inactive") {
+        throw new Error("This account is currently deactivated. Please contact Superadmin.");
+      }
+      // Update last login timestamp
+      const updatedUsers = allUsers.map((u) =>
+        u.id === matchedUser.id ? { ...u, lastLogin: "Just now" } : u
+      );
+      userStore?.save(updatedUsers);
+
+      return {
+        id: matchedUser.id,
+        name: matchedUser.name,
+        email: matchedUser.email,
+        role: matchedUser.role,
+        idToken: `token-${matchedUser.id}-${Date.now()}`,
+      };
     }
-    throw new Error("Use the demo administrator email and password shown below.");
+
+    // Backwards compatibility with demoAdminEmail
+    if (cleanEmail === demoAdminEmail && password === demoAdminPassword) {
+      return {
+        id: "demo-admin",
+        name: "Demo Superadmin",
+        email: demoAdminEmail,
+        role: "superadmin",
+        idToken: "demo-admin-session",
+      };
+    }
+
+    throw new Error("No account found with this email. Check demo accounts below.");
   }
   try {
     return await request("signInWithPassword", { email, password, returnSecureToken: true });

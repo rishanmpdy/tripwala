@@ -268,12 +268,13 @@ const FoodSpots = () => {
 
                     <div className="food-item">
 
-                      <div className="food-image">
+                      <div className="food-table-image food-image">
 
                         {food.image && (
                           <img
                             src={food.image}
                             alt={food.name}
+                            className="food-table-thumb"
                           />
                         )}
 

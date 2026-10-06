@@ -264,12 +264,13 @@ const Homestays = () => {
 
                       <div className="homestay-item">
 
-                        <div className="homestay-image">
+                        <div className="homestay-table-image homestay-image">
 
                           {home.image && (
                             <img
                               src={home.image}
                               alt={home.name}
+                              className="homestay-table-thumb"
                             />
                           )}
 

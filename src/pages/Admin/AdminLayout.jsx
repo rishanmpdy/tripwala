@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import "./AdminLayout.css";
@@ -51,8 +51,12 @@ const AdminLayout = () => {
   const location = useLocation();
   const currentItem = navigation.flatMap((group) => group.items).find((item) => location.pathname === item.path || location.pathname.startsWith(`${item.path}/`));
   const pageTitle = currentItem?.label || "Dashboard";
-  const displayName = session?.email?.split("@")[0] || "Admin";
-  const initials = displayName.slice(0, 2).toUpperCase();
+  const displayName = session?.name || session?.email?.split("@")[0] || "Admin";
+  const userRole = session?.role || "admin";
+  const roleLabel = userRole === "superadmin" ? "⚡ Superadmin" : userRole === "user" ? "👤 User" : "🛡️ Admin";
+  const initials = session?.name 
+    ? session.name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase()
+    : displayName.slice(0, 2).toUpperCase();
 
   return <div className={`admin-layout ${collapsed ? "sidebar-collapsed" : ""}`}>
     {sidebarOpen && <button className="admin-sidebar-overlay" type="button" aria-label="Close menu" onClick={() => setSidebarOpen(false)} />}
@@ -64,7 +68,7 @@ const AdminLayout = () => {
       <div className="admin-sidebar-content">{navigation.map((group) => <div className="admin-nav-group" key={group.title}>{!collapsed && <div className="admin-nav-title">{group.title}</div>}<nav aria-label={group.title}>{group.items.map((item) => <NavLink key={item.path} to={item.path} end={item.end} className={({ isActive }) => `admin-nav-item ${isActive ? "active" : ""}`} onClick={() => setSidebarOpen(false)}><span className="admin-nav-icon"><Icon name={item.icon} size={18} /></span>{!collapsed && <span className="admin-nav-label">{item.label}</span>}</NavLink>)}</nav></div>)}</div>
       <div className="admin-sidebar-footer"><button className="admin-logout" type="button" onClick={logout}><span className="admin-nav-icon"><Icon name="logout" size={18} /></span>{!collapsed && <span>Logout</span>}</button></div>
     </aside>
-    <div className="admin-main"><header className="admin-header"><div className="admin-header-left"><button className="mobile-menu-btn" type="button" aria-label="Open menu" onClick={() => setSidebarOpen(true)}><Icon name="menu" size={21} /></button><div><div className="admin-breadcrumb">Admin <Icon name="chevron" size={12} /><span>{pageTitle}</span></div><h1>{pageTitle}</h1></div></div><div className="admin-header-right"><button className="admin-icon-btn" type="button" aria-label="Notifications"><Icon name="bell" size={19} /><span className="notification-dot" /></button><div className="admin-user"><div className="admin-user-avatar">{initials}</div><div className="admin-user-info"><strong>{displayName}</strong><span>Administrator</span></div></div></div></header><main className="admin-content"><Outlet /></main></div>
+    <div className="admin-main"><header className="admin-header"><div className="admin-header-left"><button className="mobile-menu-btn" type="button" aria-label="Open menu" onClick={() => setSidebarOpen(true)}><Icon name="menu" size={21} /></button><div><div className="admin-breadcrumb">Admin <Icon name="chevron" size={12} /><span>{pageTitle}</span></div><h1>{pageTitle}</h1></div></div><div className="admin-header-right"><button className="admin-icon-btn" type="button" aria-label="Notifications"><Icon name="bell" size={19} /><span className="notification-dot" /></button><div className="admin-user"><div className="admin-user-avatar">{initials}</div><div className="admin-user-info"><strong>{displayName}</strong><span style={{ fontSize: "11px", fontWeight: "700", color: userRole === "superadmin" ? "#7e22ce" : userRole === "user" ? "#047857" : "#0284c7" }}>{roleLabel}</span></div></div></div></header><main className="admin-content"><Outlet /></main></div>
   </div>;
 };
 

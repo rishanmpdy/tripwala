@@ -9,63 +9,95 @@ import fallback from "../../assets/images/place-1.jpg";
 import "./CategoryGrid.css";
 
 const CATEGORY_META = [
-  { id: "places",    label: "Places",    icon: "landscape",   fallbackImg: p1 },
-  { id: "resort",    label: "Resort",    icon: "hotel",       fallbackImg: r1 },
-  { id: "food-spot", label: "Food Spot", icon: "restaurant",  fallbackImg: f1 },
-  { id: "homestay",  label: "Home Stay", icon: "cottage",     fallbackImg: r1 },
-  { id: "taxi",      label: "Taxi",      icon: "local_taxi",  fallbackImg: p1 },
+  { id: "places",    label: "Places",     icon: "landscape",   fallbackImg: p1, color: "#10b981" },
+  { id: "resort",    label: "Resorts",    icon: "hotel",       fallbackImg: r1, color: "#0284c7" },
+  { id: "food-spot", label: "Food Spots", icon: "restaurant",  fallbackImg: f1, color: "#f59e0b" },
+  { id: "homestay",  label: "Homestays",  icon: "cottage",     fallbackImg: r1, color: "#8b5cf6" },
+  { id: "taxi",      label: "Taxi & Cabs",icon: "local_taxi",  fallbackImg: fallback, color: "#eab308" },
 ];
 
-const getStoreForCategory = (id) => {
-  if (id === "places") return placeStore.get();
-  if (id === "resort") return resortStore.get();
-  if (id === "food-spot") return foodStore.get();
-  if (id === "homestay") return homestayStore.get();
-  if (id === "taxi") return taxiStore.get();
-  return [];
-};
-
-const getImagesForCategory = (id, fallbackImg) => {
-  const items = getStoreForCategory(id).filter(item => item.status === "Active");
-  const images = items.map(item => item.image || item.thumbnail || item.gallery?.[0]).filter(Boolean);
-  while (images.length < 4) {
-    images.push(images.length > 0 ? images[0] : (fallbackImg || fallback));
+const getCountForCategory = (id) => {
+  try {
+    if (id === "places") return placeStore.get().filter(i => i.status === "Active").length;
+    if (id === "resort") return resortStore.get().filter(i => i.status === "Active").length;
+    if (id === "food-spot") return foodStore.get().filter(i => i.status === "Active").length;
+    if (id === "homestay") return homestayStore.get().filter(i => i.status === "Active").length;
+    if (id === "taxi") return taxiStore.get().filter(i => i.status === "Active").length;
+  } catch {
+    return 0;
   }
-  return images.slice(0, 4);
+  return 0;
 };
 
-const CategoryGrid = ({ categories }) => {
+const getFeaturedImageForCategory = (id, fallbackImg) => {
+  try {
+    let items = [];
+    if (id === "places") items = placeStore.get();
+    else if (id === "resort") items = resortStore.get();
+    else if (id === "food-spot") items = foodStore.get();
+    else if (id === "homestay") items = homestayStore.get();
+    else if (id === "taxi") items = taxiStore.get();
+
+    const activeItem = items.find(i => i.status === "Active" && (i.image || i.thumbnail || i.gallery?.[0]));
+    return activeItem?.image || activeItem?.thumbnail || activeItem?.gallery?.[0] || fallbackImg || fallback;
+  } catch {
+    return fallbackImg || fallback;
+  }
+};
+
+const CategoryGrid = ({ categories, onSelectCategory }) => {
   const navigate = useNavigate();
 
-  const items = categories?.length
-    ? categories.map((cat) => {
-        const meta = CATEGORY_META.find((m) => m.id === cat.id) || CATEGORY_META[0];
-        const photos = getImagesForCategory(cat.id, meta.fallbackImg);
-        return { ...meta, ...cat, photos };
-      })
-    : CATEGORY_META.map(meta => ({ ...meta, photos: getImagesForCategory(meta.id, meta.fallbackImg) }));
+  const items = (categories?.length ? categories : CATEGORY_META).map((cat) => {
+    const meta = CATEGORY_META.find((m) => m.id === cat.id) || CATEGORY_META[0];
+    const image = getFeaturedImageForCategory(cat.id, meta.fallbackImg);
+    const count = getCountForCategory(cat.id);
+    return { ...meta, ...cat, image, count };
+  });
+
+  const handleClick = (categoryId) => {
+    if (onSelectCategory) {
+      onSelectCategory(categoryId);
+    } else {
+      navigate(`/listings?category=${categoryId}`);
+    }
+  };
 
   return (
-    <section className="category-grid-section">
-      <h2 className="category-grid-title">Explore Categories</h2>
-      <div className="category-grid">
+    <section className="category-section center-align">
+      <div className="section-header-center">
+        <span className="section-badge-center">
+          <span className="material-symbols-outlined">category</span>
+          Categories
+        </span>
+        <h2 className="section-title-center">Explore by Category</h2>
+      </div>
+
+      <div className="category-boxes-container">
         {items.map((cat) => (
           <button
             key={cat.id}
-            className="category-grid-card"
-            onClick={() => navigate(`/listings?category=${cat.id}`)}
+            type="button"
+            className="category-box-tile"
+            onClick={() => handleClick(cat.id)}
+            aria-label={`Explore ${cat.label}`}
           >
-            <div className="category-collage">
-              {(cat.photos || []).slice(0, 4).map((src, i) => (
-                <div key={i} className="category-collage-cell">
-                  <img src={src} alt="" className="category-collage-img" loading="lazy" />
-                </div>
-              ))}
-              <div className="category-collage-overlay" />
+            <div className="category-box-bg">
+              <img
+                src={cat.image}
+                alt={cat.label}
+                className="category-box-img"
+                loading="lazy"
+              />
+              <div className="category-box-overlay" />
             </div>
-            <div className="category-grid-label">
-              <span className="material-symbols-outlined category-grid-icon">{cat.icon}</span>
-              <span className="category-grid-name">{cat.label}</span>
+
+            <div className="category-box-content">
+              <div className="category-box-icon" style={{ "--cat-accent": cat.color }}>
+                <span className="material-symbols-outlined">{cat.icon}</span>
+              </div>
+              <span className="category-box-name">{cat.label}</span>
+              <span className="category-box-count">{cat.count} listings</span>
             </div>
           </button>
         ))}

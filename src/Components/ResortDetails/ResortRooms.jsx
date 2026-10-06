@@ -62,22 +62,24 @@ const ResortRooms = ({
           const selected = selectedRooms.includes(room.name);
           const roomImages = getRoomImages(room);
 
+          const displayImage = room.image || (resortGallery && resortGallery[0]) || "";
+
           return (
             <article
               key={room.id}
               className={`room-card ${selected ? "selected" : ""}`}
             >
               {/* Accessible Image Button */}
-              {room.image && (
+              {displayImage && (
                 <button
                   type="button"
                   className="room-card-image-wrap"
-                  onClick={() => openGallery(room)}
+                  onClick={() => openGallery({ ...room, image: displayImage })}
                   aria-label={`View photos of ${room.name}`}
                   title="Click to view all photos"
                 >
                   <img
-                    src={room.image}
+                    src={displayImage}
                     alt={room.name}
                     className="room-card-image"
                     loading="lazy"
@@ -86,7 +88,7 @@ const ResortRooms = ({
                     <span className="material-symbols-outlined">
                       photo_library
                     </span>
-                    {roomImages.length} Photos
+                    {roomImages.length > 0 ? roomImages.length : 1} Photos
                   </span>
                 </button>
               )}

@@ -14,7 +14,7 @@ const TaxiForm = () => {
   const isEdit = Boolean(id);
 
   const existingTaxi = taxiStore.get().find(
-    (taxi) => taxi.id === Number(id)
+    (taxi) => String(taxi.id) === String(id)
   );
 
 
@@ -76,35 +76,64 @@ const TaxiForm = () => {
 
     setForm((current) => {
 
+      const features = Array.isArray(current.features) ? current.features : [];
       const exists =
-        current.features.includes(feature);
+        features.includes(feature);
 
       return {
         ...current,
 
         features: exists
-          ? current.features.filter(
+          ? features.filter(
               (item) => item !== feature
             )
-          : [...current.features, feature],
+          : [...features, feature],
       };
 
     });
   };
 
 
-  const handleSubmit = (e) => {
+  const handleCoverUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setForm((prev) => ({
+        ...prev,
+        image: event.target.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
 
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(
-      isEdit
-        ? "Update Taxi:"
-        : "Create Taxi:",
-      form
-    );
+    const name = String(form.name ?? "").trim();
+    const vehicleName = String(form.vehicleName ?? "").trim();
+    if (!name || !vehicleName) {
+      return alert("Taxi name and vehicle name are required.");
+    }
 
-    navigate("/admin/taxi");
+    const currentTaxis = taxiStore.get();
+    const taxiId = existingTaxi?.id ? existingTaxi.id : Date.now();
+
+    const taxiDataToSave = {
+      ...existingTaxi,
+      ...form,
+      id: taxiId,
+      name,
+      vehicleName,
+    };
+
+    const saved = taxiStore.save(
+      existingTaxi
+        ? currentTaxis.map((t) => (String(t.id) === String(id) ? taxiDataToSave : t))
+        : [...currentTaxis, taxiDataToSave]
+    );
+    if (saved) navigate("/admin/taxi");
   };
 
 
@@ -312,18 +341,54 @@ const TaxiForm = () => {
             </div>
 
 
-            <div className="form-field">
+            <div className="form-field full">
 
               <label>
-                Main Image URL
+                Vehicle Image
               </label>
 
-              <input
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-                placeholder="/images/taxi/taxi-1.jpg"
-              />
+              <div className="admin-media-upload-bar">
+                <input
+                  name="image"
+                  value={form.image}
+                  onChange={handleChange}
+                  placeholder="/images/taxi/taxi-1.jpg or choose file"
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="taxi-cover-upload"
+                  style={{ display: "none" }}
+                  onChange={handleCoverUpload}
+                />
+                <label htmlFor="taxi-cover-upload" className="admin-choose-file-btn">
+                  Choose File
+                </label>
+              </div>
+
+              {form.image && (
+                <div className="admin-cover-preview">
+                  <div className="admin-cover-preview-thumb">
+                    <img src={form.image} alt="Vehicle Preview" />
+                  </div>
+                  <div className="admin-cover-preview-info">
+                    <span className="admin-cover-preview-name">
+                      {form.image.startsWith("data:")
+                        ? "Uploaded Vehicle Image"
+                        : (form.image.split("/").pop().split("?")[0] || form.image)}
+                    </span>
+                    <span className="admin-cover-preview-sub">Vehicle photo selected</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="admin-gallery-remove-btn"
+                    onClick={() => setForm((prev) => ({ ...prev, image: "" }))}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
 
             </div>
 
@@ -491,7 +556,7 @@ const TaxiForm = () => {
 
                 <input
                   type="checkbox"
-                  checked={form.features.includes(
+                  checked={(form.features || []).includes(
                     feature
                   )}
                   onChange={() =>
